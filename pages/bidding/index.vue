@@ -106,7 +106,7 @@
 				</u-row>
 			</view>
 		</view>
-		
+
 		<!-- 竞价排名 -->
 		<view class="binding-ranking">
 			<view class="binding-ranking-title">
@@ -135,7 +135,7 @@
 						</u-col>
 					</u-row>
 				</view>
-				
+
 				<view class="binding-record_item">
 					<u-row gutter="16">
 						<u-col span="2">
@@ -157,7 +157,7 @@
 						</u-col>
 					</u-row>
 				</view>
-				
+
 				<view class="binding-record_item">
 					<u-row gutter="16">
 						<u-col span="2">
@@ -181,7 +181,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 我的报价记录 -->
 		<view class="mybinding">
 			<view class="mybinding-title">
@@ -202,7 +202,7 @@
 					</view>
 					<view class="mybinding-recode_item_ball"></view>
 				</view>
-				
+
 				<view class="mybinding-recode_item">
 					<view class="mybinding-recode_item_count">
 						<text>第二次报价</text>
@@ -216,7 +216,7 @@
 					</view>
 					<view class="mybinding-recode_item_ball"></view>
 				</view>
-				
+
 				<view class="mybinding-recode_item">
 					<view class="mybinding-recode_item_count">
 						<text>第二次报价</text>
@@ -231,25 +231,93 @@
 					<view class="mybinding-recode_item_ball"></view>
 				</view>
 			</view>
-			
+
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="6">
 						<u-button type="error" plain>放弃报价</u-button>
 					</u-col>
 					<u-col span="6">
-						<u-button type="error">我要竞价</u-button>
-			
+						<u-button type="error" @click="modalOpen">我要竞价</u-button>
 					</u-col>
 				</u-row>
 			</view>
+		</view>
+
+		<!-- 竞价模态框 -->
+		<view>
+			<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500" :mask-close-able="true">
+				<view class="slot-content">
+					<view class="slot-content_oneline">
+						<u-row gutter="16">
+							<u-col span="6">
+								<text>价格（USD）*</text>
+							</u-col>
+							<u-col span="6">
+								<text class="fr">1.63</text>
+							</u-col>
+						</u-row>
+					</view>
+
+					<view class="slot-content_oneline">
+						<u-row gutter="16">
+							<u-col span="6">
+								<text>有效期*</text>
+							</u-col>
+							<u-col span="6">
+								<text class="fr">2020-08-12</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="remark">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text>备注*</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="remark">
+						<u-row gutter="16">
+							<u-col span="12">
+								<u-input v-model="remark" placeholder="请输入备注" />
+							</u-col>
+						</u-row>
+					</view>
+					<view class="remark">
+						总共剩余1次报价机会
+					</view>
+					<view>
+						<u-row gutter="16">
+							<u-col span="6">
+								<u-button type="error" plain>放弃报价</u-button>
+							</u-col>
+							<u-col span="6">
+								<u-button type="error">我要竞价</u-button>
+							</u-col>
+						</u-row>
+					</view>
+				</view>
+			</u-modal>
+
 		</view>
 	</view>
 </template>
 
 <script>
 	export default {
-
+		data() {
+			return {
+				//竞价模态框是否显示
+				modalShow: false,
+				remark: ""
+			}
+		},
+		methods: {
+			//点击打开竞价模态框
+			modalOpen() {
+				this.modalShow = true
+			}
+		}
 	}
 </script>
 <style lang="scss" scoped>
@@ -257,7 +325,7 @@
 	.mg15 {
 		margin: 0 15rpx;
 	}
-	
+
 	.mg-t24 {
 		margin-top: 24rpx;
 	}
@@ -265,9 +333,11 @@
 	.colorred {
 		color: #d0021b;
 	}
-     
+
 	.binding {
 		background-color: #f9f9f9;
+		margin-bottom: 30rpx;
+
 		// 竞价信息
 		.binding-info {
 			background-color: #fff;
@@ -277,79 +347,104 @@
 				margin-bottom: 25rpx;
 			}
 		}
-		
+
 		//竞价排名
-		.binding-ranking{
-			margin-top:20rpx;
+		.binding-ranking {
+			margin-top: 20rpx;
 			background-color: #fff;
 			padding: 0 30rpx;
-			.binding-ranking-title{
+
+			.binding-ranking-title {
 				height: 66rpx;
 				line-height: 66rpx;
 			}
-			
+
 			//具体的报价记录
-			.binding-record{
-				.binding-record_item{
-					padding:20rpx 30rpx;
-					border:2rpx solid #d9d9d9;
+			.binding-record {
+				.binding-record_item {
+					padding: 20rpx 30rpx;
+					border: 2rpx solid #d9d9d9;
 					border-radius: 20rpx;
-				    margin-bottom:25rpx;
-					.binding-record_item_sort{
-						marigin-top:22rpx;
-						border:6rpx solid #D0021B;
+					margin-bottom: 25rpx;
+
+					.binding-record_item_sort {
+						marigin-top: 22rpx;
+						border: 6rpx solid #D0021B;
 						width: 72rpx;
 						height: 72rpx;
 						border-radius: 50%;
 						text-align: center;
 						line-height: 72rpx;
-						color:#D0021B;
+						color: #D0021B;
 						font-weight: 700;
 						font-size: 32rpx;
 					}
 				}
 			}
 		}
-		
+
 		//我的报价记录
-		.mybinding{
-			margin-top:20rpx;
+		.mybinding {
+			margin-top: 20rpx;
 			background-color: #fff;
 			padding: 0 30rpx;
-			.mybinding-title{
+
+			.mybinding-title {
 				height: 66rpx;
 				line-height: 66rpx;
 			}
+
 			//我的报价记录具体内容
-			.mybinding-recode{
-				.mybinding-recode_item{
-					padding-left:50rpx;
-					border-left:8rpx solid #c9c9c9;
+			.mybinding-recode {
+				.mybinding-recode_item {
+					padding-left: 50rpx;
+					border-left: 8rpx solid #c9c9c9;
 					position: relative;
-					>view{
+
+					>view {
 						margin-bottom: 20rpx;
 					}
-					.mybinding-recode_item_price,.mybinding-recode_item_remark{
-						color:#868686;
+
+					.mybinding-recode_item_price,
+					.mybinding-recode_item_remark {
+						color: #868686;
 					}
-					.mybinding-recode_item_remark{
+
+					.mybinding-recode_item_remark {
 						border-bottom: 2rpx solid #f8f8f8;
 						padding-bottom: 25rpx;
 					}
-					.mybinding-recode_item_ball{
+
+					.mybinding-recode_item_ball {
 						width: 28rpx;
 						height: 28rpx;
 						background-color: #D0021B;
-						border-radius:50% ;
+						border-radius: 50%;
 						position: absolute;
-						top:50%;
+						top: 50%;
 						left: 0;
-						transform: translate(-60%,-50%);
+						transform: translate(-60%, -50%);
 					}
 				}
-				
+
 			}
-			
+		}
+
+		//竞价模态框
+		.slot-content {
+			padding: 20rpx;
+
+			.slot-content_oneline {
+				height: 84rpx;
+				line-height: 84rpx;
+				border-bottom: 2rpx solid #c9c9c9;
+			}
+
+			.remark {
+				height: 68rpx;
+				line-height: 68rpx;
+				overflow: hidden;
+			}
 		}
 	}
 </style>
