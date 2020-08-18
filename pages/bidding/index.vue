@@ -2,14 +2,17 @@
 	<view class="binding">
 		<!-- 竞价信息 -->
 		<view class="binding-info">
+			
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
-					<u-col span="12">
+					<u-col span="7">
 						<text>大豆分离蛋白</text>
 						<text class="mg15"></text>
 						<text class="bidding_sign">竞价</text>
 					</u-col>
-					
+					<u-col span="5">
+						<view class="isWinBidding">已中标</view>
+					</u-col>
 				</u-row>
 			</view>
 			<view class="binding-info_oneline">
@@ -354,7 +357,21 @@
 		.binding-info {
 			background-color: #fff;
 			padding: 24rpx;
-
+            position: relative;
+			.isWinBidding{
+				position: absolute;
+				top:0;
+				left:60%;
+				width: 120rpx;
+				height: 50rpx;
+				color:#fff;
+				text-align: center;
+				line-height: 48rpx;
+				border-bottom-left-radius: 20rpx;
+				border-bottom-right-radius: 20rpx;
+				background-color: #D0021B;
+				font-size: 24rpx;
+			}
 			.binding-info_oneline {
 				margin-bottom: 25rpx;
 				.bidding_sign{
