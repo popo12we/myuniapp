@@ -4,6 +4,16 @@
 		<view class="binding-info">
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
+					<u-col span="12">
+						<text>大豆分离蛋白</text>
+						<text class="mg15"></text>
+						<text class="bidding_sign">竞价</text>
+					</u-col>
+					
+				</u-row>
+			</view>
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
 					<u-col span="7">
 						<text>规格</text>
 						<text class="mg15">:</text>
@@ -309,7 +319,9 @@
 			return {
 				//竞价模态框是否显示
 				modalShow: false,
-				remark: ""
+				remark: "",
+				//是已报价还是未报价 已报价true 未报价false
+				quotedPrice:true
 			}
 		},
 		methods: {
@@ -345,6 +357,13 @@
 
 			.binding-info_oneline {
 				margin-bottom: 25rpx;
+				.bidding_sign{
+					padding:4rpx 14rpx;
+					background-color: #D0021B;
+					border-radius: 14rpx;
+					color: #fff;
+					font-size: 20rpx;
+				}
 			}
 		}
 
@@ -432,17 +451,17 @@
 
 		//竞价模态框
 		.slot-content {
-			padding: 20rpx;
+			padding: 30rpx;
 
 			.slot-content_oneline {
 				height: 84rpx;
 				line-height: 84rpx;
-				border-bottom: 2rpx solid #c9c9c9;
+				border-bottom: 2rpx solid #f8f8f8;
 			}
 
 			.remark {
-				height: 68rpx;
-				line-height: 68rpx;
+				height: 84rpx;
+				line-height: 84rpx;
 				overflow: hidden;
 			}
 		}
