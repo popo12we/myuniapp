@@ -1,0 +1,355 @@
+<template>
+	<view class="binding">
+		<!-- 竞价信息 -->
+		<view class="binding-info">
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text>规格</text>
+						<text class="mg15">:</text>
+						<text>Emulsion</text>
+					</u-col>
+					<u-col span="5">
+						<text>品牌</text>
+						<text class="mg15">:</text>
+						<text>菊兰</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text>包装</text>
+						<text class="mg15">:</text>
+						<text>20 KG STEEL DRUM</text>
+					</u-col>
+					<u-col span="5">
+						<text>数量</text>
+						<text class="mg15">:</text>
+						<text>25KG</text>
+
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text>标的价格(USD)</text>
+						<text class="mg15">:</text>
+						<text>1.5</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text>当前出价(USD)</text>
+						<text class="mg15">:</text>
+						<text>1.63</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text>上海---</text>
+						<text>拉各斯</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="12">
+						<text>期望5天交货</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text>询价单编号</text>
+						<text class="mg15">:</text>
+						<text>IN2087973</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="12">
+						<text>备注</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="12">
+						<text>一种食品添加剂</text>
+					</u-col>
+				</u-row>
+			</view>
+
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="12">
+						<text class="colorred">2020-08-07</text>
+						<text class="mg15">:</text>
+						<text class="colorred">12:00截止报价</text>
+					</u-col>
+				</u-row>
+			</view>
+		</view>
+		
+		<!-- 竞价排名 -->
+		<view class="binding-ranking">
+			<view class="binding-ranking-title">
+				全部供应商报价排名(价格从低到高)
+			</view>
+			<!-- 具体的报价记录 -->
+			<view class="binding-record">
+				<view class="binding-record_item">
+					<u-row gutter="16">
+						<u-col span="2">
+							<view class="binding-record_item_sort">
+								1
+							</view>
+						</u-col>
+						<u-col span="3">
+							<view class="binding-record_item_content">
+								<view>价格USD</view>
+								<view class="mg-t24">日期</view>
+							</view>
+						</u-col>
+						<u-col span="6">
+							<view class="binding-record_item_info">
+								<view>1.63</view>
+								<view class="mg-t24">2020-08-16 12:00:00</view>
+							</view>
+						</u-col>
+					</u-row>
+				</view>
+				
+				<view class="binding-record_item">
+					<u-row gutter="16">
+						<u-col span="2">
+							<view class="binding-record_item_sort">
+								2
+							</view>
+						</u-col>
+						<u-col span="3">
+							<view class="binding-record_item_content">
+								<view>价格USD</view>
+								<view class="mg-t24">日期</view>
+							</view>
+						</u-col>
+						<u-col span="6">
+							<view class="binding-record_item_info">
+								<view>1.63</view>
+								<view class="mg-t24">2020-08-16 12:00:00</view>
+							</view>
+						</u-col>
+					</u-row>
+				</view>
+				
+				<view class="binding-record_item">
+					<u-row gutter="16">
+						<u-col span="2">
+							<view class="binding-record_item_sort">
+								3
+							</view>
+						</u-col>
+						<u-col span="3">
+							<view class="binding-record_item_content">
+								<view>价格USD</view>
+								<view class="mg-t24">日期</view>
+							</view>
+						</u-col>
+						<u-col span="6">
+							<view class="binding-record_item_info">
+								<view>1.63</view>
+								<view class="mg-t24">2020-08-16 12:00:00</view>
+							</view>
+						</u-col>
+					</u-row>
+				</view>
+			</view>
+		</view>
+		
+		<!-- 我的报价记录 -->
+		<view class="mybinding">
+			<view class="mybinding-title">
+				我的报价记录
+			</view>
+			<!-- 我的具体报价记录 -->
+			<view class="mybinding-recode">
+				<view class="mybinding-recode_item">
+					<view class="mybinding-recode_item_count">
+						<text>第二次报价</text>
+						<text>(剩余报价次数1次)</text>
+					</view>
+					<view class="mybinding-recode_item_price">
+						<text>价格(USD):1.71/KG</text>
+					</view>
+					<view class="mybinding-recode_item_remark">
+						<text>最近工厂进度趋于稳定,价格稳定</text>
+					</view>
+					<view class="mybinding-recode_item_ball"></view>
+				</view>
+				
+				<view class="mybinding-recode_item">
+					<view class="mybinding-recode_item_count">
+						<text>第二次报价</text>
+						<text>(剩余报价次数1次)</text>
+					</view>
+					<view class="mybinding-recode_item_price">
+						<text>价格(USD):1.71/KG</text>
+					</view>
+					<view class="mybinding-recode_item_remark">
+						<text>最近工厂进度趋于稳定,价格稳定</text>
+					</view>
+					<view class="mybinding-recode_item_ball"></view>
+				</view>
+				
+				<view class="mybinding-recode_item">
+					<view class="mybinding-recode_item_count">
+						<text>第二次报价</text>
+						<text>(剩余报价次数1次)</text>
+					</view>
+					<view class="mybinding-recode_item_price">
+						<text>价格(USD):1.71/KG</text>
+					</view>
+					<view class="mybinding-recode_item_remark">
+						<text>最近工厂进度趋于稳定,价格稳定</text>
+					</view>
+					<view class="mybinding-recode_item_ball"></view>
+				</view>
+			</view>
+			
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="6">
+						<u-button type="error" plain>放弃报价</u-button>
+					</u-col>
+					<u-col span="6">
+						<u-button type="error">我要竞价</u-button>
+			
+					</u-col>
+				</u-row>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+
+	}
+</script>
+<style lang="scss" scoped>
+	// 公共
+	.mg15 {
+		margin: 0 15rpx;
+	}
+	
+	.mg-t24 {
+		margin-top: 24rpx;
+	}
+
+	.colorred {
+		color: #d0021b;
+	}
+     
+	.binding {
+		background-color: #f9f9f9;
+		// 竞价信息
+		.binding-info {
+			background-color: #fff;
+			padding: 24rpx;
+
+			.binding-info_oneline {
+				margin-bottom: 25rpx;
+			}
+		}
+		
+		//竞价排名
+		.binding-ranking{
+			margin-top:20rpx;
+			background-color: #fff;
+			padding: 0 30rpx;
+			.binding-ranking-title{
+				height: 66rpx;
+				line-height: 66rpx;
+			}
+			
+			//具体的报价记录
+			.binding-record{
+				.binding-record_item{
+					padding:20rpx 30rpx;
+					border:2rpx solid #d9d9d9;
+					border-radius: 20rpx;
+				    margin-bottom:25rpx;
+					.binding-record_item_sort{
+						marigin-top:22rpx;
+						border:6rpx solid #D0021B;
+						width: 72rpx;
+						height: 72rpx;
+						border-radius: 50%;
+						text-align: center;
+						line-height: 72rpx;
+						color:#D0021B;
+						font-weight: 700;
+						font-size: 32rpx;
+					}
+				}
+			}
+		}
+		
+		//我的报价记录
+		.mybinding{
+			margin-top:20rpx;
+			background-color: #fff;
+			padding: 0 30rpx;
+			.mybinding-title{
+				height: 66rpx;
+				line-height: 66rpx;
+			}
+			//我的报价记录具体内容
+			.mybinding-recode{
+				.mybinding-recode_item{
+					padding-left:50rpx;
+					border-left:8rpx solid #c9c9c9;
+					position: relative;
+					>view{
+						margin-bottom: 20rpx;
+					}
+					.mybinding-recode_item_price,.mybinding-recode_item_remark{
+						color:#868686;
+					}
+					.mybinding-recode_item_remark{
+						border-bottom: 2rpx solid #f8f8f8;
+						padding-bottom: 25rpx;
+					}
+					.mybinding-recode_item_ball{
+						width: 28rpx;
+						height: 28rpx;
+						background-color: #D0021B;
+						border-radius:50% ;
+						position: absolute;
+						top:50%;
+						left: 0;
+						transform: translate(-60%,-50%);
+					}
+				}
+				
+			}
+			
+		}
+	}
+</style>
