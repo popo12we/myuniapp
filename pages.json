@@ -4,6 +4,12 @@
 	},
 	"pages": [
 		{
+			"path": "pages/commodity/index",
+			"style": {
+				"navigationBarTitleText": "商品"
+			}
+		},
+		{
 			"path": "pages/bidding/index",
 			"style": {
 				"navigationBarTitleText": "竞价"

@@ -337,10 +337,6 @@
 </script>
 <style lang="scss" scoped>
 	// 公共
-	.mg15 {
-		margin: 0 15rpx;
-	}
-
 	.mg-t24 {
 		margin-top: 24rpx;
 	}
