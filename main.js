@@ -2,7 +2,6 @@
 import Vue from 'vue'
 import App from './App'
 import uView from "uview-ui";
-import router from './router'
 import { RouterMount } from 'uni-simple-router'
 
 App.mpType = 'app'

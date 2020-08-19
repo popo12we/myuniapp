@@ -10,6 +10,12 @@
 			}
 		},
 		{
+			"path": "pages/batchQuotation/index",
+			"style": {
+				"navigationBarTitleText": "批量报价"
+			}
+		},
+		{
 			"path": "pages/bidding/index",
 			"style": {
 				"navigationBarTitleText": "竞价"
