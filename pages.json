@@ -4,15 +4,15 @@
 	},
 	"pages": [
 		{
-			"path": "pages/commodity/index",
-			"style": {
-				"navigationBarTitleText": "商品"
-			}
-		},
-		{
 			"path": "pages/batchQuotation/index",
 			"style": {
 				"navigationBarTitleText": "批量报价"
+			}
+		},
+		{
+			"path": "pages/commodity/index",
+			"style": {
+				"navigationBarTitleText": "商品"
 			}
 		},
 		{
