@@ -2,7 +2,7 @@
 	<view class="commodity">
 		<!-- 输入框 -->
 		<view class="inp_area">
-			<u-field v-model="name" placeholder="请输入产品编号或名称">
+			<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield">
 			</u-field>
 			<u-button @click="checkedAll" type="error" plain size='mini' class="search_btn">搜索</u-button>
 		</view>
@@ -15,8 +15,8 @@
 		</view>
 		<!-- 商品列表 -->
 		<view class="commodity_list">
-			<u-checkbox-group @change="checkboxGroupChange" :wrap="true" :active-color='activeColor'>
-				<u-checkbox @change="checkboxChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
+			<u-checkbox-group :wrap="true" :active-color='activeColor'>
+				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name"  >
 					<view class="checkbox_view">
 						<view class="checkbox_view_oneline">
 							<text class="checkbox_view_name">大豆分离蛋白</text>
@@ -78,14 +78,7 @@
 			};
 		},
 		methods: {
-			// 选中某个复选框时，由checkbox时触发
-			checkboxChange(e) {
-				//console.log(e);
-			},
-			// 选中任一checkbox时，由checkbox-group触发
-			checkboxGroupChange(e) {
-				// console.log(e);
-			},
+			
 			// 全选
 			checkboxAllChange() {
 				this.allChecked ? this.list.map(val => {
@@ -93,7 +86,11 @@
 				}) : this.list.map(val => {
 					val.checked = false;
 				})
-
+			},
+			
+			//单选
+			checkboxOneChange(e){
+				this.allChecked=(this.list.length===this.list.filter(val=>val.checked).length)
 			}
 		}
 	};
@@ -102,9 +99,14 @@
 <style lang="scss" scoped>
 	.commodity {
 		.inp_area{
-			display: inline-flex;
+			padding:0 30rpx 0 10rpx;
+			display: flex;
 			.search_btn{
+				// float: right;
 				align-self:center;
+			}
+			.ufield{
+				flex:1
 			}
 		}
 		.commodity_list_tips {
