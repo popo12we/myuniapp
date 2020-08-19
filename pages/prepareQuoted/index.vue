@@ -42,9 +42,9 @@
 				</u-checkbox>
 			</u-checkbox-group>
 		</view>
-		<view class="btn">
-			<u-button @click="batchFilling" type="error" plain>批量填写</u-button>
-		</view>
+        
+		<!-- 底部导航条 -->
+		<u-tabbar v-model="current" :list="tabbarList"></u-tabbar>
 	</view>
 </template>
 
@@ -72,7 +72,30 @@
 						checked: false,
 						disabled: false
 					}
-				]
+				],
+                
+				//底部导航
+				tabbarList: [{
+						iconPath: "home",
+						text: '待报价',
+						customIcon: false,
+					},
+					{
+						iconPath: "photo",
+						text: '商品',
+						customIcon: false,
+					},
+					{
+						iconPath: "play-right",
+						text: '已报价',
+						customIcon: false,
+					},
+					{
+						iconPath: "account",
+						text: '我的',
+						customIcon: false,
+					},
+				],
 			};
 		},
 		methods: {
@@ -89,14 +112,14 @@
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
 			},
-			
+
 			//批量填写
-			batchFilling(){
+			batchFilling() {
 				uni.navigateTo({
-				    url: '../batchQuotation/index'
+					url: '../batchQuotation/index'
 				});
 			}
-			
+
 		}
 	};
 </script>
@@ -161,14 +184,11 @@
 				.utag {
 					margin-left: 20rpx;
 				}
-				.checkbox_view_oneline_btn{
-					margin-left:20rpx;
+
+				.checkbox_view_oneline_btn {
+					margin-left: 20rpx;
 				}
 			}
-		}
-
-		.btn {
-			padding: 0 40rpx;
 		}
 	}
 </style>
