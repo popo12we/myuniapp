@@ -10,9 +10,9 @@
 			</view>
 			<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
 			</u-field>
-			<u-button @click="checkedAll" type="error" plain size='mini' class="search_btn">搜索</u-button>
+			<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
 		</view>
-		<view class="commodity_list_tips">你有两个产品价格将在三天之后过期</view>
+		<view class="commodity_list_tips">您有两个产品价格将在三天之后过期</view>
 
 		<!-- 商品列表 -->
 		<view class="commodity_list">

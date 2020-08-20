@@ -10,46 +10,99 @@
 			</view>
 			<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
 			</u-field>
-			<u-button @click="checkedAll" type="error" plain size='mini' class="search_btn">搜索</u-button>
+			<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
 		</view>
-		<view class="commodity_list_tips">你有两个产品价格将在三天之后过期</view>
+		<view class="commodity_list_tips">您现在有2条竞价、2条实单</view>
 
 		<!-- 商品列表 -->
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
-				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
-					<view class="checkbox_view">
-						<view class="checkbox_view_oneline">
-							<text class="checkbox_view_name gray">大豆分离蛋白</text>
-							<text class="mg15">:</text>
-							<text class="gray">菊兰</text>
+				<u-collapse>
+
+					<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
+						<view class="checkbox_view">
+							<view class="checkbox_view_oneline">
+								<text class="checkbox_view_name gray">大豆分离蛋白</text>
+								<text class="mg15">:</text>
+								<text class="gray">菊兰</text>
+							</view>
+
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="7">
+										<text class="gray">规格</text>
+										<text class="mg15">:</text>
+										<text class="gray">Emulsion</text>
+									</u-col>
+									<u-col span="5">
+										<text class="gray">品牌</text>
+										<text class="mg15">:</text>
+										<text class="gray">菊兰</text>
+									</u-col>
+								</u-row>
+							</view>
+
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="7">
+										<text class="gray">包装</text>
+										<text class="mg15">:</text>
+										<text class="gray">20 KG STEEL DRUM</text>
+									</u-col>
+									<u-col span="5">
+										<text class="gray">数量</text>
+										<text class="mg15">:</text>
+										<text class="gray">100KG</text>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="12">
+										<view class="checkbox_view_oneline_timeend">
+											<text class="red">2020-07-30</text>
+											<text class="mg15"></text>
+											<text class="red">18：00截至报价</text>
+										</view>
+									</u-col>
+
+								</u-row>
+							</view>
+							<u-collapse-item>
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="7">
+											<text class="gray">规格</text>
+											<text class="mg15">:</text>
+											<text class="gray">Emulsion</text>
+										</u-col>
+										<u-col span="5">
+											<text class="gray">品牌</text>
+											<text class="mg15">:</text>
+											<text class="gray">菊兰</text>
+										</u-col>
+									</u-row>
+								</view>
+							</u-collapse-item>
 						</view>
 
-						<view class="checkbox_view_oneline">
-							<text class="gray">规格</text>
-							<text class="mg15">:</text>
-							<text class="gray">Emulsion</text>
-						</view>
+					</u-checkbox>
 
-						<view class="checkbox_view_oneline">
-							<text class="gray">最新报价(USD)</text>
-							<text class="mg15">:</text>
-							<text class="gray">1.63</text>
-							<u-tag text="已失效" type="info" class="utag" />
-							<u-button type="error" size="mini" class="checkbox_view_oneline_btn">更新报价</u-button>
-						</view>
-					</view>
-				</u-checkbox>
+				</u-collapse>
 			</u-checkbox-group>
 		</view>
-        
-		<!-- 底部导航条 -->
-		<u-tabbar v-model="current" :list="tabbarList"></u-tabbar>
+
+		<!-- 底部导航 -->
+		<Tabbar></Tabbar>
 	</view>
 </template>
 
 <script>
+	import Tabbar from '../../my_common_components/Tabbar.vue'
 	export default {
+		components: {
+			Tabbar
+		},
 		data() {
 			return {
 				name: "",
@@ -72,31 +125,8 @@
 						checked: false,
 						disabled: false
 					}
-				],
-                
-				//底部导航
-				tabbarList: [{
-						iconPath: "home",
-						text: '待报价',
-						customIcon: false,
-					},
-					{
-						iconPath: "photo",
-						text: '商品',
-						customIcon: false,
-					},
-					{
-						iconPath: "play-right",
-						text: '已报价',
-						customIcon: false,
-					},
-					{
-						iconPath: "account",
-						text: '我的',
-						customIcon: false,
-					},
-				],
-			};
+				]
+			}
 		},
 		methods: {
 			// 全选
@@ -128,6 +158,10 @@
 	//公共样式
 	.gray {
 		color: #c9c9c9 !important;
+	}
+
+	.red {
+		color: #D0021B !important
 	}
 
 	.commodity {
@@ -165,20 +199,32 @@
 
 			/deep/ .u-checkbox {
 				border-bottom: 2rpx solid #f6f6f6;
+				align-items: flex-start;
 			}
-
+			/deep/ .u-checkbox__icon-wrap{
+				margin-top:38rpx;
+			}
+            /deep/ .u-collapse-head{
+				padding:0;
+			}
 			.checkbox_view {
 				float: none;
 				display: block;
-				margin-left: 20rpx;
 				padding: 25rpx 0;
 				width: 100%;
 				color: #868686;
 
-				.checkbox_view_name {
-					font-weight: 700;
-					font-size: 32rpx;
-					color: #666;
+				.checkbox_view_oneline {
+					.checkbox_view_name {
+						font-weight: 700;
+						font-size: 32rpx;
+						color: #666;
+					}
+
+					// .checkbox_view_oneline_timeend {
+					// 	padding-bottom: 10rpx;
+					// 	border-bottom: 2rpx solid #c9c9c9;
+					// }
 				}
 
 				.utag {
