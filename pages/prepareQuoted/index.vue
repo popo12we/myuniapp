@@ -72,14 +72,55 @@
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="7">
-											<text class="gray">规格</text>
-											<text class="mg15">:</text>
-											<text class="gray">Emulsion</text>
+											<text class="gray">上海</text>
+											<text class="mg15">---</text>
+											<text class="gray">拉各斯</text>
 										</u-col>
 										<u-col span="5">
-											<text class="gray">品牌</text>
+											<text class="gray">20GP</text>
+										</u-col>
+									</u-row>
+								</view>
+								
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="7">
+											<text class="gray">期望五天交货</text>
+										</u-col>
+										<u-col span="5">
+											<text class="gray">打托</text>
 											<text class="mg15">:</text>
-											<text class="gray">菊兰</text>
+											<text class="gray">是</text>
+										</u-col>
+									</u-row>
+								</view>
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="12">
+											<text class="gray">询价单编号：IN2087973</text>
+										</u-col>
+									</u-row>
+								</view>
+								
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="12">
+											<text class="gray">备注:</text>
+										</u-col>
+									</u-row>
+								</view>
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="12">
+											<text class="gray">一种食品添加剂</text>
+										</u-col>
+									</u-row>
+								</view>
+								<view class="checkbox_view_oneline mt15">
+									<u-row gutter="16">
+										<u-col span="12">
+											<u-button type="error" size='mini' plain>放弃报价</u-button>
+											<u-button type="error" size='mini' plain>我要报价</u-button>
 										</u-col>
 									</u-row>
 								</view>
@@ -162,6 +203,9 @@
 
 	.red {
 		color: #D0021B !important
+	}
+	.mt15{
+		margin-top:15rpx;
 	}
 
 	.commodity {
