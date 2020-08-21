@@ -14,27 +14,183 @@
 		</view>
 		<view class="commodity_list_tips">您现在有2条竞价、2条实单</view>
 
-		<!-- 轮播图 -->
-		<view class="swiper">
+		<!-- 轮播图区域 -->
+		<view class="swiper_box">
 			<view class="uni-padding-wrap">
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
 						<swiper class="swiper" :indicator-dots="indicatorDots">
 							<swiper-item>
-								<view class="swiper-item uni-bg-red">A</view>
+								<!-- 具体的轮播图页面 -->
+								<view class="swiper-item">
+									<view class="swiper-item_left">
+										<view class="swiper-item_sign_box">
+											<view class="swiper-item_sign"><text>竞价</text></view>
+										</view>
+									</view>
+									<view class="swiper-item_right">
+										
+									</view>
+									<view class="swiper-item_center">
+										<view class="swiper_center_title">
+											<text>大豆分离蛋白</text>
+											<text class="mg15"></text>
+											<text>菊兰</text>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">规格</text>
+													<text class="mg15 gray">:</text>
+													<text class="gray">Emulsion</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">当前出价（USD):</text>
+													<text class="mg15"></text>
+													<text class="gray">1.63</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">当前排名</text>
+													<text class="mg15 gray">:</text>
+													<text class="gray">2</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline settimeout_btn clearfix">
+											<view class="settimeout">
+												剩余1天12小时30分结束
+											</view>
+										</view>
+										<view class="swiper_center_oneline center_btn_area">
+											<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
+										</view>
+									</view>
+								</view>
 							</swiper-item>
 							<swiper-item>
-								<view class="swiper-item uni-bg-green">B</view>
+								<!-- 具体的轮播图页面 -->
+								<view class="swiper-item">
+									<view class="swiper-item_left">
+										<view class="swiper-item_sign_box">
+											<view class="swiper-item_sign"><text>竞价</text></view>
+										</view>
+									</view>
+									<view class="swiper-item_right">
+										
+									</view>
+									<view class="swiper-item_center">
+										<view class="swiper_center_title">
+											<text>甜味剂</text>
+											<text class="mg15"></text>
+											<text>莲花</text>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">规格</text>
+													<text class="mg15 gray">:</text>
+													<text class="gray">Emulsion</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">当前出价（USD):</text>
+													<text class="mg15"></text>
+													<text class="gray">1.63</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">当前排名</text>
+													<text class="mg15 gray">:</text>
+													<text class="gray">2</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline settimeout_btn clearfix">
+											<view class="settimeout">
+												剩余1天12小时30分结束
+											</view>
+										</view>
+										<view class="swiper_center_oneline center_btn_area">
+											<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
+										</view>
+									</view>
+								</view>
 							</swiper-item>
 							<swiper-item>
-								<view class="swiper-item uni-bg-blue">C</view>
+								<!-- 具体的轮播图页面 -->
+								<view class="swiper-item">
+									<view class="swiper-item_left">
+										<view class="swiper-item_sign_box">
+											<view class="swiper-item_sign"><text>竞价</text></view>
+										</view>
+									</view>
+									<view class="swiper-item_right">
+										
+									</view>
+									<view class="swiper-item_center">
+										<view class="swiper_center_title">
+											<text>山梨酸钾</text>
+											<text class="mg15"></text>
+											<text>康乐</text>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">规格</text>
+													<text class="mg15 gray">:</text>
+													<text class="gray">Emulsion</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">当前出价（USD):</text>
+													<text class="mg15"></text>
+													<text class="gray">1.63</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline">
+											<u-row>
+												<u-col span="12">
+													<text class="gray">当前排名</text>
+													<text class="mg15 gray">:</text>
+													<text class="gray">2</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="swiper_center_oneline settimeout_btn clearfix">
+											<view class="settimeout">
+												剩余1天12小时30分结束
+											</view>
+										</view>
+										<view class="swiper_center_oneline center_btn_area">
+											<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
+										</view>
+									</view>
+								</view>
 							</swiper-item>
 						</swiper>
 					</view>
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 商品列表 -->
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
@@ -85,7 +241,6 @@
 											<text class="red">18：00截至报价</text>
 										</view>
 									</u-col>
-
 								</u-row>
 							</view>
 							<u-collapse-item>
@@ -187,7 +342,7 @@
 						disabled: false
 					}
 				],
-				
+
 				//轮播图参数
 				indicatorDots: true
 			}
@@ -251,6 +406,74 @@
 			color: #D0021B;
 			text-align: center;
 			line-height: 70rpx;
+		}
+
+		//轮播图区域
+		.swiper_box {
+			/deep/ .swiper{
+				height: 450rpx;
+			}
+
+			.swiper-item_left {
+				width: 150rpx;
+				height: 100%;
+				float: left;
+
+				.swiper-item_sign_box {
+					width: 110rpx;
+					height: 110rpx;
+					color: #fff;
+					text-align: center;
+
+					.swiper-item_sign {
+						width: 0;
+						height: 0;
+						position: relative;
+						border-top: 110rpx solid red;
+						border-right: 110rpx solid transparent;
+
+						text {
+							position: absolute;
+							left: 20rpx;
+							top: -108rpx;
+							color: #fff;
+							font-size: 28rpx;
+							transform: rotate(225deg);
+						}
+					}
+				}
+			}
+
+			.swiper-item_right {
+				width: 150rpx;
+				height: 55px;
+				float: right;
+				background-color: transparent;
+			}
+
+			.swiper-item_center {
+				overflow: hidden;
+				.swiper_center_title{
+					margin-top:30rpx;
+				}
+				.swiper_center_oneline{
+					margin:10rpx 0;
+				}
+				.settimeout {
+					background-color: #D0021B;
+					padding: 20rpx 60rpx;
+					border-radius: 20rpx;
+					color: #fff;
+					text-align: center;
+					float: left;
+				}
+				.center_btn_area{
+					display: flex;
+					justify-content: center;
+					margin-top:30rpx !important;
+				}
+				
+			}
 		}
 
 		//商品列表
