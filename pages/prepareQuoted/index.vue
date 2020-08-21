@@ -32,7 +32,7 @@
 										<span class="iconfont icon_close">&#xe607;</span>
 									</view>
 									<view class="swiper-item_center">
-										
+
 										<view class="swiper_center_title">
 											<text>大豆分离蛋白</text>
 											<text class="mg15"></text>
@@ -85,7 +85,7 @@
 										</view>
 									</view>
 									<view class="swiper-item_right">
-										
+
 									</view>
 									<view class="swiper-item_center">
 										<view class="swiper_center_title">
@@ -140,7 +140,7 @@
 										</view>
 									</view>
 									<view class="swiper-item_right">
-										
+
 									</view>
 									<view class="swiper-item_center">
 										<view class="swiper_center_title">
@@ -201,7 +201,7 @@
 							<view class="checkbox_view_oneline">
 								<text class="checkbox_view_name gray">大豆分离蛋白</text>
 								<text class="mg15"></text>
-								<text class="checkbox_view_tab">询盘</text>
+								<text class="checkbox_view_tab" @click="showInquiryModal">询盘</text>
 							</view>
 
 							<view class="checkbox_view_oneline">
@@ -311,6 +311,39 @@
 
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
+
+		<!-- 询盘模态框 -->
+		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false" :mask-close-able="true">
+			<view class="inquiryModal_content">
+				<u-form :model="inquiryForm" ref="iForm" :label-width="145">
+					<u-form-item label="币种">
+						<u-input v-model="form.currency" />
+					</u-form-item>
+					<u-form-item label="价格">
+						<u-input v-model="form.price" />
+					</u-form-item>
+					<u-form-item label="美元价格">
+						<u-input v-model="form.usaPrice" />
+					</u-form-item>
+					<u-form-item label="有效期">
+						<u-input v-model="form.validity" />
+					</u-form-item>
+					<u-form-item label="交货天数">
+						<u-input v-model="form.day" />
+					</u-form-item>
+					<u-form-item label="价格趋势">
+						<u-input v-model="form.trend" type="select" @click="showTrendSelect" />
+					</u-form-item>
+					<u-form-item label="趋势说明">
+						<u-input v-model="form.explain" />
+					</u-form-item>
+					<u-form-item label="备注">
+						<u-input v-model="form.remark" />
+					</u-form-item>
+				</u-form>
+			</view>
+		</u-modal>
+		<u-select v-model="selectShow" :list="selectlist"></u-select>
 	</view>
 </template>
 
@@ -326,6 +359,15 @@
 				name: "",
 				//默认checkbox选中颜色
 				activeColor: "#D0021B",
+				selectlist: [{
+						value: '1',
+						label: '江'
+					},
+					{
+						value: '2',
+						label: '湖'
+					}
+				],
 				//全选
 				allChecked: false,
 				list: [{
@@ -346,7 +388,29 @@
 				],
 
 				//轮播图参数
-				indicatorDots: true
+				indicatorDots: true,
+				selectShow: false,
+
+				//询盘模态框是否显示
+				inquiryShow: false,
+				inquiryForm: {
+					//币种
+					currency: '',
+					//价格
+					price: '',
+					//美元价格
+					usaPrice: '',
+					//有效期
+					validity: '',
+					//交货天数
+					day: '',
+					//价格趋势
+					trend: '',
+					//趋势说明
+					explain: '',
+					//备注
+					remark: ''
+				}
 			}
 		},
 		methods: {
@@ -362,6 +426,16 @@
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
+			},
+			
+			//点击打开价格趋势下拉框
+			showTrendSelect() {
+				this.selectShow = true
+			},
+			
+			//点击询盘打开询盘模态框
+			showInquiryModal(){
+				this.inquiryShow=true
 			}
 		}
 	};
@@ -412,7 +486,7 @@
 
 		//轮播图区域
 		.swiper_box {
-			/deep/ .swiper{
+			/deep/ .swiper {
 				height: 450rpx;
 			}
 
@@ -452,23 +526,26 @@
 				float: right;
 				background-color: transparent;
 				position: relative;
-				.icon_close{
+
+				.icon_close {
 					position: absolute;
-					right:20rpx;
-					top:20rpx;
+					right: 20rpx;
+					top: 20rpx;
 				}
 			}
 
 			.swiper-item_center {
 				overflow: hidden;
 				position: relative;
-				
-				.swiper_center_title{
-					margin-top:30rpx;
+
+				.swiper_center_title {
+					margin-top: 30rpx;
 				}
-				.swiper_center_oneline{
-					margin:10rpx 0;
+
+				.swiper_center_oneline {
+					margin: 10rpx 0;
 				}
+
 				.settimeout {
 					background-color: #D0021B;
 					padding: 20rpx 60rpx;
@@ -477,12 +554,12 @@
 					text-align: center;
 					float: left;
 				}
-				.center_btn_area{
+
+				.center_btn_area {
 					display: flex;
 					justify-content: center;
-					margin-top:30rpx !important;
+					margin-top: 30rpx !important;
 				}
-				
 			}
 		}
 
@@ -539,5 +616,12 @@
 				}
 			}
 		}
+
+		// 询盘模态框
+		.inquiryModal_content {
+			padding: 20rpx;
+		}
+
+
 	}
 </style>
