@@ -29,9 +29,10 @@
 										</view>
 									</view>
 									<view class="swiper-item_right">
-										
+										<span class="iconfont icon_close">&#xe607;</span>
 									</view>
 									<view class="swiper-item_center">
+										
 										<view class="swiper_center_title">
 											<text>大豆分离蛋白</text>
 											<text class="mg15"></text>
@@ -315,6 +316,7 @@
 
 <script>
 	import Tabbar from '../../my_common_components/Tabbar.vue'
+	import '../../common/font/iconfont.css';
 	export default {
 		components: {
 			Tabbar
@@ -449,10 +451,18 @@
 				height: 55px;
 				float: right;
 				background-color: transparent;
+				position: relative;
+				.icon_close{
+					position: absolute;
+					right:20rpx;
+					top:20rpx;
+				}
 			}
 
 			.swiper-item_center {
 				overflow: hidden;
+				position: relative;
+				
 				.swiper_center_title{
 					margin-top:30rpx;
 				}
