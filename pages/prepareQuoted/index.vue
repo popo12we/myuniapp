@@ -14,6 +14,27 @@
 		</view>
 		<view class="commodity_list_tips">您现在有2条竞价、2条实单</view>
 
+		<!-- 轮播图 -->
+		<view class="swiper">
+			<view class="uni-padding-wrap">
+				<view class="page-section swiper">
+					<view class="page-section-spacing">
+						<swiper class="swiper" :indicator-dots="indicatorDots">
+							<swiper-item>
+								<view class="swiper-item uni-bg-red">A</view>
+							</swiper-item>
+							<swiper-item>
+								<view class="swiper-item uni-bg-green">B</view>
+							</swiper-item>
+							<swiper-item>
+								<view class="swiper-item uni-bg-blue">C</view>
+							</swiper-item>
+						</swiper>
+					</view>
+				</view>
+			</view>
+		</view>
+		
 		<!-- 商品列表 -->
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
@@ -80,7 +101,7 @@
 										</u-col>
 									</u-row>
 								</view>
-								
+
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="7">
@@ -100,7 +121,7 @@
 										</u-col>
 									</u-row>
 								</view>
-								
+
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="12">
@@ -165,7 +186,10 @@
 						checked: false,
 						disabled: false
 					}
-				]
+				],
+				
+				//轮播图参数
+				indicatorDots: true
 			}
 		},
 		methods: {
@@ -181,15 +205,7 @@
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
-			},
-
-			//批量填写
-			batchFilling() {
-				uni.navigateTo({
-					url: '../batchQuotation/index'
-				});
 			}
-
 		}
 	};
 </script>
@@ -203,8 +219,9 @@
 	.red {
 		color: #D0021B !important
 	}
-	.mt15{
-		margin-top:15rpx;
+
+	.mt15 {
+		margin-top: 15rpx;
 	}
 
 	.commodity {
@@ -244,12 +261,15 @@
 				border-bottom: 2rpx solid #f6f6f6;
 				align-items: flex-start;
 			}
-			/deep/ .u-checkbox__icon-wrap{
-				margin-top:38rpx;
+
+			/deep/ .u-checkbox__icon-wrap {
+				margin-top: 38rpx;
 			}
-            /deep/ .u-collapse-head{
-				padding:0;
+
+			/deep/ .u-collapse-head {
+				padding: 0;
 			}
+
 			.checkbox_view {
 				float: none;
 				display: block;
@@ -263,17 +283,17 @@
 						font-size: 32rpx;
 						color: #666;
 					}
-					
-					.checkbox_view_tab{
+
+					.checkbox_view_tab {
 						background-color: #0099cc;
-						color:#fff;
-						padding:4rpx 16rpx;
+						color: #fff;
+						padding: 4rpx 16rpx;
 						font-size: 24rpx;
 						border-radius: 20rpx;
 					}
-                    
-					.giveupbindding{
-						margin-right:30rpx;
+
+					.giveupbindding {
+						margin-right: 30rpx;
 					}
 				}
 
