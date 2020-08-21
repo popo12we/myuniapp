@@ -258,7 +258,6 @@
 		</view>
 
 		<!-- 竞价模态框 -->
-		<view>
 			<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500" :mask-close-able="true">
 				<view class="slot-content">
 					<view class="slot-content_oneline">
@@ -311,8 +310,6 @@
 					</view>
 				</view>
 			</u-modal>
-
-		</view>
 	</view>
 </template>
 
@@ -385,7 +382,6 @@
 			margin-top: 20rpx;
 			background-color: #fff;
 			padding: 0 30rpx;
-
 			.binding-ranking-title {
 				height: 66rpx;
 				line-height: 66rpx;
@@ -432,21 +428,17 @@
 					padding-left: 50rpx;
 					border-left: 8rpx solid #c9c9c9;
 					position: relative;
-
 					>view {
 						margin-bottom: 20rpx;
 					}
-
 					.mybinding-recode_item_price,
 					.mybinding-recode_item_remark {
 						color: #868686;
 					}
-
 					.mybinding-recode_item_remark {
 						border-bottom: 2rpx solid #f8f8f8;
 						padding-bottom: 25rpx;
 					}
-
 					.mybinding-recode_item_ball {
 						width: 28rpx;
 						height: 28rpx;
@@ -465,13 +457,11 @@
 		//竞价模态框
 		.slot-content {
 			padding: 30rpx;
-
 			.slot-content_oneline {
 				height: 84rpx;
 				line-height: 84rpx;
 				border-bottom: 2rpx solid #f8f8f8;
 			}
-
 			.remark {
 				height: 84rpx;
 				line-height: 84rpx;

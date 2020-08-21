@@ -1,4 +1,5 @@
 <template>
+	<!-- 待报价页面 -->
 	<view class="commodity">
 		<!-- 输入框 -->
 		<view class="inp_area">
@@ -71,7 +72,7 @@
 											</view>
 										</view>
 										<view class="swiper_center_oneline center_btn_area">
-											<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
+											<u-button type="error" size="mini" plain class="btn_end" @click="toBindding">我要竞价</u-button>
 										</view>
 									</view>
 								</view>
@@ -295,7 +296,7 @@
 								<view class="checkbox_view_oneline mt15">
 									<u-row gutter="16">
 										<u-col span="12">
-											<u-button type="info" size='mini' plain class="giveupbindding">放弃报价</u-button>
+											<u-button type="info" size='mini' plain class="giveupbindding" @click="giveupbidding">放弃报价</u-button>
 											<u-button type="error" size='mini' plain>我要报价</u-button>
 										</u-col>
 									</u-row>
@@ -340,7 +341,81 @@
 					<u-form-item label="备注">
 						<u-input v-model="form.remark" />
 					</u-form-item>
+					<view>
+						<u-row gutter="16" class="btn-area">
+							<u-col span="6">
+								<u-button type="error" plain>取消</u-button>
+							</u-col>
+							<u-col span="6">
+								<u-button type="error">提交报价</u-button>
+							</u-col>
+						</u-row>
+					</view>
 				</u-form>
+			</view>
+		</u-modal>
+
+		<!-- 竞价模态框 -->
+		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500" :mask-close-able="true">
+			<view class="slot-content">
+				<view class="slot-content_oneline">
+					<u-row gutter="16">
+						<u-col span="6">
+							<text>价格（USD）*</text>
+						</u-col>
+						<u-col span="6">
+							<text class="fr">1.63</text>
+						</u-col>
+					</u-row>
+				</view>
+
+				<view class="slot-content_oneline">
+					<u-row gutter="16">
+						<u-col span="6">
+							<text>有效期*</text>
+						</u-col>
+						<u-col span="6">
+							<text class="fr">2020-08-12</text>
+						</u-col>
+					</u-row>
+				</view>
+				<view class="remark">
+					<u-row gutter="16">
+						<u-col span="12">
+							<text>备注*</text>
+						</u-col>
+					</u-row>
+				</view>
+				<view class="remark">
+					<u-row gutter="16">
+						<u-col span="12">
+							<u-input v-model="remark" placeholder="请输入备注" />
+						</u-col>
+					</u-row>
+				</view>
+				<view class="remark">
+					总共剩余1次报价机会
+				</view>
+				<view>
+					<u-row gutter="16">
+						<u-col span="6">
+							<u-button type="error" plain>放弃报价</u-button>
+						</u-col>
+						<u-col span="6">
+							<u-button type="error">我要竞价</u-button>
+						</u-col>
+					</u-row>
+				</view>
+			</view>
+		</u-modal>
+
+		<!-- 放弃报价模态框 -->
+		<u-modal v-model="giveupbiddingShow" :mask-close-able="true" :show-title="false" :show-cancel-button="true" confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
+			<view class="giveupbiddingModal_oneline">
+				确定放弃报价？
+			</view>
+			<view class="red giveupbiddingModal_oneline">
+				大豆分离蛋白
 			</view>
 		</u-modal>
 		<u-select v-model="selectShow" :list="selectlist"></u-select>
@@ -410,7 +485,11 @@
 					explain: '',
 					//备注
 					remark: ''
-				}
+				},
+				//竞价模态框是否显示
+				binddingShow: false,
+				//放弃模态框是否显示
+				giveupbiddingShow: false
 			}
 		},
 		methods: {
@@ -427,15 +506,25 @@
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
 			},
-			
+
 			//点击打开价格趋势下拉框
 			showTrendSelect() {
 				this.selectShow = true
 			},
-			
+
 			//点击询盘打开询盘模态框
-			showInquiryModal(){
-				this.inquiryShow=true
+			showInquiryModal() {
+				this.inquiryShow = true
+			},
+
+			//点击我要竞价按钮打开竞价模态框
+			toBindding() {
+				this.binddingShow = true
+			},
+
+			//点击放弃报价出的弹框
+			giveupbidding() {
+				this.giveupbiddingShow = true
 			}
 		}
 	};
@@ -620,8 +709,33 @@
 		// 询盘模态框
 		.inquiryModal_content {
 			padding: 20rpx;
+			.btn-area{
+				margin-top: 20rpx;
+			}
 		}
 
+		//竞价模态框
+		.slot-content {
+			padding: 30rpx;
 
+			.slot-content_oneline {
+				height: 84rpx;
+				line-height: 84rpx;
+				border-bottom: 2rpx solid #f8f8f8;
+			}
+
+			.remark {
+				height: 84rpx;
+				line-height: 84rpx;
+				overflow: hidden;
+			}
+		}
+		
+		.giveupbiddingModal{
+			.giveupbiddingModal_oneline{
+				text-align: center;
+				margin:20rpx 0;
+			}
+		}
 	}
 </style>
