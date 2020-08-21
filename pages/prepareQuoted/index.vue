@@ -18,13 +18,12 @@
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
 				<u-collapse>
-
 					<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
 						<view class="checkbox_view">
 							<view class="checkbox_view_oneline">
 								<text class="checkbox_view_name gray">大豆分离蛋白</text>
-								<text class="mg15">:</text>
-								<text class="gray">菊兰</text>
+								<text class="mg15"></text>
+								<text class="checkbox_view_tab">询盘</text>
 							</view>
 
 							<view class="checkbox_view_oneline">
@@ -59,7 +58,7 @@
 							<view class="checkbox_view_oneline">
 								<u-row gutter="16">
 									<u-col span="12">
-										<view class="checkbox_view_oneline_timeend">
+										<view>
 											<text class="red">2020-07-30</text>
 											<text class="mg15"></text>
 											<text class="red">18：00截至报价</text>
@@ -119,7 +118,7 @@
 								<view class="checkbox_view_oneline mt15">
 									<u-row gutter="16">
 										<u-col span="12">
-											<u-button type="error" size='mini' plain>放弃报价</u-button>
+											<u-button type="info" size='mini' plain class="giveupbindding">放弃报价</u-button>
 											<u-button type="error" size='mini' plain>我要报价</u-button>
 										</u-col>
 									</u-row>
@@ -264,11 +263,18 @@
 						font-size: 32rpx;
 						color: #666;
 					}
-
-					// .checkbox_view_oneline_timeend {
-					// 	padding-bottom: 10rpx;
-					// 	border-bottom: 2rpx solid #c9c9c9;
-					// }
+					
+					.checkbox_view_tab{
+						background-color: #0099cc;
+						color:#fff;
+						padding:4rpx 16rpx;
+						font-size: 24rpx;
+						border-radius: 20rpx;
+					}
+                    
+					.giveupbindding{
+						margin-right:30rpx;
+					}
 				}
 
 				.utag {
