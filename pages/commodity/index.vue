@@ -1,4 +1,5 @@
 <template>
+	<!-- 商品（没有点批量报价的商品） -->
 	<view class="commodity">
 		<!-- 输入框 -->
 		<view class="inp_area">

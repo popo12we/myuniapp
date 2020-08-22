@@ -4,18 +4,6 @@
 	},
 	"pages": [
 		{
-			"path": "pages/prepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
-			}
-		},
-		{
-			"path": "pages/batchQuotation/index",
-			"style": {
-				"navigationBarTitleText": "批量报价"
-			}
-		},
-		{
 			"path": "pages/commodity/index",
 			"style": {
 				"navigationBarTitleText": "商品"
@@ -27,6 +15,20 @@
 				"navigationBarTitleText": "竞价"
 			}
 		},
+		{
+			"path": "pages/prepareQuoted/index",
+			"style": {
+				"navigationBarTitleText": "待报价"
+			}
+		},
+		{
+			"path": "pages/batchQuotation/index",
+			"style": {
+				"navigationBarTitleText": "批量报价"
+			}
+		},
+		
+		
 		{
 			"path": "pages/login/index",
 			"style": {

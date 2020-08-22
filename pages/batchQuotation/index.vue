@@ -1,4 +1,5 @@
 <template>
+	<!-- 商品（点了批量报价后） -->
 	<view class="batchQuotation">
 		<!-- 批量报价项 -->
 		<view class="batchQuotation_list">
@@ -71,7 +72,7 @@
 					</u-field>
 				</view>
 				<view class="quotation_area_oneline_item">
-					<text class="text">交货天数</text>
+					<text class="text">趋势说明</text>
 					<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false">
 					</u-field>
 				</view>

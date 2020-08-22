@@ -1,4 +1,5 @@
 <template>
+	<!-- 登录 -->
 	<view class="login">
 		<view class="login_center">
 			<view class="login_center_logo">Foodchem</view>

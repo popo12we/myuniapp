@@ -293,6 +293,16 @@
 										</u-col>
 									</u-row>
 								</view>
+								<view class="price_change">
+									<text class="gray pricetext">价格</text>
+									<text class="mg15"></text>
+									<u-field :border-bottom="true" class="ufield" :label-width="0">
+									</u-field>
+									<text class="mg15"></text>
+									<text>USD</text>
+									<text class="mg15"></text>
+									<text class="change">切换</text>
+								</view>
 								<view class="checkbox_view_oneline mt15">
 									<u-row gutter="16">
 										<u-col span="12">
@@ -308,7 +318,37 @@
 
 				</u-collapse>
 			</u-checkbox-group>
+			<!-- 报价 -->
+			<view class="quotation_area">
+				<view class="quotation_area_oneline">
+					<view class="quotation_area_oneline_item">
+						<text class="text">有效期</text>
+						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false">
+						</u-field>
+					</view>
+					<view class="quotation_area_oneline_item">
+						<text class="text">交货天数</text>
+						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false">
+						</u-field>
+					</view>
+				</view>
+			
+				<view class="quotation_area_oneline">
+					<view class="quotation_area_oneline_item">
+						<text class="text">价格趋势</text>
+						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false">
+						</u-field>
+					</view>
+					<view class="quotation_area_oneline_item">
+						<text class="text">交货天数</text>
+						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false">
+						</u-field>
+					</view>
+				</view>
+			</view>
 		</view>
+
+
 
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
@@ -410,7 +450,8 @@
 		</u-modal>
 
 		<!-- 放弃报价模态框 -->
-		<u-modal v-model="giveupbiddingShow" :mask-close-able="true" :show-title="false" :show-cancel-button="true" confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
+		<u-modal v-model="giveupbiddingShow" :mask-close-able="true" :show-title="false" :show-cancel-button="true"
+		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
 			<view class="giveupbiddingModal_oneline">
 				确定放弃报价？
 			</view>
@@ -703,13 +744,51 @@
 				.checkbox_view_oneline_btn {
 					margin-left: 20rpx;
 				}
+
+				.price_change {
+					display: flex;
+                    .pricetext{
+						margin-left: 6rpx;
+					}
+					.ufield {
+						flex: 1;
+					}
+
+					text {
+						align-self: center;
+					}
+
+					.change {
+						color: #00a6db;
+					}
+				}
+			}
+		}
+
+		//报价
+		.quotation_area_oneline {
+			display: flex;
+
+			.quotation_area_oneline_item {
+				display: flex;
+				width: 50%;
+
+				.ufield {
+					flex: 1
+				}
+
+				.text {
+					align-self: center;
+					color:#868686;
+				}
 			}
 		}
 
 		// 询盘模态框
 		.inquiryModal_content {
 			padding: 20rpx;
-			.btn-area{
+
+			.btn-area {
 				margin-top: 20rpx;
 			}
 		}
@@ -730,11 +809,11 @@
 				overflow: hidden;
 			}
 		}
-		
-		.giveupbiddingModal{
-			.giveupbiddingModal_oneline{
+
+		.giveupbiddingModal {
+			.giveupbiddingModal_oneline {
 				text-align: center;
-				margin:20rpx 0;
+				margin: 20rpx 0;
 			}
 		}
 	}
