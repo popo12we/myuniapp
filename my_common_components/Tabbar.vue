@@ -35,7 +35,7 @@
 					{
 						iconPath: "account",
 						selectedIconPath: "account-fill",
-						text: '我的',
+						text: '用户中心',
 						customIcon: false,
 						pagePath: "/pages/profile/index",
 					},
@@ -45,5 +45,6 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	
 </style>
