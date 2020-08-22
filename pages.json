@@ -4,6 +4,18 @@
 	},
 	"pages": [
 		{
+			"path": "pages/quotedPrice/index",
+			"style": {
+				"navigationBarTitleText": "已报价"
+			}
+		},
+		{
+			"path": "pages/prepareQuoted/index",
+			"style": {
+				"navigationBarTitleText": "待报价"
+			}
+		},
+		{
 			"path": "pages/commodity/index",
 			"style": {
 				"navigationBarTitleText": "商品"
@@ -16,19 +28,11 @@
 			}
 		},
 		{
-			"path": "pages/prepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
-			}
-		},
-		{
 			"path": "pages/batchQuotation/index",
 			"style": {
 				"navigationBarTitleText": "批量报价"
 			}
 		},
-		
-		
 		{
 			"path": "pages/login/index",
 			"style": {
