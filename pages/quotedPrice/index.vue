@@ -120,9 +120,6 @@
 				</u-collapse>
 			</u-checkbox-group>
 		</view>
-
-
-
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
 
@@ -158,7 +155,7 @@
 						checked: false,
 						disabled: false
 					}
-				]
+				],
 			}
 		},
 		methods: {

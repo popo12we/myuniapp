@@ -82,10 +82,19 @@
 		<view class="btn-area">
 			<u-button type="error">批量报价</u-button>
 		</view>
+		<!-- 底部导航 -->
+		<Tabbar></Tabbar>
 	</view>
 </template>
 
 <script>
+	import Tabbar from '../../my_common_components/Tabbar.vue'
+	import '../../common/font/iconfont.css';
+	export default {
+		components: {
+			Tabbar
+		},
+	}
 </script>
 
 <style lang="scss" scoped>

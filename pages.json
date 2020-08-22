@@ -9,6 +9,7 @@
 				"navigationBarTitleText": "已报价"
 			}
 		},
+		
 		{
 			"path": "pages/prepareQuoted/index",
 			"style": {
@@ -38,6 +39,12 @@
 			"style": {
 				"navigationBarTitleText": "登录页"
 			}
+		},
+		{
+			"path": "pages/profile/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
 		}
 		
 	],
@@ -46,5 +53,36 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
-	}
+	},
+		"tabBar": {
+			"color": "#909399",
+			"selectedColor": "#303133",
+			"backgroundColor": "#FFFFFF",
+			"borderStyle": "black",
+			"list": [{
+					"pagePath": "pages/quotedPrice/index"
+					// "iconPath": "static/uview/example/component.png",
+					// "selectedIconPath": "static/uview/example/component_select.png",
+					// "text": "组件"
+				},
+				{
+					"pagePath": "pages/prepareQuoted/index"
+					// "iconPath": "static/uview/example/template.png",
+					// "selectedIconPath": "static/uview/example/template_select.png",
+					// "text": "模板"
+				},
+				{
+					"pagePath": "pages/commodity/index"
+					// "iconPath": "static/uview/example/js.png",
+					// "selectedIconPath": "static/uview/example/js_select.png",
+					// "text": "工具"
+				},
+				{
+					"pagePath": "pages/profile/index"
+					// "iconPath": "static/uview/example/template.png",
+					// "selectedIconPath": "static/uview/example/template_select.png",
+					// "text": "模板"
+				}
+			]
+		}
 }

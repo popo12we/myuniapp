@@ -46,11 +46,17 @@
 		<view class="btn">
 			<u-button @click="batchFilling" type="error" plain>批量填写</u-button>
 		</view>
+		<!-- 底部导航 -->
+		<Tabbar></Tabbar>
 	</view>
 </template>
 
 <script>
+	import Tabbar from '../../my_common_components/Tabbar.vue'
 	export default {
+		components: {
+			Tabbar
+		},
 		data() {
 			return {
 				name: "",
