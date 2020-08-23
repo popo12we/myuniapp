@@ -1,5 +1,5 @@
 <template>
-	<!-- 待报价(竞价模式) -->
+	<!-- 供应商待报价(竞价模式) -->
 	<view class="binding">
 		<!-- 竞价信息 -->
 		<view class="binding-info">

@@ -4,6 +4,24 @@
 	},
 	"pages": [
 		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录页"
+			}
+		},	
+		{
+			"path": "pages/logisticsPrepareQuoted/index",
+			"style": {
+				"navigationBarTitleText": "待报价"
+			}
+		},
+		{
+			"path": "pages/prepareQuoted/index",
+			"style": {
+				"navigationBarTitleText": "待报价"
+			}
+		},
+		{
 			"path": "pages/editPassword/index",
 			"style": {
 				"navigationBarTitleText": "个人中心"
@@ -22,12 +40,7 @@
 			}
 		},
 		
-		{
-			"path": "pages/prepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
-			}
-		},
+		
 		{
 			"path": "pages/commodity/index",
 			"style": {
@@ -45,13 +58,7 @@
 			"style": {
 				"navigationBarTitleText": "批量报价"
 			}
-		},
-		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": "登录页"
-			}
-		}	
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -64,17 +71,18 @@
 			"selectedColor": "#303133",
 			"backgroundColor": "#FFFFFF",
 			"borderStyle": "black",
-			"list": [{
-					"pagePath": "pages/quotedPrice/index"
-					// "iconPath": "static/uview/example/component.png",
-					// "selectedIconPath": "static/uview/example/component_select.png",
-					// "text": "组件"
-				},
+			"list": [
 				{
 					"pagePath": "pages/prepareQuoted/index"
 					// "iconPath": "static/uview/example/template.png",
 					// "selectedIconPath": "static/uview/example/template_select.png",
 					// "text": "模板"
+				},
+				{
+					"pagePath": "pages/quotedPrice/index"
+					// "iconPath": "static/uview/example/component.png",
+					// "selectedIconPath": "static/uview/example/component_select.png",
+					// "text": "组件"
 				},
 				{
 					"pagePath": "pages/commodity/index"

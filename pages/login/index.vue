@@ -30,7 +30,7 @@
 				<text class="verificationcode-login">验证码登录</text>
 			</view>
 			<view class="loginbtn-area">
-				<u-button  type="primary">登录</u-button>
+				<u-button type="error" @click="login">登录</u-button>
 			</view>
 		</view>
 	</view>
@@ -48,6 +48,16 @@
 				errorTextValueMessage:'',
 				//密码的错误提示信息
 				errorPasswordValueMessage:''
+			}
+		},
+			
+		methods:{
+			//点击登录
+			login(){
+				uni.switchTab({
+				    url: '../prepareQuoted/index'
+				});
+				
 			}
 		}
 	}

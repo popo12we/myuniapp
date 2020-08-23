@@ -1,5 +1,5 @@
 <template>
-	<!-- 已报价（非竞价模式） -->
+	<!-- 产品供应商已报价（非竞价模式） -->
 	<view class="commodity">
 		<!-- 输入框 -->
 		<view class="inp_area">

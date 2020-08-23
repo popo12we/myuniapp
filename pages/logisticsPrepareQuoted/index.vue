@@ -1,6 +1,6 @@
 <template>
-	<!-- 产品供应商待报价页面（非竞价模式） -->
-	<view class="prepareQuoted">
+	<!-- 物流供应商待报价页面（非竞价模式） -->
+	<view class="logisticsPrepareQuoted">
 		<!-- 输入框 -->
 		<view class="inp_area">
 			<!-- 全选 -->
@@ -13,7 +13,7 @@
 			</u-field>
 			<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
 		</view>
-		<view class="commodity_list_tips">您现在有2条竞价、2条实单</view>
+		<view class="commodity_list_tips">您现在有 2 条实盘询价</view>
 
 		<!-- 轮播图区域 -->
 		<view class="swiper_box">
@@ -26,45 +26,37 @@
 								<view class="swiper-item">
 									<view class="swiper-item_left">
 										<view class="swiper-item_sign_box">
-											<view class="swiper-item_sign"><text>竞价</text></view>
+											<view class="swiper-item_sign"><text>实盘</text></view>
 										</view>
 									</view>
 									<view class="swiper-item_right">
 										<span class="iconfont icon_close">&#xe607;</span>
 									</view>
 									<view class="swiper-item_center">
+										<view class="swiper_center_oneline_title clearfix">
+											<view class="firsttext">
+												黑海
+											</view>
+											<view class="secondtext">
+												上海
+											</view>
+											<view class="thirdtext">
+												<view>直达</view>
+												<view>——</view>
+											</view>
+											<view class="fourthtext">
+												奥德赛
+											</view>
+											<view class="fifthtext">
+												1*20'GP
+											</view>
 
-										<view class="swiper_center_title">
-											<text>大豆分离蛋白</text>
-											<text class="mg15"></text>
-											<text>菊兰</text>
 										</view>
 										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">规格</text>
-													<text class="mg15 gray">:</text>
-													<text class="gray">Emulsion</text>
-												</u-col>
-											</u-row>
+											周一，周三，周五
 										</view>
 										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">当前出价（USD):</text>
-													<text class="mg15"></text>
-													<text class="gray">1.63</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">当前排名</text>
-													<text class="mg15 gray">:</text>
-													<text class="gray">2</text>
-												</u-col>
-											</u-row>
+											2020-08-05 至 2020-08-15
 										</view>
 										<view class="swiper_center_oneline settimeout_btn clearfix">
 											<view class="settimeout">
@@ -73,116 +65,6 @@
 										</view>
 										<view class="swiper_center_oneline center_btn_area">
 											<u-button type="error" size="mini" plain class="btn_end" @click="toBindding">我要竞价</u-button>
-										</view>
-									</view>
-								</view>
-							</swiper-item>
-							<swiper-item>
-								<!-- 具体的轮播图页面 -->
-								<view class="swiper-item">
-									<view class="swiper-item_left">
-										<view class="swiper-item_sign_box">
-											<view class="swiper-item_sign"><text>竞价</text></view>
-										</view>
-									</view>
-									<view class="swiper-item_right">
-
-									</view>
-									<view class="swiper-item_center">
-										<view class="swiper_center_title">
-											<text>甜味剂</text>
-											<text class="mg15"></text>
-											<text>莲花</text>
-										</view>
-										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">规格</text>
-													<text class="mg15 gray">:</text>
-													<text class="gray">Emulsion</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">当前出价（USD):</text>
-													<text class="mg15"></text>
-													<text class="gray">1.63</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">当前排名</text>
-													<text class="mg15 gray">:</text>
-													<text class="gray">2</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="swiper_center_oneline settimeout_btn clearfix">
-											<view class="settimeout">
-												剩余1天12小时30分结束
-											</view>
-										</view>
-										<view class="swiper_center_oneline center_btn_area">
-											<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
-										</view>
-									</view>
-								</view>
-							</swiper-item>
-							<swiper-item>
-								<!-- 具体的轮播图页面 -->
-								<view class="swiper-item">
-									<view class="swiper-item_left">
-										<view class="swiper-item_sign_box">
-											<view class="swiper-item_sign"><text>竞价</text></view>
-										</view>
-									</view>
-									<view class="swiper-item_right">
-
-									</view>
-									<view class="swiper-item_center">
-										<view class="swiper_center_title">
-											<text>山梨酸钾</text>
-											<text class="mg15"></text>
-											<text>康乐</text>
-										</view>
-										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">规格</text>
-													<text class="mg15 gray">:</text>
-													<text class="gray">Emulsion</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">当前出价（USD):</text>
-													<text class="mg15"></text>
-													<text class="gray">1.63</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="swiper_center_oneline">
-											<u-row>
-												<u-col span="12">
-													<text class="gray">当前排名</text>
-													<text class="mg15 gray">:</text>
-													<text class="gray">2</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="swiper_center_oneline settimeout_btn clearfix">
-											<view class="settimeout">
-												剩余1天12小时30分结束
-											</view>
-										</view>
-										<view class="swiper_center_oneline center_btn_area">
-											<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
 										</view>
 									</view>
 								</view>
@@ -200,81 +82,75 @@
 					<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
 						<view class="checkbox_view">
 							<view class="checkbox_view_oneline">
-								<text class="checkbox_view_name gray">大豆分离蛋白</text>
-								<text class="mg15"></text>
-								<text class="checkbox_view_tab" @click="showInquiryModal">询盘</text>
+								<view class="checkbox_view_oneline_title clearfix">
+									<view class="secondtext">
+										上海
+									</view>
+									<view class="thirdtext">
+										<view>直达</view>
+										<view>——</view>
+									</view>
+									<view class="fourthtext">
+										奥德赛
+									</view>
+									<text class="checkbox_view_tab" @click="showInquiryModal">询盘</text>
+								</view>
 							</view>
 
-							<view class="checkbox_view_oneline">
+							<view class="checkbox_view_oneline checkbox_view_oneline_first">
 								<u-row gutter="16">
-									<u-col span="7">
-										<text class="gray">规格</text>
+									<u-col span="6">
+										<text class="gray">箱型</text>
 										<text class="mg15">:</text>
-										<text class="gray">Emulsion</text>
+										<text class="gray">20GP</text>
 									</u-col>
-									<u-col span="5">
-										<text class="gray">品牌</text>
+									<u-col span="6">
+										<text class="red">截止日期</text>
 										<text class="mg15">:</text>
-										<text class="gray">菊兰</text>
-									</u-col>
-								</u-row>
-							</view>
-
-							<view class="checkbox_view_oneline">
-								<u-row gutter="16">
-									<u-col span="7">
-										<text class="gray">包装</text>
-										<text class="mg15">:</text>
-										<text class="gray">20 KG STEEL DRUM</text>
-									</u-col>
-									<u-col span="5">
-										<text class="gray">数量</text>
-										<text class="mg15">:</text>
-										<text class="gray">100KG</text>
-									</u-col>
-								</u-row>
-							</view>
-							<view class="checkbox_view_oneline">
-								<u-row gutter="16">
-									<u-col span="12">
-										<view>
-											<text class="red">2020-07-30</text>
-											<text class="mg15"></text>
-											<text class="red">18：00截至报价</text>
-										</view>
+										<text class="red">2020-08-05</text>
 									</u-col>
 								</u-row>
 							</view>
 							<u-collapse-item>
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
-										<u-col span="7">
-											<text class="gray">上海</text>
-											<text class="mg15">---</text>
-											<text class="gray">拉各斯</text>
-										</u-col>
-										<u-col span="5">
-											<text class="gray">20GP</text>
-										</u-col>
-									</u-row>
-								</view>
-
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="7">
-											<text class="gray">期望五天交货</text>
-										</u-col>
-										<u-col span="5">
-											<text class="gray">打托</text>
+										<u-col span="6">
+											<text class="gray">货盘类型</text>
 											<text class="mg15">:</text>
-											<text class="gray">是</text>
+											<text class="gray">海运整箱</text>
+										</u-col>
+										<u-col span="6">
+											<text class="gray">货物总量</text>
+											<text class="mg15">:</text>
+											<text class="gray">1*20‘GP</text>
 										</u-col>
 									</u-row>
 								</view>
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
-										<u-col span="12">
-											<text class="gray">询价单编号：IN2087973</text>
+										<u-col span="6">
+											<text class="gray">货物毛重</text>
+											<text class="mg15">:</text>
+											<text class="gray">200KG</text>
+										</u-col>
+										<u-col span="6">
+											<text class="gray">预计出运</text>
+											<text class="mg15">:</text>
+											<text class="gray">2020-08-05</text>
+										</u-col>
+									</u-row>
+								</view>
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="6">
+											<text class="gray">装货码头</text>
+											<text class="mg15">:</text>
+											<text class="gray">卸货码头</text>
+										</u-col>
+										<u-col span="6">
+											<text class="gray">货物类型</text>
+											<text class="mg15">:</text>
+											<text class="gray">一般化工品</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -282,15 +158,11 @@
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="12">
-											<text class="gray">备注:</text>
-										</u-col>
-									</u-row>
-								</view>
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="12">
+											<text class="gray">货物描述</text>
+											<text class="mg15">:</text>
 											<text class="gray">一种食品添加剂</text>
 										</u-col>
+
 									</u-row>
 								</view>
 								<view class="price_change">
@@ -313,9 +185,7 @@
 								</view>
 							</u-collapse-item>
 						</view>
-
 					</u-checkbox>
-
 				</u-collapse>
 			</u-checkbox-group>
 			<!-- 报价 -->
@@ -332,7 +202,7 @@
 						</u-field>
 					</view>
 				</view>
-			
+
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item">
 						<text class="text">价格趋势</text>
@@ -585,7 +455,7 @@
 		margin-top: 15rpx;
 	}
 
-	.prepareQuoted {
+	.logisticsPrepareQuoted {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
@@ -621,7 +491,7 @@
 			}
 
 			.swiper-item_left {
-				width: 150rpx;
+				width: 110rpx;
 				height: 100%;
 				float: left;
 
@@ -651,7 +521,7 @@
 			}
 
 			.swiper-item_right {
-				width: 150rpx;
+				width: 110rpx;
 				height: 55px;
 				float: right;
 				background-color: transparent;
@@ -668,12 +538,44 @@
 				overflow: hidden;
 				position: relative;
 
-				.swiper_center_title {
-					margin-top: 30rpx;
+				.swiper_center_oneline_title {
+					margin-top: 40rpx;
+					text-align: center;
+					display: flex;
+					justify-content: center;
+
+					.firsttext {
+						font-size: 24rpx;
+						line-height: 50rpx;
+					}
+
+					.secondtext {
+						font-weight: 700;
+						font-size: 32rpx;
+						margin: 0 10rpx;
+					}
+
+					.thirdtext {
+						line-height: 20rpx;
+					}
+
+					.fourthtext {
+						font-weight: 700;
+						font-size: 32rpx;
+						margin: 0 10rpx;
+					}
+
+					.fifthtext {
+						font-size: 24rpx;
+						line-height: 50rpx;
+
+					}
+
 				}
 
 				.swiper_center_oneline {
-					margin: 10rpx 0;
+					margin: 20rpx 0;
+					text-align: center;
 				}
 
 				.settimeout {
@@ -682,7 +584,6 @@
 					border-radius: 20rpx;
 					color: #fff;
 					text-align: center;
-					float: left;
 				}
 
 				.center_btn_area {
@@ -716,8 +617,37 @@
 				padding: 25rpx 0;
 				width: 100%;
 				color: #868686;
-
+                .checkbox_view_oneline_first{
+					margin-top:10rpx;
+				}
 				.checkbox_view_oneline {
+					font-size: 24rpx;
+					.checkbox_view_oneline_title {
+
+						text-align: center;
+						display: flex;
+
+
+						.secondtext {
+
+							font-size: 32rpx;
+							margin: 0 15rpx;
+						}
+
+						.thirdtext {
+							line-height: 20rpx;
+							font-size: 20rpx;
+						}
+
+						.fourthtext {
+
+							font-size: 32rpx;
+							margin: 0 15rpx;
+						}
+
+
+					}
+
 					.checkbox_view_name {
 						font-weight: 700;
 						font-size: 32rpx;
@@ -725,10 +655,14 @@
 					}
 
 					.checkbox_view_tab {
+						margin-top:10rpx;
 						background-color: #0099cc;
 						color: #fff;
-						padding: 4rpx 16rpx;
-						font-size: 24rpx;
+						width: 60rpx;
+						height: 40rpx;
+						line-height: 40rpx;
+						text-align: center;
+						font-size: 20rpx;
 						border-radius: 20rpx;
 					}
 
@@ -747,9 +681,11 @@
 
 				.price_change {
 					display: flex;
-                    .pricetext{
+
+					.pricetext {
 						margin-left: 6rpx;
 					}
+
 					.ufield {
 						flex: 1;
 					}
@@ -779,7 +715,7 @@
 
 				.text {
 					align-self: center;
-					color:#868686;
+					color: #868686;
 				}
 			}
 		}
