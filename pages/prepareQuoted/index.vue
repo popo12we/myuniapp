@@ -196,7 +196,7 @@
 		<!-- 商品列表 -->
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
-				<u-collapse>
+				<u-collapse :accordion="false">
 					<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
 						<view class="checkbox_view">
 							<view class="checkbox_view_oneline">
@@ -245,7 +245,17 @@
 									</u-col>
 								</u-row>
 							</view>
-							<u-collapse-item>
+							<view class="price_change" v-if="item.checked&&(!item.down)">
+								<text class="gray pricetext">价格</text>
+								<text class="mg15"></text>
+								<u-field :border-bottom="true" class="ufield" :label-width="0">
+								</u-field>
+								<text class="mg15"></text>
+								<text>USD</text>
+								<text class="mg15"></text>
+								<text class="change">切换</text>
+							</view>
+							<u-collapse-item :index="index" @change="changeCollapseItem">
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="7">
@@ -293,7 +303,7 @@
 										</u-col>
 									</u-row>
 								</view>
-								<view class="price_change">
+								<view class="price_change" v-if="list[index].checked&&item.down">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
 									<u-field :border-bottom="true" class="ufield" :label-width="0">
@@ -319,7 +329,7 @@
 				</u-collapse>
 			</u-checkbox-group>
 			<!-- 报价 -->
-			<view class="quotation_area">
+			<view class="quotation_area" v-if="checkedNum>0">
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item">
 						<text class="text">有效期</text>
@@ -487,19 +497,19 @@
 				//全选
 				allChecked: false,
 				list: [{
-						name: 'apple',
+						name: 0,
 						checked: false,
-						disabled: false
+						down: false
 					},
 					{
-						name: 'banner',
+						name: 1,
 						checked: false,
-						disabled: false
+						down: false
 					},
 					{
-						name: 'orange',
+						name: 2,
 						checked: false,
-						disabled: false
+						down: false
 					}
 				],
 
@@ -530,7 +540,9 @@
 				//竞价模态框是否显示
 				binddingShow: false,
 				//放弃模态框是否显示
-				giveupbiddingShow: false
+				giveupbiddingShow: false,
+				//记录哪些面板是展开的
+				collapseItemIsChecked:[]
 			}
 		},
 		methods: {
@@ -546,6 +558,7 @@
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
+				
 			},
 
 			//点击打开价格趋势下拉框
@@ -566,6 +579,30 @@
 			//点击放弃报价出的弹框
 			giveupbidding() {
 				this.giveupbiddingShow = true
+			},
+			
+			//点的折叠面板是开启还是关闭的 方便后续操作
+			changeCollapseItem(e){
+					
+			    if(e.show===true){
+					if(this.collapseItemIsChecked.length===0){
+						this.collapseItemIsChecked.push(e.index)
+					}else{
+						if(this.collapseItemIsChecked.some(item=>item!==e.index)){
+							this.collapseItemIsChecked.push(e.index)
+						}
+					}
+				}else{
+					this.collapseItemIsChecked=this.collapseItemIsChecked.filter(item=>item!==e.index)
+				}
+				this.list[e.index].down=e.show
+			}
+		},
+			
+		computed:{
+			//选中的个数
+			checkedNum(){
+				return this.list.filter(val => val.checked).length
 			}
 		}
 	};
