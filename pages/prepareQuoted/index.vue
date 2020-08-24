@@ -328,7 +328,9 @@
 
 				</u-collapse>
 			</u-checkbox-group>
-			<!-- 报价 -->
+	
+		</view>
+		<!-- 报价 -->
 			<view class="quotation_area" v-if="checkedNum>0">
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item">
@@ -356,8 +358,6 @@
 					</view>
 				</view>
 			</view>
-		</view>
-
 
 
 		<!-- 底部导航 -->
@@ -803,23 +803,32 @@
 		}
 
 		//报价
-		.quotation_area_oneline {
-			display: flex;
-
-			.quotation_area_oneline_item {
+		.quotation_area{
+			position: fixed;
+			bottom:165rpx;
+			z-index: 999;
+			border-top: 5rpx solid #f8f8f8;
+			background-color: #fefefe;
+			.quotation_area_oneline {
+				padding:0 40rpx;
 				display: flex;
-				width: 50%;
-
-				.ufield {
-					flex: 1
-				}
-
-				.text {
-					align-self: center;
-					color:#868686;
+			   
+				.quotation_area_oneline_item {
+					display: flex;
+					width: 50%;
+			
+					.ufield {
+						flex: 1
+					}
+			
+					.text {
+						align-self: center;
+						color:#868686;
+					}
 				}
 			}
 		}
+
 
 		// 询盘模态框
 		.inquiryModal_content {
