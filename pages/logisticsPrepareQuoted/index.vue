@@ -617,20 +617,21 @@
 				padding: 25rpx 0;
 				width: 100%;
 				color: #868686;
-                .checkbox_view_oneline_first{
-					margin-top:10rpx;
+
+				.checkbox_view_oneline_first {
+					margin-top: 10rpx;
 				}
+
 				.checkbox_view_oneline {
 					font-size: 24rpx;
-					.checkbox_view_oneline_title {
 
+					.checkbox_view_oneline_title {
 						text-align: center;
 						display: flex;
-
-
 						.secondtext {
-
-							font-size: 32rpx;
+							font-weight: 700;
+							color:#515151;
+							font-size: 28rpx;
 							margin: 0 15rpx;
 						}
 
@@ -640,8 +641,9 @@
 						}
 
 						.fourthtext {
-
-							font-size: 32rpx;
+							font-weight: 700;
+							color:#515151;
+							font-size: 28rpx;
 							margin: 0 15rpx;
 						}
 
@@ -655,7 +657,7 @@
 					}
 
 					.checkbox_view_tab {
-						margin-top:10rpx;
+						margin-top: 10rpx;
 						background-color: #0099cc;
 						color: #fff;
 						width: 60rpx;

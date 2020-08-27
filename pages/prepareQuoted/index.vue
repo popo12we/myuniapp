@@ -20,6 +20,7 @@
 			<view class="uni-padding-wrap">
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
+						<!-- autoplay='true' :circular='true' -->
 						<swiper class="swiper" :indicator-dots="indicatorDots">
 							<swiper-item>
 								<!-- 具体的轮播图页面 -->
@@ -696,7 +697,7 @@
 
 				.icon_close {
 					position: absolute;
-					right: 20rpx;
+					right: 40rpx;
 					top: 20rpx;
 				}
 			}
@@ -707,6 +708,7 @@
 
 				.swiper_center_title {
 					margin-top: 30rpx;
+					text-align: center;
 				}
 
 				.swiper_center_oneline {

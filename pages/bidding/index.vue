@@ -7,7 +7,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text>大豆分离蛋白</text>
+						<text class="bidding_name">大豆分离蛋白</text>
 						<text class="mg15"></text>
 						<text class="bidding_sign">竞价</text>
 					</u-col>
@@ -19,14 +19,14 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text>规格</text>
+						<text class="colorgary">规格</text>
 						<text class="mg15">:</text>
-						<text>Emulsion</text>
+						<text class="colorgary">Emulsion</text>
 					</u-col>
 					<u-col span="5">
-						<text>品牌</text>
+						<text class="colorgary">品牌</text>
 						<text class="mg15">:</text>
-						<text>菊兰</text>
+						<text class="colorgary">菊兰</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -34,14 +34,14 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text>包装</text>
+						<text class="colorgary">包装</text>
 						<text class="mg15">:</text>
-						<text>20 KG STEEL DRUM</text>
+						<text class="colorgary">20 KG STEEL DRUM</text>
 					</u-col>
 					<u-col span="5">
-						<text>数量</text>
+						<text class="colorgary">数量</text>
 						<text class="mg15">:</text>
-						<text>25KG</text>
+						<text class="colorgary">25KG</text>
 
 					</u-col>
 				</u-row>
@@ -50,9 +50,9 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text>标的价格(USD)</text>
+						<text class="colorgary">标的价格(USD)</text>
 						<text class="mg15">:</text>
-						<text>1.5</text>
+						<text class="colorgary">1.5</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -60,9 +60,9 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text>当前出价(USD)</text>
+						<text class="colorgary">当前出价(USD)</text>
 						<text class="mg15">:</text>
-						<text>1.63</text>
+						<text class="colorgary">1.63</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -70,8 +70,8 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text>上海---</text>
-						<text>拉各斯</text>
+						<text class="colorgary">上海---</text>
+						<text class="colorgary">拉各斯</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -79,7 +79,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text>期望5天交货</text>
+						<text class="colorgary">期望5天交货</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -87,9 +87,9 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text>询价单编号</text>
+						<text class="colorgary">询价单编号</text>
 						<text class="mg15">:</text>
-						<text>IN2087973</text>
+						<text class="colorgary">IN2087973</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -97,7 +97,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text>备注</text>
+						<text class="colorgary">备注</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -105,7 +105,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text>一种食品添加剂</text>
+						<text class="colorgary">一种食品添加剂</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -342,7 +342,9 @@
 	.colorred {
 		color: #d0021b;
 	}
-
+    .colorgary{
+		color:#868686;
+	}
 	.binding {
 		background-color: #f9f9f9;
 		margin-bottom: 30rpx;
@@ -368,6 +370,9 @@
 			}
 			.binding-info_oneline {
 				margin-bottom: 25rpx;
+				.bidding_name{
+					font-weight: 700;
+				}
 				.bidding_sign{
 					padding:4rpx 14rpx;
 					background-color: #D0021B;
