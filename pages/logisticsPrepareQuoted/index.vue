@@ -111,7 +111,17 @@
 									</u-col>
 								</u-row>
 							</view>
-							<u-collapse-item>
+							<view class="price_change" v-if="item.checked&&(!item.down)">
+								<text class="gray pricetext">价格</text>
+								<text class="mg15"></text>
+								<u-field :border-bottom="true" class="ufield" :label-width="0">
+								</u-field>
+								<text class="mg15"></text>
+								<text>USD</text>
+								<text class="mg15"></text>
+								<text class="change">切换</text>
+							</view>
+							<u-collapse-item :index="index" @change="changeCollapseItem">
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="6">
@@ -165,7 +175,7 @@
 
 									</u-row>
 								</view>
-								<view class="price_change">
+								<view class="price_change" v-if="list[index].checked&&item.down">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
 									<u-field :border-bottom="true" class="ufield" :label-width="0">
@@ -359,17 +369,17 @@
 				list: [{
 						name: 'apple',
 						checked: false,
-						disabled: false
+						down: false
 					},
 					{
 						name: 'banner',
 						checked: false,
-						disabled: false
+						down: false
 					},
 					{
 						name: 'orange',
 						checked: false,
-						disabled: false
+						down: false
 					}
 				],
 
@@ -400,7 +410,9 @@
 				//竞价模态框是否显示
 				binddingShow: false,
 				//放弃模态框是否显示
-				giveupbiddingShow: false
+				giveupbiddingShow: false,
+				//记录哪些面板是展开的
+				collapseItemIsChecked: []
 			}
 		},
 		methods: {
@@ -436,6 +448,22 @@
 			//点击放弃报价出的弹框
 			giveupbidding() {
 				this.giveupbiddingShow = true
+			},
+			//点的折叠面板是开启还是关闭的 方便后续操作
+			changeCollapseItem(e) {
+
+				if (e.show === true) {
+					if (this.collapseItemIsChecked.length === 0) {
+						this.collapseItemIsChecked.push(e.index)
+					} else {
+						if (this.collapseItemIsChecked.some(item => item !== e.index)) {
+							this.collapseItemIsChecked.push(e.index)
+						}
+					}
+				} else {
+					this.collapseItemIsChecked = this.collapseItemIsChecked.filter(item => item !== e.index)
+				}
+				this.list[e.index].down = e.show
 			}
 		}
 	};
@@ -456,6 +484,9 @@
 	}
 
 	.logisticsPrepareQuoted {
+		  /deep/ .u-checkbox__label {
+		    width: 100%;
+		  }
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
@@ -628,9 +659,10 @@
 					.checkbox_view_oneline_title {
 						text-align: center;
 						display: flex;
+
 						.secondtext {
 							font-weight: 700;
-							color:#515151;
+							color: #515151;
 							font-size: 28rpx;
 							margin: 0 15rpx;
 						}
@@ -642,7 +674,7 @@
 
 						.fourthtext {
 							font-weight: 700;
-							color:#515151;
+							color: #515151;
 							font-size: 28rpx;
 							margin: 0 15rpx;
 						}
