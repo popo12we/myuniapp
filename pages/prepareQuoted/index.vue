@@ -334,7 +334,7 @@
                         class="giveupbindding"
                         @click="giveupbidding"
                       >放弃报价</u-button>
-                      <u-button type="error" size="mini" plain>我要报价</u-button>
+                      <u-button type="error" size="mini" plain @click="showInquiryModal">我要报价</u-button>
                     </u-col>
                   </u-row>
                 </view>
@@ -408,7 +408,7 @@
           <view>
             <u-row gutter="16" class="btn-area">
               <u-col span="6">
-                <u-button type="error" plain>取消</u-button>
+                <u-button type="error" plain @click="showInquiryModalCancel">取消</u-button>
               </u-col>
               <u-col span="6">
                 <u-button type="error">提交报价</u-button>
@@ -467,7 +467,7 @@
         <view>
           <u-row gutter="16">
             <u-col span="6">
-              <u-button type="error" plain>放弃报价</u-button>
+              <u-button type="error" plain>取消</u-button>
             </u-col>
             <u-col span="6">
               <u-button type="error">我要竞价</u-button>
@@ -591,7 +591,7 @@ export default {
       this.selectShow = true;
     },
 
-    //点击询盘打开询盘模态框
+    //点击询盘/我要报价打开询盘模态框
     showInquiryModal() {
       this.inquiryShow = true;
     },
@@ -601,10 +601,15 @@ export default {
       this.binddingShow = true;
     },
 
-    //点击放弃报价出的弹框
+    //点击放弃竞价出的弹框
     giveupbidding() {
       this.giveupbiddingShow = true;
     },
+	
+	//点击取消 取消询盘弹窗显示
+	showInquiryModalCancel(){
+		this.inquiryShow=false
+	},
 
     //点的折叠面板是开启还是关闭的 方便后续操作
     changeCollapseItem(e) {

@@ -24,6 +24,7 @@
 								<text class="checkbox_view_name gray">大豆分离蛋白</text>
 								<text class="mg15"></text>
 								<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
+								<view class="isWinBidding">已中标</view>
 							</view>
 
 							<view class="checkbox_view_oneline">
@@ -242,7 +243,21 @@
 				padding: 25rpx 0;
 				width: 100%;
 				color: #868686;
-
+                position: relative;
+				.isWinBidding{
+					position: absolute;
+					top:0;
+					left:60%;
+					width: 120rpx;
+					height: 50rpx;
+					color:#fff;
+					text-align: center;
+					line-height: 48rpx;
+					border-bottom-left-radius: 20rpx;
+					border-bottom-right-radius: 20rpx;
+					background-color: #D0021B;
+					font-size: 24rpx;
+				}
 				.checkbox_view_oneline {
 					.checkbox_view_name {
 						font-weight: 700;

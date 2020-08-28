@@ -4,11 +4,18 @@
 	},
 	"pages": [
 		{
-			"path": "pages/logisticsPrepareQuoted/index",
+			"path": "pages/prepareQuoted/index",
 			"style": {
 				"navigationBarTitleText": "待报价"
 			}
 		},
+		{
+			"path": "pages/quotedPrice/index",
+			"style": {
+				"navigationBarTitleText": "已报价"
+			}
+		},
+		
 		{
 			"path": "pages/commodity/index",
 			"style": {
@@ -21,12 +28,7 @@
 				"navigationBarTitleText": "竞价"
 			}
 		},
-		{
-			"path": "pages/prepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
-			}
-		},
+		
 		{
 			"path": "pages/login/index",
 			"style": {
@@ -47,9 +49,9 @@
 			}
 		},
 		{
-			"path": "pages/quotedPrice/index",
+			"path": "pages/logisticsPrepareQuoted/index",
 			"style": {
-				"navigationBarTitleText": "已报价"
+				"navigationBarTitleText": "待报价"
 			}
 		},
 		{
