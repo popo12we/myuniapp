@@ -4,6 +4,12 @@
 	},
 	"pages": [
 		{
+			"path": "pages/logisticsQuotedPrice/index",
+			"style": {
+				"navigationBarTitleText": "已报价"
+			}
+		},
+		{
 			"path": "pages/firmOfferInquiry/index",
 			"style": {
 				"navigationBarTitleText": "实盘询价"

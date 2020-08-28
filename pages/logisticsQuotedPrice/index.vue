@@ -1,6 +1,6 @@
 <template>
-	<!-- 产品供应商已报价（非竞价模式） -->
-	<view class="quotedPrice">
+	<!-- 物流供应商已报价（物流） -->
+	<view class="logisticsQuotedPrice">
 		<!-- 输入框 -->
 		<view class="inp_area">
 			<!-- 全选 -->
@@ -207,7 +207,7 @@
 		margin-top: 15rpx;
 	}
 
-	.quotedPrice {
+	.logisticsQuotedPrice {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
