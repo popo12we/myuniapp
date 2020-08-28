@@ -3,15 +3,35 @@
 	<view class="firmOfferInquiry">
 		<!-- 竞价信息 -->
 		<view class="binding-info">
+			<view class="binding-info_oneline  binding-info_oneline_title">
+				<view class="firsttext colorgary">
+					黑海
+				</view>
+				<view class="secondtext">
+					上海
+				</view>
+				<view class="thirdtext">
+					<view>直达</view>
+					<view>——</view>
+				</view>
+				<view class="fourthtext">
+					奥德赛
+				</view>
+				<view class="fifthtext colorgary">
+					1*20'GP
+				</view>
+			</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
-					<u-col span="7">
-						<text class="bidding_name">大豆分离蛋白</text>
-						<text class="mg15"></text>
-						<text class="bidding_sign">竞价</text>
+					<u-col span="12">
+						<view class="colorgary">周一，周三，周五</view>
 					</u-col>
-					<u-col span="5">
-						<view class="isWinBidding">已中标</view>
+				</u-row>
+			</view>
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="12">
+						<view class="colorgary">2020-08-05 至 2020-08-15</view>
 					</u-col>
 				</u-row>
 			</view>
@@ -251,65 +271,65 @@
 						<u-button type="error" plain>放弃报价</u-button>
 					</u-col>
 					<u-col span="6">
-						<u-button type="error" @click="modalOpen">我要竞价</u-button>
+						<u-button type="error" @click="modalOpen">我要报价</u-button>
 					</u-col>
 				</u-row>
 			</view>
 		</view>
 
 		<!-- 竞价模态框 -->
-			<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500" :mask-close-able="true">
-				<view class="slot-content">
-					<view class="slot-content_oneline">
-						<u-row gutter="16">
-							<u-col span="6">
-								<text>价格（USD）*</text>
-							</u-col>
-							<u-col span="6">
-								<text class="fr">1.63</text>
-							</u-col>
-						</u-row>
-					</view>
-
-					<view class="slot-content_oneline">
-						<u-row gutter="16">
-							<u-col span="6">
-								<text>有效期*</text>
-							</u-col>
-							<u-col span="6">
-								<text class="fr">2020-08-12</text>
-							</u-col>
-						</u-row>
-					</view>
-					<view class="remark">
-						<u-row gutter="16">
-							<u-col span="12">
-								<text>备注*</text>
-							</u-col>
-						</u-row>
-					</view>
-					<view class="remark">
-						<u-row gutter="16">
-							<u-col span="12">
-								<u-input v-model="remark" placeholder="请输入备注" />
-							</u-col>
-						</u-row>
-					</view>
-					<view class="remark">
-						总共剩余1次报价机会
-					</view>
-					<view>
-						<u-row gutter="16">
-							<u-col span="6">
-								<u-button type="error" plain>放弃报价</u-button>
-							</u-col>
-							<u-col span="6">
-								<u-button type="error">我要竞价</u-button>
-							</u-col>
-						</u-row>
-					</view>
+		<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500" :mask-close-able="true">
+			<view class="slot-content">
+				<view class="slot-content_oneline">
+					<u-row gutter="16">
+						<u-col span="6">
+							<text>价格（USD）*</text>
+						</u-col>
+						<u-col span="6">
+							<text class="fr">1.63</text>
+						</u-col>
+					</u-row>
 				</view>
-			</u-modal>
+
+				<view class="slot-content_oneline">
+					<u-row gutter="16">
+						<u-col span="6">
+							<text>有效期*</text>
+						</u-col>
+						<u-col span="6">
+							<text class="fr">2020-08-12</text>
+						</u-col>
+					</u-row>
+				</view>
+				<view class="remark">
+					<u-row gutter="16">
+						<u-col span="12">
+							<text>备注*</text>
+						</u-col>
+					</u-row>
+				</view>
+				<view class="remark">
+					<u-row gutter="16">
+						<u-col span="12">
+							<u-input v-model="remark" placeholder="请输入备注" />
+						</u-col>
+					</u-row>
+				</view>
+				<view class="remark">
+					总共剩余1次报价机会
+				</view>
+				<view>
+					<u-row gutter="16">
+						<u-col span="6">
+							<u-button type="error" plain>放弃报价</u-button>
+						</u-col>
+						<u-col span="6">
+							<u-button type="error">我要报价</u-button>
+						</u-col>
+					</u-row>
+				</view>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -321,7 +341,7 @@
 				modalShow: false,
 				remark: "",
 				//是已报价还是未报价 已报价true 未报价false
-				quotedPrice:true
+				quotedPrice: true
 			}
 		},
 		methods: {
@@ -341,9 +361,11 @@
 	.colorred {
 		color: #d0021b;
 	}
-    .colorgary{
-		color:#868686;
+
+	.colorgary {
+		color: #868686;
 	}
+
 	.firmOfferInquiry {
 		background-color: #f9f9f9;
 		margin-bottom: 30rpx;
@@ -352,14 +374,15 @@
 		.binding-info {
 			background-color: #fff;
 			padding: 24rpx;
-            position: relative;
-			.isWinBidding{
+			position: relative;
+
+			.isWinBidding {
 				position: absolute;
-				top:0;
-				left:60%;
+				top: 0;
+				left: 60%;
 				width: 120rpx;
 				height: 50rpx;
-				color:#fff;
+				color: #fff;
 				text-align: center;
 				line-height: 48rpx;
 				border-bottom-left-radius: 20rpx;
@@ -367,13 +390,51 @@
 				background-color: #D0021B;
 				font-size: 24rpx;
 			}
+
+			.binding-info_oneline_title {
+				margin-top: 40rpx;
+				margin-left: 10rpx;
+				text-align: center;
+				display: flex;
+
+			}
+
 			.binding-info_oneline {
 				margin-bottom: 25rpx;
-				.bidding_name{
+
+				.firsttext {
+					font-size: 24rpx;
+					line-height: 50rpx;
+				}
+
+				.secondtext {
+					font-weight: 700;
+					font-size: 32rpx;
+					margin: 0 10rpx;
+				}
+
+				.thirdtext {
+					line-height: 20rpx;
+				}
+
+				.fourthtext {
+					font-weight: 700;
+					font-size: 32rpx;
+					margin: 0 10rpx;
+				}
+
+				.fifthtext {
+					font-size: 24rpx;
+					line-height: 50rpx;
+
+				}
+
+				.bidding_name {
 					font-weight: 700;
 				}
-				.bidding_sign{
-					padding:4rpx 14rpx;
+
+				.bidding_sign {
+					padding: 4rpx 14rpx;
 					background-color: #D0021B;
 					border-radius: 14rpx;
 					color: #fff;
@@ -387,6 +448,7 @@
 			margin-top: 20rpx;
 			background-color: #fff;
 			padding: 0 30rpx;
+
 			.binding-ranking-title {
 				height: 66rpx;
 				line-height: 66rpx;
@@ -433,17 +495,21 @@
 					padding-left: 50rpx;
 					border-left: 8rpx solid #c9c9c9;
 					position: relative;
+
 					>view {
 						margin-bottom: 20rpx;
 					}
+
 					.mybinding-recode_item_price,
 					.mybinding-recode_item_remark {
 						color: #868686;
 					}
+
 					.mybinding-recode_item_remark {
 						border-bottom: 2rpx solid #f8f8f8;
 						padding-bottom: 25rpx;
 					}
+
 					.mybinding-recode_item_ball {
 						width: 28rpx;
 						height: 28rpx;
@@ -462,11 +528,13 @@
 		//竞价模态框
 		.slot-content {
 			padding: 30rpx;
+
 			.slot-content_oneline {
 				height: 84rpx;
 				line-height: 84rpx;
 				border-bottom: 2rpx solid #f8f8f8;
 			}
+
 			.remark {
 				height: 84rpx;
 				line-height: 84rpx;
