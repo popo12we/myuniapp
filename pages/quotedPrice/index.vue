@@ -63,7 +63,15 @@
 											<text class="red">2020-07-30</text>
 											<text class="mg15"></text>
 											<text class="red">18：00截至报价</text>
+
 										</view>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="12">
+										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding">详情</u-button>
 									</u-col>
 								</u-row>
 							</view>
@@ -172,6 +180,14 @@
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
+			},
+            
+			//点击详情跳转
+			toBidding() {
+				
+				uni.navigateTo({
+					 url: '../bidding/index'
+				})
 			}
 		}
 	};
@@ -243,14 +259,15 @@
 				padding: 25rpx 0;
 				width: 100%;
 				color: #868686;
-                position: relative;
-				.isWinBidding{
+				position: relative;
+
+				.isWinBidding {
 					position: absolute;
-					top:0;
-					left:60%;
+					top: 0;
+					left: 60%;
 					width: 120rpx;
 					height: 50rpx;
-					color:#fff;
+					color: #fff;
 					text-align: center;
 					line-height: 48rpx;
 					border-bottom-left-radius: 20rpx;
@@ -258,6 +275,7 @@
 					background-color: #D0021B;
 					font-size: 24rpx;
 				}
+
 				.checkbox_view_oneline {
 					.checkbox_view_name {
 						font-weight: 700;
@@ -288,9 +306,11 @@
 
 				.price_change {
 					display: flex;
-                    .pricetext{
+
+					.pricetext {
 						margin-left: 6rpx;
 					}
+
 					.ufield {
 						flex: 1;
 					}
