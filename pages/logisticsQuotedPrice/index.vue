@@ -20,8 +20,14 @@
 				<u-collapse>
 					<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
 						<view class="checkbox_view">
-							<view class="checkbox_view_oneline">
-								<text class="checkbox_view_name gray">大豆分离蛋白</text>
+							<view class="checkbox_view_oneline  checkbox_view_oneline_title">
+								<!-- <text class="checkbox_view_name gray">大豆分离蛋白</text> -->
+								<view class="secondtext">上海</view>
+								<view class="thirdtext">
+									<view>直达</view>
+									<view>——</view>
+								</view>
+								<view class="fourthtext">奥德赛</view>
 								<text class="mg15"></text>
 								<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
 								<view class="isWinBidding">已中标</view>
@@ -63,18 +69,12 @@
 											<text class="red">2020-07-30</text>
 											<text class="mg15"></text>
 											<text class="red">18：00截至报价</text>
-
+											<u-button type="error" shape="circle" plain size="medium" class='fr' @click="toBidding">详情</u-button>
 										</view>
 									</u-col>
 								</u-row>
 							</view>
-							<view class="checkbox_view_oneline">
-								<u-row gutter="16">
-									<u-col span="12">
-										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding">详情</u-button>
-									</u-col>
-								</u-row>
-							</view>
+
 							<u-collapse-item>
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
@@ -181,12 +181,12 @@
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
 			},
-            
+
 			//点击详情跳转
 			toBidding() {
-				
+
 				uni.navigateTo({
-					 url: '../bidding/index'
+					url: '../bidding/index'
 				})
 			}
 		}
@@ -264,7 +264,7 @@
 				.isWinBidding {
 					position: absolute;
 					top: 0;
-					left: 60%;
+					left: 75%;
 					width: 120rpx;
 					height: 50rpx;
 					color: #fff;
@@ -276,7 +276,44 @@
 					font-size: 24rpx;
 				}
 
+				.checkbox_view_oneline_title {
+					// margin-top: 40rpx;
+					text-align: center;
+					display: flex;
+
+				}
+
 				.checkbox_view_oneline {
+					.firsttext {
+						font-size: 24rpx;
+						line-height: 50rpx;
+					}
+
+					.secondtext {
+						font-weight: 700;
+						font-size: 32rpx;
+						margin: 0 10rpx;
+					}
+
+					.thirdtext {
+						line-height: 20rpx;
+
+						view {
+							font-size: 24rpx;
+						}
+					}
+
+					.fourthtext {
+						font-weight: 700;
+						font-size: 32rpx;
+						margin: 0 10rpx;
+					}
+
+					.fifthtext {
+						font-size: 24rpx;
+						line-height: 50rpx;
+					}
+
 					.checkbox_view_name {
 						font-weight: 700;
 						font-size: 32rpx;
