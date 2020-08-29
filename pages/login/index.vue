@@ -5,25 +5,10 @@
 			<view class="login_center_logo">Foodchem</view>
 			<view class="login_center_title">枫晴供应链管理系统</view>
 			<view class="login_center_inputarea">
-				<u-field 
-				border="true"
-				 v-model="textvalue"
-				  icon="account" 
-				  placeholder="账号" 
-				  border-top="true" 
-				  required
-			      :error-message="errorTextValueMessage"
-				  >
+				<u-field border="true" v-model="textvalue" icon="account" placeholder="账号" border-top="true" required
+				 :error-message="errorTextValueMessage">
 				</u-field>
-				<u-field 
-				border="true"
-				type="password"
-				v-model="password" 
-				icon="lock" 
-				placeholder="密码/验证码" 
-				required
-				:error-message="errorPasswordValueMessage"
-				>
+				<u-field border="true" type="password" v-model="password" icon="lock" placeholder="密码/验证码" required :error-message="errorPasswordValueMessage">
 				</u-field>
 			</view>
 			<view class="verificationcode-login-area clearfix">
@@ -37,6 +22,8 @@
 </template>
 
 <script>
+	import fetch from '../../utils/fetch.js'
+	var RSA = require('../../utils/wxapp_rsa.js')
 	export default {
 		data() {
 			return {
@@ -45,19 +32,31 @@
 				//密码
 				password: '',
 				//账号的错误提示信息
-				errorTextValueMessage:'',
+				errorTextValueMessage: '',
 				//密码的错误提示信息
-				errorPasswordValueMessage:''
+				errorPasswordValueMessage: ''
 			}
 		},
-			
-		methods:{
+
+		methods: {
 			//点击登录
-			login(){
-				uni.switchTab({
-				    url: '../prepareQuoted/index'
-				});
+			login() {
+				// uni.switchTab({
+				//     url: '../prepareQuoted/index'
+				// });
+				//加密公钥私钥
+				let publicKey_pkcs1 =
+					`-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJUEyICiHyhpZPZM/qCJkHMXvrsbqPbhxGNp+rCBI4TTgpqlvyzJ5i0n3DIsF2rRT8kN0dETkCWlDwLnOqQnFN8CAwEAAQ==-----END PUBLIC KEY-----`;
+				let privateKey_pkcs1 =
+					`-----BEGIN PRIVATE KEY-----MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAlQTIgKIfKGlk9kz+oImQcxe+uxuo9uHEY2n6sIEjhNOCmqW/LMnmLSfcMiwXatFPyQ3R0ROQJaUPAuc6pCcU3wIDAQABAkABRfkwoDID9mKWeDH0zTgew6UtlB7tfSBgeRdbSr8y81hXfgJcyI/rbQDgDs0T6RTJluZsWANFRArJUqfToD8BAiEA53Yjk02hN52QC7zZvbuETo/JsPVVdTcO3Z7PJGqQx/kCIQCk0SXlG/5NpvFG1I4sjzpmZx+NFvjLuAsymHalo5xplwIhALR744u2SdMTMsJkVSlkcevMpUouU5/d+eKINh/AVPsJAiBKftY4Bj0dcBWiRDS2404sNvRF21o9CkTVa6BFIfxypQIgfwJt2qdBDpJX76DsW1TIFKNYOENMFinaH3qPLGkUZQ4=-----END PRIVATE KEY-----`;
+				// 加密 【加密字段长度不大于117】
+				let encrypt_rsa = new RSA.RSAKey();
+				encrypt_rsa = RSA.KEYUTIL.getKey(publicKey_pkcs1);
+				let encStr = encrypt_rsa.encrypt(this.password)
+				encStr = RSA.hex2b64(encStr);
+
 				
+
 			}
 		}
 	}
@@ -67,24 +66,29 @@
 		width: 70%;
 		margin: 100rpx auto;
 	}
-    .login_center_logo{
-		color:#cb352f;
+
+	.login_center_logo {
+		color: #cb352f;
 		font-size: 80rpx;
 		font-weight: 700;
 	}
+
 	.login_center_title {
 		margin: 25rpx 0 30rpx;
 		font-size: 32rpx;
-		font-weight:700 ;
+		font-weight: 700;
 	}
-	.verificationcode-login-area{
-		margin-top:40rpx;
+
+	.verificationcode-login-area {
+		margin-top: 40rpx;
 	}
-	.verificationcode-login{
-		color:#4395ff;
+
+	.verificationcode-login {
+		color: #4395ff;
 		float: right;
 	}
-	.loginbtn-area{
-		margin-top:40rpx;
+
+	.loginbtn-area {
+		margin-top: 40rpx;
 	}
 </style>
