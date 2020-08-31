@@ -1,6 +1,7 @@
 <template>
 	<!-- 登录 -->
 	<view class="login">
+		<u-toast ref="errorLoginToast" position="top"/>
 		<view class="login_center">
 			<view class="login_center_logo">Foodchem</view>
 			<view class="login_center_title">枫晴供应链管理系统</view>
@@ -18,6 +19,7 @@
 				<u-button type="error" @click="login">登录</u-button>
 			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -40,10 +42,8 @@
 
 		methods: {
 			//点击登录
-			login() {
-				// uni.switchTab({
-				//     url: '../prepareQuoted/index'
-				// });
+			async login() {
+
 				//加密公钥私钥
 				let publicKey_pkcs1 =
 					`-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJUEyICiHyhpZPZM/qCJkHMXvrsbqPbhxGNp+rCBI4TTgpqlvyzJ5i0n3DIsF2rRT8kN0dETkCWlDwLnOqQnFN8CAwEAAQ==-----END PUBLIC KEY-----`;
@@ -54,9 +54,25 @@
 				encrypt_rsa = RSA.KEYUTIL.getKey(publicKey_pkcs1);
 				let encStr = encrypt_rsa.encrypt(this.password)
 				encStr = RSA.hex2b64(encStr);
-
+				let res = await fetch(this.api.v2.login, {
+					method: "post",
+					data: {
+						account: 13011111111,
+						password: encStr
+					}
+				})
 				
-
+				if (res.data.code === '0') {
+					uni.switchTab({
+						url: '../prepareQuoted/index'
+					})
+				} else {
+					this.$refs.errorLoginToast.show({
+						title: res.data.msg,
+						type: 'error',
+						position:'top'
+					})
+				}
 			}
 		}
 	}
@@ -65,6 +81,7 @@
 	.login_center {
 		width: 70%;
 		margin: 100rpx auto;
+		z-index:1;
 	}
 
 	.login_center_logo {

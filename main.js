@@ -3,12 +3,13 @@ import Vue from 'vue'
 import App from './App'
 import uView from "uview-ui";
 import { RouterMount } from 'uni-simple-router'
-
+import api from './libs/api.js'
 App.mpType = 'app'
 Vue.use(uView);
 const app = new Vue({
 	...App
 })
+Vue.prototype.api=api
 //v1.3.5起 H5端 你应该去除原有的app.$mount();使用路由自带的渲染方式
 // #ifdef H5
 	RouterMount(app,'#app');
