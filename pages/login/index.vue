@@ -1,7 +1,7 @@
 <template>
 	<!-- 登录 -->
 	<view class="login">
-		<u-toast ref="errorLoginToast" position="top"/>
+		<u-toast ref="errorLoginToast" position="top" />
 		<view class="login_center">
 			<view class="login_center_logo">Foodchem</view>
 			<view class="login_center_title">枫晴供应链管理系统</view>
@@ -19,7 +19,7 @@
 				<u-button type="error" @click="login">登录</u-button>
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -61,8 +61,10 @@
 						password: encStr
 					}
 				})
-				
+
 				if (res.data.code === '0') {
+				
+					uni.setStorageSync('roleId',0)
 					uni.switchTab({
 						url: '../prepareQuoted/index'
 					})
@@ -70,7 +72,7 @@
 					this.$refs.errorLoginToast.show({
 						title: res.data.msg,
 						type: 'error',
-						position:'top'
+						position: 'top'
 					})
 				}
 			}
@@ -81,7 +83,7 @@
 	.login_center {
 		width: 70%;
 		margin: 100rpx auto;
-		z-index:1;
+		z-index: 1;
 	}
 
 	.login_center_logo {

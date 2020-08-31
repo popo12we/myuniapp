@@ -21,12 +21,7 @@
 				"navigationBarTitleText": "实盘询价"
 			}
 		},
-		{
-			"path": "pages/logisticsPrepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
-			}
-		},
+		
 		
 		{
 			"path": "pages/quotedPrice/index",
