@@ -22,7 +22,7 @@
 						<view class="page-section-spacing">
 							<!-- autoplay='true' :circular='true' -->
 							<swiper class="swiper" :indicator-dots="indicatorDots">
-								<swiper-item>
+								<swiper-item v-for="item in inquiryList" :key="item.id">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
 										<view class="swiper-item_left">
@@ -37,16 +37,16 @@
 										</view>
 										<view class="swiper-item_center">
 											<view class="swiper_center_title">
-												<text>大豆分离蛋白</text>
+												<text>{{item.spuName}}</text>
 												<text class="mg15"></text>
-												<text>菊兰</text>
+												<text>{{item.brand}}</text>
 											</view>
 											<view class="swiper_center_oneline">
 												<u-row>
 													<u-col span="12">
 														<text class="gray">规格</text>
 														<text class="mg15 gray">:</text>
-														<text class="gray">Emulsion</text>
+														<text class="gray">{{item.spuSpec}}</text>
 													</u-col>
 												</u-row>
 											</view>
@@ -77,112 +77,6 @@
 										</view>
 									</view>
 								</swiper-item>
-								<swiper-item>
-									<!-- 具体的轮播图页面 -->
-									<view class="swiper-item">
-										<view class="swiper-item_left">
-											<view class="swiper-item_sign_box">
-												<view class="swiper-item_sign">
-													<text>竞价</text>
-												</view>
-											</view>
-										</view>
-										<view class="swiper-item_right"></view>
-										<view class="swiper-item_center">
-											<view class="swiper_center_title">
-												<text>甜味剂</text>
-												<text class="mg15"></text>
-												<text>莲花</text>
-											</view>
-											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">规格</text>
-														<text class="mg15 gray">:</text>
-														<text class="gray">Emulsion</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">当前出价（USD):</text>
-														<text class="mg15"></text>
-														<text class="gray">1.63</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">当前排名</text>
-														<text class="mg15 gray">:</text>
-														<text class="gray">2</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="swiper_center_oneline settimeout_btn clearfix">
-												<view class="settimeout">剩余1天12小时30分结束</view>
-											</view>
-											<view class="swiper_center_oneline center_btn_area">
-												<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
-											</view>
-										</view>
-									</view>
-								</swiper-item>
-								<swiper-item>
-									<!-- 具体的轮播图页面 -->
-									<view class="swiper-item">
-										<view class="swiper-item_left">
-											<view class="swiper-item_sign_box">
-												<view class="swiper-item_sign">
-													<text>竞价</text>
-												</view>
-											</view>
-										</view>
-										<view class="swiper-item_right"></view>
-										<view class="swiper-item_center">
-											<view class="swiper_center_title">
-												<text>山梨酸钾</text>
-												<text class="mg15"></text>
-												<text>康乐</text>
-											</view>
-											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">规格</text>
-														<text class="mg15 gray">:</text>
-														<text class="gray">Emulsion</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">当前出价（USD):</text>
-														<text class="mg15"></text>
-														<text class="gray">1.63</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">当前排名</text>
-														<text class="mg15 gray">:</text>
-														<text class="gray">2</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="swiper_center_oneline settimeout_btn clearfix">
-												<view class="settimeout">剩余1天12小时30分结束</view>
-											</view>
-											<view class="swiper_center_oneline center_btn_area">
-												<u-button type="error" size="mini" plain class="btn_end">我要竞价</u-button>
-											</view>
-										</view>
-									</view>
-								</swiper-item>
 							</swiper>
 						</view>
 					</view>
@@ -193,10 +87,10 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
+						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in inquiryList" :key="item.id" :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
-									<text class="checkbox_view_name gray">大豆分离蛋白</text>
+									<text class="checkbox_view_name gray">{{item.spuName}}</text>
 									<text class="mg15"></text>
 									<text class="checkbox_view_tab" @click="showInquiryModal">询盘</text>
 								</view>
@@ -206,12 +100,12 @@
 										<u-col span="7">
 											<text class="gray">规格</text>
 											<text class="mg15">:</text>
-											<text class="gray">Emulsion</text>
+											<text class="gray">{{item.spuSpec}}</text>
 										</u-col>
 										<u-col span="5">
 											<text class="gray">品牌</text>
 											<text class="mg15">:</text>
-											<text class="gray">菊兰</text>
+											<text class="gray">{{item.brand}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -221,12 +115,12 @@
 										<u-col span="7">
 											<text class="gray">包装</text>
 											<text class="mg15">:</text>
-											<text class="gray">20 KG STEEL DRUM</text>
+											<text class="gray">{{item.packageInfo}}</text>
 										</u-col>
 										<u-col span="5">
 											<text class="gray">数量</text>
 											<text class="mg15">:</text>
-											<text class="gray">100KG</text>
+											<text class="gray">{{item.saleQty}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -254,9 +148,9 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text class="gray">上海</text>
+												<text class="gray">{{item.shipPort}}</text>
 												<text class="mg15">---</text>
-												<text class="gray">拉各斯</text>
+												<text class="gray">{{item.destinationPort}}</text>
 											</u-col>
 											<u-col span="5">
 												<text class="gray">20GP</text>
@@ -267,19 +161,19 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text class="gray">期望五天交货</text>
+												<text class="gray">期望{{item.expeDeliDay}}天交货</text>
 											</u-col>
 											<u-col span="5">
 												<text class="gray">打托</text>
 												<text class="mg15">:</text>
-												<text class="gray">是</text>
+												<text class="gray">{{item.ifPlay}}</text>
 											</u-col>
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
-												<text class="gray">询价单编号：IN2087973</text>
+												<text class="gray">询价单编号：{{item.inquiryCode}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -294,7 +188,7 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
-												<text class="gray">一种食品添加剂</text>
+												<text class="gray">{{item.remarks}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -437,7 +331,7 @@
 										<u-col span="6">
 											<text class="red">截止日期</text>
 											<text class="mg15">:</text>
-											<text class="red">2020-08-05</text>
+											<text class="red">{{item.inquiryDeadline}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -669,6 +563,7 @@
 		},
 		data() {
 			return {
+				//上方全局搜索
 				name: "",
 				//默认checkbox选中颜色
 				activeColor: "#D0021B",
@@ -683,22 +578,7 @@
 				],
 				//全选
 				allChecked: false,
-				list: [{
-						name: 0,
-						checked: false,
-						down: false,
-					},
-					{
-						name: 1,
-						checked: false,
-						down: false,
-					},
-					{
-						name: 2,
-						checked: false,
-						down: false,
-					},
-				],
+				
 
 				//轮播图参数
 				indicatorDots: true,
@@ -730,6 +610,8 @@
 				giveupbiddingShow: false,
 				//记录哪些面板是展开的
 				collapseItemIsChecked: [],
+				//询价单列表
+				inquiryList:[]
 			};
 		},
 		created(){
@@ -744,15 +626,25 @@
 						accessToken: uni.getStorageSync('accessToken')
 					}
 				})
-				console.log(res)
+				if(res.data.code==='0'){
+					this.inquiryList=res.data.data.list
+					if(this.inquiryList.length>0){
+						this.inquiryList.forEach((item,index)=>{
+							item.checked=false
+							item.down=false
+							item.name=index
+							item.id=index
+						})
+					}
+				}
 			},
 			// 全选
 			checkboxAllChange() {
 				this.allChecked ?
-					this.list.map((val) => {
+					this.inquiryList.map((val) => {
 						val.checked = true;
 					}) :
-					this.list.map((val) => {
+					this.inquiryList.map((val) => {
 						val.checked = false;
 					});
 			},
@@ -760,7 +652,7 @@
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked =
-					this.list.length === this.list.filter((val) => val.checked).length;
+					this.inquiryList.length === this.inquiryList.filter((val) => val.checked).length;
 			},
 
 			//点击打开价格趋势下拉框
@@ -803,14 +695,14 @@
 						(item) => item !== e.index
 					);
 				}
-				this.list[e.index].down = e.show;
+				this.inquiryList[e.index].down = e.show;
 			},
 		},
 
 		computed: {
 			//选中的个数
 			checkedNum() {
-				return this.list.filter((val) => val.checked).length;
+				return this.inquiryList.filter((val) => val.checked).length;
 			},
 			
 			//判断哪个角色权限	
