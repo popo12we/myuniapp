@@ -464,7 +464,7 @@
 						<u-input v-model="inquiryForm.usaPrice" placeholder="请输入美元价格" />
 					</u-form-item>
 					<u-form-item label="有效期">
-						<u-input v-model="inquiryForm.validity" placeholder="请输入有效期" />
+						<u-input v-model="inquiryForm.validity" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
 					<u-form-item label="交货天数">
 						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数" />
@@ -555,7 +555,7 @@
 		<!-- 报价币种下拉框 -->
 		<u-select v-model="selectTypesCurrencyShow" :list="selectTypesCurrencyList" @confirm="confirmCurrency"></u-select>
 		<!-- 时间选择 -->
-		<u-picker v-model="dateTime" mode="time" :params="params" :default-time='newDate'></u-picker>
+		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
 	</view>
 </template>
 
@@ -563,12 +563,14 @@
 	import Tabbar from "../../my_common_components/Tabbar.vue";
 	import "../../common/font/iconfont.css";
 	import fetch from '../../utils/fetch.js'
+	import moment from 'moment'
 	export default {
 		components: {
 			Tabbar,
 		},
 		data() {
 			return {
+				defaultTime:moment().format('YYYY-MM-DD HH:mm:ss'),
 				//上方全局搜索
 				name: "",
 				//默认checkbox选中颜色
@@ -640,7 +642,7 @@
 				// 询价单号
 				offerId: "",
 				//时间选择器
-				dateTime: true,
+				dateTime: false,
 				params: {
 					year: true,
 					month: true,
@@ -649,6 +651,7 @@
 					minute: true,
 					second: true
 				},
+			
 			};
 		},
 		created() {
@@ -789,6 +792,16 @@
 				})
 
 				console.log(res)
+			},
+			
+			//询盘打开选时间
+			showValidity(){
+				this.dateTime=true
+			},
+			
+			//询盘确实时间
+			confirmTime(e){
+				this.inquiryForm.validity=`${e.year}-${e.month}-${e.day} ${e.hour}:${e.month}:${e.second}`
 			}
 		},
 
@@ -805,10 +818,6 @@
 
 			swiperList() {
 				return [...this.biddingList, ...this.realOrderList]
-			},
-			newDate(){
-				console.log(new Date())
-				return new Date()
 			}
 		},
 
