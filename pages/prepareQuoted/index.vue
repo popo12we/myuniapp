@@ -87,7 +87,8 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in Inquiry" :key="item.id" :name="item.name">
+						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in Inquiry" :key="item.id"
+						 :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
 									<text class="checkbox_view_name gray">{{item.spuName}}</text>
@@ -173,7 +174,7 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
-												<text class="gray">询价单编号：{{item.inquiryCode}}</text>
+												<text class="gray">询价单编号：{{item.offerId}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -205,7 +206,7 @@
 										<u-row gutter="16">
 											<u-col span="12">
 												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding">放弃报价</u-button>
-												<u-button type="error" size="mini" plain @click="showInquiryModal(item.inquiryCode)">我要报价</u-button>
+												<u-button type="error" size="mini" plain @click="showInquiryModal(item.offerId)">我要报价</u-button>
 											</u-col>
 										</u-row>
 									</view>
@@ -454,22 +455,22 @@
 			<view class="inquiryModal_content">
 				<u-form :model="inquiryForm" ref="iForm" :label-width="145">
 					<u-form-item label="币种">
-						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种"/>
+						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
 					</u-form-item>
 					<u-form-item label="价格">
-						<u-input v-model="inquiryForm.price" placeholder="请输入价格"/>
+						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
 					<u-form-item label="美元价格">
-						<u-input v-model="inquiryForm.usaPrice" placeholder="请输入美元价格"/>
+						<u-input v-model="inquiryForm.usaPrice" placeholder="请输入美元价格" />
 					</u-form-item>
 					<u-form-item label="有效期">
-						<u-input v-model="form.validity" placeholder="请输入有效期"/>
+						<u-input v-model="inquiryForm.validity" placeholder="请输入有效期" />
 					</u-form-item>
 					<u-form-item label="交货天数">
-						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数"/>
+						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数" />
 					</u-form-item>
 					<u-form-item label="价格趋势">
-						<u-input v-model="inquiryForm.trend" type="select" @click="showTrendSelect" placeholder="请选择价格趋势"/>
+						<u-input v-model="inquiryForm.trend" type="select" @click="showTrendSelect" placeholder="请选择价格趋势" />
 					</u-form-item>
 					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
 						<u-input v-model="inquiryForm.explain" />
@@ -477,7 +478,7 @@
 					<u-form-item label="备注" placeholder="请输入备注">
 						<u-input v-model="inquiryForm.remark" />
 					</u-form-item>
-					<view  class="btn-area">
+					<view class="btn-area">
 						<u-row gutter="16">
 							<u-col span="6">
 								<u-button type="error" plain @click="showInquiryModalCancel">取消</u-button>
@@ -553,6 +554,8 @@
 		<u-select v-model="selectPriceTrendShow" :list="selectPriceTrendList" @confirm="confirmPriceTrend"></u-select>
 		<!-- 报价币种下拉框 -->
 		<u-select v-model="selectTypesCurrencyShow" :list="selectTypesCurrencyList" @confirm="confirmCurrency"></u-select>
+		<!-- 时间选择 -->
+		<u-picker v-model="dateTime" mode="time" :params="params" :default-time='newDate'></u-picker>
 	</view>
 </template>
 
@@ -584,11 +587,11 @@
 				selectPriceTrendShow: false,
 				selectPriceTrendList: [{
 						value: "1",
-						label: "平稳",
+						label: "上升",
 					},
 					{
 						value: "2",
-						label: "上升",
+						label: "平稳",
 					},
 					{
 						value: "3",
@@ -614,6 +617,7 @@
 					day: "",
 					//价格趋势
 					trend: "",
+					pricetrendValue: "",
 					//趋势说明
 					explain: "",
 					//备注
@@ -626,50 +630,59 @@
 				//记录哪些面板是展开的
 				collapseItemIsChecked: [],
 				//总的询价单列表
-				inquiryList:[],
+				inquiryList: [],
 				// 竞价询价单
-				biddingList:[],
+				biddingList: [],
 				// 询盘
-				Inquiry:[],
+				Inquiry: [],
 				// 实单
-				realOrderList:[],
+				realOrderList: [],
 				// 询价单号
-				inquiryCode:""
-				
+				offerId: "",
+				//时间选择器
+				dateTime: true,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: true,
+					minute: true,
+					second: true
+				},
 			};
 		},
-		created(){
+		created() {
 			this.getInquiryList()
 		},
 		methods: {
 			//询价单列表
-			async getInquiryList(){
+			async getInquiryList() {
 				let res = await fetch(this.api.v2.inquiryList, {
 					method: "get",
 					data: {
 						accessToken: uni.getStorageSync('accessToken')
 					}
 				})
-				this.biddingList=[]
-				this.inquiryList=[]
-				this.Inquiry=[]
-				this.realOrderList=[]
-				if(res.data.code==='0'){
-					this.inquiryList=res.data.data.list
-					if(this.inquiryList.length>0){
-						this.inquiryList.forEach((item,index)=>{
-							item.checked=false
-							item.down=false
-							item.name=index
-							item.id=index
-							if(item.biddingMode==='1'){
+				this.biddingList = []
+				this.inquiryList = []
+				this.Inquiry = []
+				this.realOrderList = []
+				if (res.data.code === '0') {
+					this.inquiryList = res.data.data.list
+					if (this.inquiryList.length > 0) {
+						this.inquiryList.forEach((item, index) => {
+							item.checked = false
+							item.down = false
+							item.name = index
+							item.id = index
+							if (item.biddingMode === '1') {
 								// 竞价数组
 								this.biddingList.push(item)
-							}else{
-								if(item.inquiryType==="预询价"){
+							} else {
+								if (item.inquiryType === "预询价") {
 									//询盘数组
 									this.Inquiry.push(item)
-								}else{
+								} else {
 									//实单数组
 									this.realOrderList.push(item)
 								}
@@ -687,29 +700,29 @@
 					this.inquiryList.map((val) => {
 						val.checked = false;
 					});
-					this.$forceUpdate()
+				this.$forceUpdate()
 			},
 
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked =
 					this.inquiryList.length === this.inquiryList.filter((val) => val.checked).length;
-					this.$forceUpdate()
+				this.$forceUpdate()
 			},
 
 			//点击打开价格趋势下拉框
 			showTrendSelect() {
 				this.selectPriceTrendShow = true;
 			},
-			
+
 			//点击打开币种拉框
-			showCurrencySelect(){
+			showCurrencySelect() {
 				this.selectTypesCurrencyShow = true;
 			},
 
 			//点击询盘/我要报价打开询盘模态框
-			showInquiryModal(inquiryCode) {
-				this.inquiryCode=inquiryCode
+			showInquiryModal(offerId) {
+				this.offerId = offerId
 				this.inquiryShow = true;
 			},
 
@@ -745,57 +758,37 @@
 				}
 				this.inquiryList[e.index].down = e.show;
 			},
-			
+
 			//确认币种
-			confirmCurrency(e){
-				this.inquiryForm.currency=e[0].label
+			confirmCurrency(e) {
+				this.inquiryForm.currency = e[0].label
 			},
 			//确认价格趋势
-			confirmPriceTrend(e){
-				this.inquiryForm.trend=e[0].label
+			confirmPriceTrend(e) {
+				this.inquiryForm.trend = e[0].label
+				this.inquiryForm.pricetrendValue = e[0].value
 			},
-			
+
 			//提交报价
-			async submitBidding(){
+			async submitBidding() {
 				let res = await fetch(this.api.v2.submitQuotation, {
-					method: "get",
+					method: "post",
 					data: {
 						accessToken: uni.getStorageSync('accessToken'),
-						list:[
-							{
-								// <u-form-item label="币种">
-								// 	<u-input v-model="form.currency" />
-								// </u-form-item>
-								// <u-form-item label="价格">
-								// 	<u-input v-model="form.price" />
-								// </u-form-item>
-								// <u-form-item label="美元价格">
-								// 	<u-input v-model="form.usaPrice" />
-								// </u-form-item>
-								// <u-form-item label="有效期">
-								// 	<u-input v-model="form.validity" />
-								// </u-form-item>
-								// <u-form-item label="交货天数">
-								// 	<u-input v-model="form.day" />
-								// </u-form-item>
-								// <u-form-item label="价格趋势">
-								// 	<u-input v-model="form.trend" type="select" @click="showTrendSelect" />
-								// </u-form-item>
-								// <u-form-item label="趋势说明">
-								// 	<u-input v-model="form.explain" />
-								// </u-form-item>
-								// <u-form-item label="备注">
-								// 	<u-input v-model="form.remark" />
-								// </u-form-item>
-								offerId:this.inquiryCode,
-								cur:'USD',
-								price:this.form.price
-								
-								
-							}
-						]
+						list: [{
+							offerId: this.offerId,
+							cur: this.inquiryForm.currency,
+							price: this.inquiryForm.price,
+							deliveryDay: this.inquiryForm.day,
+							expiredDate: this.inquiryForm.validity,
+							pricetrend: this.inquiryForm.pricetrendValue,
+							priceInfo: this.inquiryForm.explain,
+							remarks: this.inquiryForm.remark
+						}]
 					}
 				})
+
+				console.log(res)
 			}
 		},
 
@@ -804,16 +797,21 @@
 			checkedNum() {
 				return this.inquiryList.filter((val) => val.checked).length;
 			},
-			
+
 			//判断哪个角色权限	
-			isRole(){
-				return uni.getStorageSync('roleId')===1?true:false
+			isRole() {
+				return uni.getStorageSync('roleId') === 1 ? true : false
 			},
-			
-			swiperList(){
-				return [...this.biddingList,...this.realOrderList]
+
+			swiperList() {
+				return [...this.biddingList, ...this.realOrderList]
+			},
+			newDate(){
+				console.log(new Date())
+				return new Date()
 			}
 		},
+
 	};
 </script>
 
@@ -1045,7 +1043,8 @@
 	}
 
 
-	.prepareQuoted,.logisticsPrepareQuoted {
+	.prepareQuoted,
+	.logisticsPrepareQuoted {
 		/deep/ .u-checkbox__label {
 			width: 100%;
 		}
@@ -1313,33 +1312,33 @@
 			}
 		}
 	}
-	
+
 	// 询盘模态框
 	.inquiryModal_content {
 		padding: 20rpx;
-	
+
 		.btn-area {
 			margin-top: 20rpx;
 		}
 	}
-	
+
 	//竞价模态框
 	.slot-content {
 		padding: 30rpx;
-	
+
 		.slot-content_oneline {
 			height: 84rpx;
 			line-height: 84rpx;
 			border-bottom: 2rpx solid #f8f8f8;
 		}
-	
+
 		.remark {
 			height: 84rpx;
 			line-height: 84rpx;
 			overflow: hidden;
 		}
 	}
-	
+
 	.giveupbiddingModal {
 		.giveupbiddingModal_oneline {
 			text-align: center;
