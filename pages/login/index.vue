@@ -61,10 +61,11 @@
 						password: encStr
 					}
 				})
-
+				console.log(res.data)
 				if (res.data.code === '0') {
-				
-					uni.setStorageSync('roleId',0)
+				// res.data.supplierNature  1采购供应商2物流供应商
+					uni.setStorageSync('roleId',res.data.data.supplierNature)
+					uni.setStorageSync('accessToken',res.data.data.accessToken)
 					uni.switchTab({
 						url: '../prepareQuoted/index'
 					})

@@ -4,30 +4,37 @@
 	},
 	"pages": [
 		{
-			"path": "pages/quotedPrice/index",
-			"style": {
-				"navigationBarTitleText": "已报价"
-			}
-		},
-		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录页"
 			}
 		},	
-		
-		{
-			"path": "pages/firmOfferInquiry/index",
-			"style": {
-				"navigationBarTitleText": "实盘询价"
-			}
-		},
 		{
 			"path": "pages/prepareQuoted/index",
 			"style": {
 				"navigationBarTitleText": "待报价"
 			}
 		},
+		{
+			"path": "pages/profile/index",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		
+		{
+			"path": "pages/quotedPrice/index",
+			"style": {
+				"navigationBarTitleText": "已报价"
+			}
+		},
+		{
+			"path": "pages/firmOfferInquiry/index",
+			"style": {
+				"navigationBarTitleText": "实盘询价"
+			}
+		},
+		
 		{
 			"path": "pages/commodity/index",
 			"style": {
@@ -46,13 +53,6 @@
 				"navigationBarTitleText": "个人中心"
 			}
 		},
-		{
-			"path": "pages/profile/index",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
-		
 		{
 			"path": "pages/batchQuotation/index",
 			"style": {

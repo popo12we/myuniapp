@@ -7,7 +7,7 @@
 			</view>
 			<view class="company">
 				<view class="companyname">杭州红博化工有限公司</view>
-				<view class="info">test</view>
+				<view class="info">{{userName}}</view>
 			</view>
 		</view>
 		<view class="empty"></view>
@@ -35,14 +35,37 @@
 
 <script>
 	import Tabbar from '../../my_common_components/Tabbar.vue'
-	export default{
+	import fetch from '../../utils/fetch.js'
+	export default {
 		components: {
 			Tabbar
 		},
-		methods:{
-			toEditPassword(){
+		created() {
+			this.getSupplierInfo()
+		},
+		data() {
+			return {
+				//公司名字/用户名
+				userName: ""
+			}
+		},
+		methods: {
+			// 供应商信息
+			async getSupplierInfo() {
+				let res = await fetch(this.api.v2.supplierInfo, {
+					method: "get",
+					data: {
+						accessToken: uni.getStorageSync('accessToken')
+					}
+				})
+				console.log(res)
+				if (res.data.code === '0') {
+					this.userName = res.data.data.userName
+				}
+			},
+			toEditPassword() {
 				uni.navigateTo({
-				    url: '../editPassword/index'
+					url: '../editPassword/index'
 				});
 			}
 		}
@@ -50,52 +73,60 @@
 </script>
 
 <style lang="scss" scoped>
-	.profile{
-		padding:0 40rpx;
-		.empty{
+	.profile {
+		padding: 0 40rpx;
+
+		.empty {
 			height: 15rpx;
 			background-color: #f9f9f9;
 		}
-		
-		.profile_info{
+
+		.profile_info {
 			display: flex;
 			background-color: #fff;
-			
+
 			height: 185rpx;
-			.company{
-				margin-left:40rpx;
-				margin-top:30rpx;
-				.info{
-					margin-top:25rpx;
+
+			.company {
+				margin-left: 40rpx;
+				margin-top: 30rpx;
+
+				.info {
+					margin-top: 25rpx;
 				}
-			},
-			.avator{
-				margin-top:30rpx;
+			}
+
+			,
+			.avator {
+				margin-top: 30rpx;
 			}
 		}
-		
-		.count{
+
+		.count {
 			display: flex;
 			background-color: #fff;
-			>view{
+
+			>view {
 				width: 50%;
 				height: 130rpx;
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				flex-direction: column;
-				>view{
-					margin-top:10rpx;
+
+				>view {
+					margin-top: 10rpx;
 				}
 			}
 		}
-		
-		.editpassword,.loginout{
-			height:75rpx;
+
+		.editpassword,
+		.loginout {
+			height: 75rpx;
 			line-height: 75rpx;
-			border:1px solid #f8f8f8;
+			border: 1px solid #f8f8f8;
 			background-color: #fff;
 		}
-		
+
 	}
 </style>

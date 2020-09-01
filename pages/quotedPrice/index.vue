@@ -317,7 +317,6 @@
 
 			//点击详情跳转
 			toBidding() {
-
 				uni.navigateTo({
 					url: '../bidding/index'
 				})
@@ -327,7 +326,7 @@
 		computed:{
 			//判断哪个角色权限
 			isRole(){
-				return uni.getStorageSync('roleId')===0?true:false
+				return uni.getStorageSync('roleId')===1?true:false
 			}
 		}
 	};

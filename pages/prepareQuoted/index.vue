@@ -662,6 +662,7 @@
 <script>
 	import Tabbar from "../../my_common_components/Tabbar.vue";
 	import "../../common/font/iconfont.css";
+	import fetch from '../../utils/fetch.js'
 	export default {
 		components: {
 			Tabbar,
@@ -731,7 +732,20 @@
 				collapseItemIsChecked: [],
 			};
 		},
+		created(){
+			this.getInquiryList()
+		},
 		methods: {
+			//询价单列表
+			async getInquiryList(){
+				let res = await fetch(this.api.v2.inquiryList, {
+					method: "get",
+					data: {
+						accessToken: uni.getStorageSync('accessToken')
+					}
+				})
+				console.log(res)
+			},
 			// 全选
 			checkboxAllChange() {
 				this.allChecked ?
@@ -801,7 +815,7 @@
 			
 			//判断哪个角色权限	
 			isRole(){
-				return uni.getStorageSync('roleId')===0?true:false
+				return uni.getStorageSync('roleId')===1?true:false
 			}
 		},
 	};
