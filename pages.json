@@ -14,8 +14,7 @@
 			"style": {
 				"navigationBarTitleText": "登录页"
 			}
-		},	
-		
+		},
 		{
 			"path": "pages/profile/index",
 			"style": {
