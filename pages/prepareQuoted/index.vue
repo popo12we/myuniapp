@@ -16,13 +16,13 @@
 			<view class="commodity_list_tips">您现在有2条竞价、2条实单</view>
 
 			<!-- 轮播图区域 -->
-			<view class="swiper_box">
+			<view class="swiper_box" v-if="swiperList.length>0">
 				<view class="uni-padding-wrap">
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
 							<!-- autoplay='true' :circular='true' -->
 							<swiper class="swiper" :indicator-dots="indicatorDots">
-								<swiper-item v-for="item in inquiryList" :key="item.id">
+								<swiper-item v-for="item in swiperList" :key="item.id">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
 										<view class="swiper-item_left">
@@ -87,7 +87,7 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in inquiryList" :key="item.id" :name="item.name">
+						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in Inquiry" :key="item.id" :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
 									<text class="checkbox_view_name gray">{{item.spuName}}</text>
@@ -578,12 +578,9 @@
 				],
 				//全选
 				allChecked: false,
-				
-
 				//轮播图参数
 				indicatorDots: true,
 				selectShow: false,
-
 				//询盘模态框是否显示
 				inquiryShow: false,
 				inquiryForm: {
@@ -610,8 +607,15 @@
 				giveupbiddingShow: false,
 				//记录哪些面板是展开的
 				collapseItemIsChecked: [],
-				//询价单列表
-				inquiryList:[]
+				//总的询价单列表
+				inquiryList:[],
+				// 竞价询价单
+				biddingList:[],
+				// 询盘
+				Inquiry:[],
+				// 实单
+				realOrderList:[]
+				
 			};
 		},
 		created(){
@@ -626,6 +630,10 @@
 						accessToken: uni.getStorageSync('accessToken')
 					}
 				})
+				this.biddingList=[]
+				this.inquiryList=[]
+				this.Inquiry=[]
+				this.realOrderList=[]
 				if(res.data.code==='0'){
 					this.inquiryList=res.data.data.list
 					if(this.inquiryList.length>0){
@@ -634,9 +642,23 @@
 							item.down=false
 							item.name=index
 							item.id=index
+							if(item.biddingMode==='1'){
+								// 竞价数组
+								this.biddingList.push(item)
+							}else{
+								if(item.inquiryType==="预询价"){
+									//询盘数组
+									this.Inquiry.push(item)
+								}else{
+									//实单数组
+									this.realOrderList.push(item)
+								}
+							}
+							
 						})
 					}
 				}
+				console.log(this.biddingList)
 			},
 			// 全选
 			checkboxAllChange() {
@@ -708,6 +730,10 @@
 			//判断哪个角色权限	
 			isRole(){
 				return uni.getStorageSync('roleId')===1?true:false
+			},
+			
+			swiperList(){
+				return [...this.biddingList,...this.realOrderList]
 			}
 		},
 	};
