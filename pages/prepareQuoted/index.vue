@@ -10,7 +10,7 @@
 						<text class="allChoose_text">全选</text>
 					</u-checkbox>
 				</view>
-				<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false"></u-field>
+				<u-field v-model="keywords" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false"></u-field>
 				<u-button @click="checkedAll" type="error" size="mini" class="search_btn">搜索</u-button>
 			</view>
 			<view class="commodity_list_tips">您现在有2条竞价、2条实单</view>
@@ -573,7 +573,7 @@
 			return {
 				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
 				//上方全局搜索
-				name: "",
+				keywords: "",
 				//默认checkbox选中颜色
 				activeColor: "#D0021B",
 				// 报价币种
@@ -664,7 +664,8 @@
 				let res = await fetch(this.api.v2.inquiryList, {
 					method: "get",
 					data: {
-						accessToken: uni.getStorageSync('accessToken')
+						accessToken: uni.getStorageSync('accessToken'),
+						keywords:this.keywords
 					}
 				})
 				this.biddingList = []
@@ -672,6 +673,7 @@
 				this.Inquiry = []
 				this.realOrderList = []
 				if (res.data.code === '0') {
+					console.log(res.data.data.list)
 					this.inquiryList = res.data.data.list
 					if (this.inquiryList.length > 0) {
 						this.inquiryList.forEach((item, index) => {
@@ -738,7 +740,6 @@
 
 			//点击放弃竞价出的弹框
 			giveupbidding(offerId) {
-				console.log(offerId)
 				this.offerId = offerId
 				this.giveupbiddingShow = true;
 			},
@@ -838,6 +839,11 @@
 				uni.navigateTo({
 					url:'../bidding/index'
 				})
+			},
+			
+			//点击搜索
+			checkedAll(){
+				this.getInquiryList()
 			},
 			
 			//重置报价模态框
