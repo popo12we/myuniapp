@@ -33,7 +33,7 @@
 											</view>
 										</view>
 										<view class="swiper-item_right">
-											<span class="iconfont icon_close">&#xe607;</span>
+											<span class="iconfont icon_close" @click="giveupbidding(item.offerId)">&#xe607;</span>
 										</view>
 										<view class="swiper-item_center">
 											<view class="swiper_center_title">
@@ -174,7 +174,7 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
-												<text class="gray">询价单编号：{{item.offerId}}</text>
+												<text class="gray">询价单编号：{{item.inquiryCode}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -205,7 +205,7 @@
 									<view class="checkbox_view_oneline mt15">
 										<u-row gutter="16">
 											<u-col span="12">
-												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding">放弃报价</u-button>
+												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding(item.offerId)">放弃报价</u-button>
 												<u-button type="error" size="mini" plain @click="showInquiryModal(item.offerId)">我要报价</u-button>
 											</u-col>
 										</u-row>
@@ -543,10 +543,11 @@
 				</view>
 			</view>
 		</u-modal>
-
+		<!-- toast -->
+		<u-toast ref="toast" position="top" />
 		<!-- 放弃报价模态框 -->
 		<u-modal v-model="giveupbiddingShow" :mask-close-able="true" :show-title="false" :show-cancel-button="true"
-		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
+		@confirm="sureGiveupBidding" confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
 			<view class="giveupbiddingModal_oneline">确定放弃报价？</view>
 			<view class="red giveupbiddingModal_oneline">大豆分离蛋白</view>
 		</u-modal>
@@ -570,7 +571,7 @@
 		},
 		data() {
 			return {
-				defaultTime:moment().format('YYYY-MM-DD HH:mm:ss'),
+				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
 				//上方全局搜索
 				name: "",
 				//默认checkbox选中颜色
@@ -651,7 +652,7 @@
 					minute: true,
 					second: true
 				},
-			
+
 			};
 		},
 		created() {
@@ -735,7 +736,9 @@
 			},
 
 			//点击放弃竞价出的弹框
-			giveupbidding() {
+			giveupbidding(offerId) {
+				console.log(offerId)
+				this.offerId = offerId
 				this.giveupbiddingShow = true;
 			},
 
@@ -791,17 +794,42 @@
 					}
 				})
 
-				console.log(res)
+				this.inquiryShow = false
+				if (res.data.code === '0') {
+					this.$refs.toast.show({
+						title: res.data.msg,
+						type: 'success',
+						position: 'top'
+					})
+				} else {
+					this.$refs.toast.show({
+						title: res.data.msg,
+						type: 'error',
+						position: 'top'
+					})
+				}
+
 			},
-			
+
 			//询盘打开选时间
-			showValidity(){
-				this.dateTime=true
+			showValidity() {
+				this.dateTime = true
+			},
+
+			//询盘确实时间
+			confirmTime(e) {
+				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.month}:${e.second}`
 			},
 			
-			//询盘确实时间
-			confirmTime(e){
-				this.inquiryForm.validity=`${e.year}-${e.month}-${e.day} ${e.hour}:${e.month}:${e.second}`
+			//确认放弃报价
+			async sureGiveupBidding(){
+				let res = await fetch(this.api.v2.giveupOffer, {
+					method: "post",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						offerId: this.offerId
+					}
+				})
 			}
 		},
 
