@@ -43,7 +43,6 @@
 		methods: {
 			//点击登录
 			async login() {
-
 				//加密公钥私钥
 				let publicKey_pkcs1 =
 					`-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJUEyICiHyhpZPZM/qCJkHMXvrsbqPbhxGNp+rCBI4TTgpqlvyzJ5i0n3DIsF2rRT8kN0dETkCWlDwLnOqQnFN8CAwEAAQ==-----END PUBLIC KEY-----`;
@@ -61,14 +60,33 @@
 						password: encStr
 					}
 				})
-				console.log(res.data)
+
 				if (res.data.code === '0') {
-				// res.data.supplierNature  1采购供应商2物流供应商
-					uni.setStorageSync('roleId',res.data.data.supplierNature)
-					uni.setStorageSync('accessToken',res.data.data.accessToken)
-					uni.switchTab({
-						url: '../prepareQuoted/index'
+					// res.data.supplierNature  1采购供应商2物流供应商
+					uni.setStorageSync('roleId', res.data.data.supplierNature)
+					uni.setStorageSync('accessToken', res.data.data.accessToken)
+					var accessToken = res.data.data.accessToken
+					wx.login({
+						success: async res => {
+							if (res.code) {
+								// console.log(res.code)
+								let res1 = await fetch(this.api.v2.codeSession, {
+									method: "get",
+									data: {
+										code: res.code,
+										accessToken
+									}
+								})
+									
+									uni.switchTab({
+										url: '../prepareQuoted/index'
+									})
+							} else {
+								console.log('登录失败！' + res1.errMsg)
+							}
+						}
 					})
+					
 				} else {
 					this.$refs.errorLoginToast.show({
 						title: res.data.msg,

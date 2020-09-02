@@ -6,18 +6,17 @@
 				<u-image width="110rpx" height="110rpx" shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			</view>
 			<view class="company">
-				<view class="companyname">杭州红博化工有限公司</view>
-				<view class="info">{{userName}}</view>
+				<view class="companyname">{{userName}}</view>
 			</view>
 		</view>
 		<view class="empty"></view>
 		<view class="count">
 			<view class="bind_count">
-				<view>5</view>
+				<view>{{offerCount}}</view>
 				<view>报价次数</view>
 			</view>
 			<view class="giveup_count">
-				<view>2</view>
+				<view>{{giveupCount}}</view>
 				<view>放弃次数</view>
 			</view>
 		</view>
@@ -46,7 +45,11 @@
 		data() {
 			return {
 				//公司名字/用户名
-				userName: ""
+				userName: "",
+				//报价次数
+				offerCount:0,
+				//放弃报价次数
+				giveupCount:0
 			}
 		},
 		methods: {
@@ -61,6 +64,8 @@
 				console.log(res)
 				if (res.data.code === '0') {
 					this.userName = res.data.data.userName
+					this.offerCount = res.data.data.offerCount
+					this.giveupCount = res.data.data.giveupCount
 				}
 			},
 			toEditPassword() {
