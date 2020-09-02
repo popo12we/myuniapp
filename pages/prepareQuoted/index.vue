@@ -22,7 +22,7 @@
 						<view class="page-section-spacing">
 							<!-- autoplay='true' :circular='true' -->
 							<swiper class="swiper" :indicator-dots="indicatorDots">
-								<swiper-item v-for="item in swiperList" :key="item.id">
+								<swiper-item v-for="item in swiperList" :key="item.id" @click="navigateTobidding">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
 										<view class="swiper-item_left">
@@ -464,7 +464,7 @@
 						<u-input v-model="inquiryForm.usaPrice" placeholder="请输入美元价格" />
 					</u-form-item>
 					<u-form-item label="有效期">
-						<u-input v-model="inquiryForm.validity" @click="showValidity" placeholder="请输入有效期" />
+						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
 					<u-form-item label="交货天数">
 						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数" />
@@ -726,6 +726,7 @@
 
 			//点击询盘/我要报价打开询盘模态框
 			showInquiryModal(offerId) {
+				this.resetInquiryForm()
 				this.offerId = offerId
 				this.inquiryShow = true;
 			},
@@ -830,6 +831,36 @@
 						offerId: this.offerId
 					}
 				})
+			},
+			
+			//点轮播图跳转到待报价竞价模式
+			navigateTobidding(){
+				uni.navigateTo({
+					url:'../bidding/index'
+				})
+			},
+			
+			//重置报价模态框
+			resetInquiryForm(){
+				this.inquiryForm={
+					//币种
+					currency: "",
+					//价格
+					price: "",
+					//美元价格
+					usaPrice: "",
+					//有效期
+					validity: "",
+					//交货天数
+					day: "",
+					//价格趋势
+					trend: "",
+					pricetrendValue: "",
+					//趋势说明
+					explain: "",
+					//备注
+					remark: "",
+				}
 			}
 		},
 

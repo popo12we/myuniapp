@@ -77,12 +77,17 @@
 										accessToken
 									}
 								})
-									
+								if(res1.data.code==='0'){
 									uni.switchTab({
 										url: '../prepareQuoted/index'
 									})
+								}
 							} else {
-								console.log('登录失败！' + res1.errMsg)
+								this.$refs.errorLoginToast.show({
+									title: res1.data.msg,
+									type: 'error',
+									position: 'top'
+								})
 							}
 						}
 					})
