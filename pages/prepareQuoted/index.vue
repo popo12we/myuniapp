@@ -13,7 +13,7 @@
 				<u-field v-model="keywords" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false"></u-field>
 				<u-button @click="checkedAll" type="error" size="mini" class="search_btn">搜索</u-button>
 			</view>
-			<view class="commodity_list_tips">您现在有2条竞价、2条实单</view>
+			<view class="commodity_list_tips">您现在有{{biddingList.length}}条竞价、{{realOrderList.length}}条实单</view>
 
 			<!-- 轮播图区域 -->
 			<view class="swiper_box" v-if="swiperList.length>0">
@@ -26,9 +26,14 @@
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
 										<view class="swiper-item_left">
-											<view class="swiper-item_sign_box">
+											<view class="swiper-item_sign_box_red" v-if="item.biddingMode==='是'">
 												<view class="swiper-item_sign">
 													<text>竞价</text>
+												</view>
+											</view>
+											<view class="swiper-item_sign_box_yellow" v-if="item.biddingMode!=='是'&&item.inquiryType==='实单询价'">
+												<view class="swiper-item_sign">
+													<text>实单</text>
 												</view>
 											</view>
 										</view>
@@ -87,7 +92,7 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in Inquiry" :key="item.id"
+						<u-checkbox @change="checkboxOneChange(item.offerId)" v-model="item.checked" v-for="(item, index) in Inquiry" :key="item.id"
 						 :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
@@ -231,7 +236,7 @@
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item per60">
 						<text class="text">价格趋势</text>
-						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.day"></u-field>
+						<u-input type="select" @click="showTrendSelect" placeholder="请选择价格趋势" v-model="inquiryForm.trend"/>
 					</view>
 					<view class="quotation_area_oneline_item per40">
 						<text class="text">趋势说明</text>
@@ -239,7 +244,7 @@
 					</view>
 				</view>
 				<view class="quotation_area_oneline btnarea">
-					<u-button type="error" class="btn">批量报价</u-button>
+					<u-button type="error" class="btn" @click="submitBidding">批量报价</u-button>
 				</view>
 			</view>
 		</view>
@@ -683,14 +688,16 @@
 							item.down = false
 							item.name = index
 							item.id = index
-							if (item.biddingMode === '1') {
+							if (item.biddingMode === '是') {
 								// 竞价数组
 								this.biddingList.push(item)
 							} else {
-								if (item.inquiryType === "预询价") {
+								if (item.inquiryType === "询盘询价") {
 									//询盘数组
 									this.Inquiry.push(item)
-								} else {
+								} 
+								
+								if (item.inquiryType === "实单询价") {
 									//实单数组
 									this.realOrderList.push(item)
 								}
@@ -701,6 +708,7 @@
 			},
 			// 全选
 			checkboxAllChange() {
+				this.resetInquiryForm()
 				this.allChecked ?
 					this.Inquiry.map((val) => {
 						val.checked = true;
@@ -714,6 +722,7 @@
 
 			//单选
 			checkboxOneChange(e) {
+				this.resetInquiryForm()
 				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 				this.allChecked =
 					this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
@@ -890,6 +899,7 @@
 
 <style lang="scss" scoped>
 	//公共样式
+	
 	.gray {
 		color: #c9c9c9 !important;
 	}
@@ -948,7 +958,7 @@
 				height: 100%;
 				float: left;
 
-				.swiper-item_sign_box {
+				.swiper-item_sign_box_red {
 					width: 110rpx;
 					height: 110rpx;
 					color: #fff;
@@ -961,6 +971,31 @@
 						border-top: 110rpx solid red;
 						border-right: 110rpx solid transparent;
 
+						text {
+							position: absolute;
+							left: 20rpx;
+							top: -108rpx;
+							color: #fff;
+							font-size: 28rpx;
+							transform: rotate(225deg);
+						}
+					}
+				}
+				
+				
+				.swiper-item_sign_box_yellow {
+					width: 110rpx;
+					height: 110rpx;
+					color: #fff;
+					text-align: center;
+				
+					.swiper-item_sign {
+						width: 0;
+						height: 0;
+						position: relative;
+						border-top: 110rpx solid #ff9900;
+						border-right: 110rpx solid transparent;
+				
 						text {
 							position: absolute;
 							left: 20rpx;
