@@ -6,7 +6,7 @@
 			<view class="login_center_logo">Foodchem</view>
 			<view class="login_center_title">枫晴供应链管理系统</view>
 			<view class="login_center_inputarea">
-				<u-field border="true" v-model="textvalue" icon="account" placeholder="账号" border-top="true" required
+				<u-field border="true" v-model="username" icon="account" placeholder="账号" border-top="true" required
 				 :error-message="errorTextValueMessage">
 				</u-field>
 				<u-field border="true" type="password" v-model="password" icon="lock" placeholder="密码/验证码" required :error-message="errorPasswordValueMessage">
@@ -30,7 +30,7 @@
 		data() {
 			return {
 				//账号
-				textvalue: '',
+				username: '',
 				//密码
 				password: '',
 				//账号的错误提示信息
@@ -56,7 +56,7 @@
 				let res = await fetch(this.api.v2.login, {
 					method: "post",
 					data: {
-						account: 13011111111,
+						account: this.username,
 						password: encStr
 					}
 				})

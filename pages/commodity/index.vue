@@ -53,10 +53,12 @@
 
 <script>
 	import Tabbar from '../../my_common_components/Tabbar.vue'
+	import fetch from '../../utils/fetch.js'
 	export default {
 		components: {
 			Tabbar
 		},
+
 		data() {
 			return {
 				name: "",
@@ -82,7 +84,21 @@
 				]
 			};
 		},
+
+		created() {
+			this.getSupplierProduct()
+		},
 		methods: {
+			//获取商品列表
+			async getSupplierProduct() {
+				let res = await fetch(this.api.v2.supplier_product, {
+					method: "get",
+					data: {
+						accessToken:uni.getStorageSync('accessToken')
+					}
+				})
+				console.log(res)
+			},
 			// 全选
 			checkboxAllChange() {
 				this.allChecked ? this.list.map(val => {
@@ -96,14 +112,14 @@
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
 			},
-			
+
 			//批量填写
-			batchFilling(){
+			batchFilling() {
 				uni.navigateTo({
-				    url: '../batchQuotation/index'
+					url: '../batchQuotation/index'
 				});
 			}
-			
+
 		}
 	};
 </script>
@@ -168,8 +184,9 @@
 				.utag {
 					margin-left: 20rpx;
 				}
-				.checkbox_view_oneline_btn{
-					margin-left:20rpx;
+
+				.checkbox_view_oneline_btn {
+					margin-left: 20rpx;
 				}
 			}
 		}

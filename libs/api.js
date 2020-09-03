@@ -10,5 +10,6 @@ export default {
 		submitQuotation: 'v2/wx/submitQuotation',// 提交报价
 		giveupOffer: 'v2/wx/giveupOffer',// 放弃报价
 		codeSession: 'v2/wx/codeSession',// 小程序授权获取用户信息
+		supplier_product:'v2/wx/supplier/product',//获取供应商产品
     }
 }
