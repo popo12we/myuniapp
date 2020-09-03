@@ -460,7 +460,8 @@
 					<u-form-item label="价格">
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
-					<u-form-item label="美元价格">
+					<view class="red" v-if="inquiryForm.currency==='RMB'&&inquiryForm.price===''">请填写含税含运费价格</view>
+					<u-form-item label="美元价格" v-if="inquiryForm.currency==='USD'">
 						<u-input v-model="inquiryForm.usaPrice" placeholder="请输入美元价格" />
 					</u-form-item>
 					<u-form-item label="有效期">
