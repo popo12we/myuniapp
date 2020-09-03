@@ -216,7 +216,7 @@
 					</u-collapse>
 				</u-checkbox-group>
 			</view>
-			<!-- 报价 -->
+			<!-- 底部批量报价的框 -->
 			<view class="quotation_area" v-if="checkedNum>0">
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item">
@@ -228,7 +228,6 @@
 						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false"></u-field>
 					</view>
 				</view>
-
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item">
 						<text class="text">价格趋势</text>
@@ -572,6 +571,7 @@
 		},
 		data() {
 			return {
+				checkedNum:0,
 				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
 				//上方全局搜索
 				keywords: "",
@@ -700,19 +700,21 @@
 			// 全选
 			checkboxAllChange() {
 				this.allChecked ?
-					this.inquiryList.map((val) => {
+					this.Inquiry.map((val) => {
 						val.checked = true;
 					}) :
-					this.inquiryList.map((val) => {
+					this.Inquiry.map((val) => {
 						val.checked = false;
 					});
 				this.$forceUpdate()
+				this.checkedNum=this.Inquiry.filter((val) => val.checked).length
 			},
 
 			//单选
 			checkboxOneChange(e) {
+				this.checkedNum=this.Inquiry.filter((val) => val.checked).length
 				this.allChecked =
-					this.inquiryList.length === this.inquiryList.filter((val) => val.checked).length;
+					this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
 				this.$forceUpdate()
 			},
 
@@ -871,11 +873,6 @@
 		},
 
 		computed: {
-			//选中的个数
-			checkedNum() {
-				return this.inquiryList.filter((val) => val.checked).length;
-			},
-
 			//判断哪个角色权限	
 			isRole() {
 				return uni.getStorageSync('roleId') === 1 ? true : false
