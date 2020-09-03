@@ -216,27 +216,30 @@
 					</u-collapse>
 				</u-checkbox-group>
 			</view>
-			<!-- 底部批量报价的框 -->
+
 			<view class="quotation_area" v-if="checkedNum>0">
 				<view class="quotation_area_oneline">
-					<view class="quotation_area_oneline_item">
+					<view class="quotation_area_oneline_item per60">
 						<text class="text">有效期</text>
-						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false"></u-field>
+						<u-input :border-bottom="true" class="ufield" type="select" @click="showValidity" :label-width="0" :clearable="false" v-model="inquiryForm.validity" placeholder=" "></u-input>
 					</view>
-					<view class="quotation_area_oneline_item">
+					<view class="quotation_area_oneline_item per40">
 						<text class="text">交货天数</text>
-						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false"></u-field>
+						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.day"></u-field>
 					</view>
 				</view>
 				<view class="quotation_area_oneline">
-					<view class="quotation_area_oneline_item">
+					<view class="quotation_area_oneline_item per60">
 						<text class="text">价格趋势</text>
-						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false"></u-field>
+						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.day"></u-field>
 					</view>
-					<view class="quotation_area_oneline_item">
-						<text class="text">交货天数</text>
-						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false"></u-field>
+					<view class="quotation_area_oneline_item per40">
+						<text class="text">趋势说明</text>
+						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.explain"></u-field>
 					</view>
+				</view>
+				<view class="quotation_area_oneline btnarea">
+					<u-button type="error" class="btn">批量报价</u-button>
 				</view>
 			</view>
 		</view>
@@ -546,8 +549,8 @@
 		<!-- toast -->
 		<u-toast ref="toast" position="top" />
 		<!-- 放弃报价模态框 -->
-		<u-modal v-model="giveupbiddingShow" :mask-close-able="true" :show-title="false" :show-cancel-button="true"
-		@confirm="sureGiveupBidding" confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
+		<u-modal v-model="giveupbiddingShow" :mask-close-able="true" :show-title="false" :show-cancel-button="true" @confirm="sureGiveupBidding"
+		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
 			<view class="giveupbiddingModal_oneline">确定放弃报价？</view>
 			<view class="red giveupbiddingModal_oneline">大豆分离蛋白</view>
 		</u-modal>
@@ -571,7 +574,7 @@
 		},
 		data() {
 			return {
-				checkedNum:0,
+				checkedNum: 0,
 				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
 				//上方全局搜索
 				keywords: "",
@@ -650,8 +653,7 @@
 					month: true,
 					day: true,
 					hour: true,
-					minute: true,
-					second: true
+					minute: true
 				},
 
 			};
@@ -666,7 +668,7 @@
 					method: "get",
 					data: {
 						accessToken: uni.getStorageSync('accessToken'),
-						keywords:this.keywords
+						keywords: this.keywords
 					}
 				})
 				this.biddingList = []
@@ -707,12 +709,12 @@
 						val.checked = false;
 					});
 				this.$forceUpdate()
-				this.checkedNum=this.Inquiry.filter((val) => val.checked).length
+				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 			},
 
 			//单选
 			checkboxOneChange(e) {
-				this.checkedNum=this.Inquiry.filter((val) => val.checked).length
+				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 				this.allChecked =
 					this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
 				this.$forceUpdate()
@@ -822,11 +824,11 @@
 
 			//询盘确实时间
 			confirmTime(e) {
-				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.month}:${e.second}`
+				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}:00`
 			},
-			
+
 			//确认放弃报价
-			async sureGiveupBidding(){
+			async sureGiveupBidding() {
 				let res = await fetch(this.api.v2.giveupOffer, {
 					method: "post",
 					data: {
@@ -835,22 +837,22 @@
 					}
 				})
 			},
-			
+
 			//点轮播图跳转到待报价竞价模式
-			navigateTobidding(){
+			navigateTobidding() {
 				uni.navigateTo({
-					url:'../bidding/index'
+					url: '../bidding/index'
 				})
 			},
-			
+
 			//点击搜索
-			checkedAll(){
+			checkedAll() {
 				this.getInquiryList()
 			},
-			
+
 			//重置报价模态框
-			resetInquiryForm(){
-				this.inquiryForm={
+			resetInquiryForm() {
+				this.inquiryForm = {
 					//币种
 					currency: "",
 					//价格
@@ -899,7 +901,13 @@
 	.mt15 {
 		margin-top: 15rpx;
 	}
-
+    
+	.per60{
+		width:60% !important;
+	}
+	.per40{
+		width:40% !important;
+	}
 	.prepareQuoted {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
@@ -1092,13 +1100,15 @@
 			background-color: #fefefe;
 
 			.quotation_area_oneline {
-				padding: 0 40rpx;
+				padding: 0 20rpx;
 				display: flex;
 
 				.quotation_area_oneline_item {
 					display: flex;
-					width: 50%;
-
+					// width: 50%;
+                    /deep/.u-input__input{
+					  margin-top:8rpx;	
+					}
 					.ufield {
 						flex: 1;
 					}
@@ -1370,7 +1380,7 @@
 
 			.quotation_area_oneline_item {
 				display: flex;
-				width: 50%;
+				// width: 50%;
 
 				.ufield {
 					flex: 1;
@@ -1380,6 +1390,13 @@
 					align-self: center;
 					color: #868686;
 				}
+			}
+		}
+		
+		.quotation_area_oneline.btnarea{
+			margin-top:20rpx;
+			.btn{
+				width: 100%;
 			}
 		}
 	}
