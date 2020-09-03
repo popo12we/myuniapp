@@ -18,24 +18,24 @@
 		<!-- 商品列表 -->
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
-				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
+				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="item.id" :name="item.name">
 					<view class="checkbox_view">
 						<view class="checkbox_view_oneline">
-							<text class="checkbox_view_name gray">大豆分离蛋白</text>
+							<text class="checkbox_view_name gray">{{item.spuName}}</text>
 							<text class="mg15">:</text>
-							<text class="gray">菊兰</text>
+							<text class="gray">{{item.brand}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
 							<text class="gray">规格</text>
 							<text class="mg15">:</text>
-							<text class="gray">Emulsion</text>
+							<text class="gray">{{item.spuSpec}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
 							<text class="gray">最新报价(USD)</text>
 							<text class="mg15">:</text>
-							<text class="gray">1.63</text>
+							<text class="gray">{{item.bidAmount}}</text>
 							<u-tag text="已失效" type="info" class="utag" />
 							<u-button type="error" size="mini" class="checkbox_view_oneline_btn">更新报价</u-button>
 						</view>
@@ -66,22 +66,7 @@
 				activeColor: "#D0021B",
 				//全选
 				allChecked: false,
-				list: [{
-						name: 'apple',
-						checked: false,
-						disabled: false
-					},
-					{
-						name: 'banner',
-						checked: false,
-						disabled: false
-					},
-					{
-						name: 'orange',
-						checked: false,
-						disabled: false
-					}
-				]
+				list: []
 			};
 		},
 
@@ -97,7 +82,18 @@
 						accessToken:uni.getStorageSync('accessToken')
 					}
 				})
-				console.log(res)
+			
+				if (res.data.code === '0') {
+					this.list=res.data.data
+					if (this.list.length > 0) {
+						this.list.forEach((item, index) => {
+							item.checked = false
+							item.down = false
+							item.name = index
+							item.id = index
+						})
+					}
+				}
 			},
 			// 全选
 			checkboxAllChange() {

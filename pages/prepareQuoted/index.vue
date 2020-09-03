@@ -33,7 +33,7 @@
 											</view>
 										</view>
 										<view class="swiper-item_right">
-											<span class="iconfont icon_close" @click="giveupbidding(item.offerId)">&#xe607;</span>
+											<span class="iconfont icon_close" @click.stop="giveupbidding(item.offerId)">&#xe607;</span>
 										</view>
 										<view class="swiper-item_center">
 											<view class="swiper_center_title">
@@ -673,7 +673,6 @@
 				this.Inquiry = []
 				this.realOrderList = []
 				if (res.data.code === '0') {
-					console.log(res.data.data.list)
 					this.inquiryList = res.data.data.list
 					if (this.inquiryList.length > 0) {
 						this.inquiryList.forEach((item, index) => {
