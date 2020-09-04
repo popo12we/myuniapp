@@ -464,7 +464,7 @@
 					<u-form-item label="币种">
 						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
 					</u-form-item>
-					<u-form-item label="价格">
+					<u-form-item label="价格" v-if="inquiryForm.currency!=='USD'">
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
 					<view class="red" v-if="inquiryForm.currency==='RMB'&&inquiryForm.price===''">请填写含税含运费价格</view>
