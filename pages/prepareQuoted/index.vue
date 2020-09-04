@@ -77,7 +77,7 @@
 												<view class="settimeout">剩余1天12小时30分结束</view>
 											</view>
 											<view class="swiper_center_oneline center_btn_area">
-												<u-button type="error" size="mini" plain class="btn_end" @click="toBindding">我要竞价</u-button>
+												<u-button type="error" size="mini" plain class="btn_end" @click="toBindding(item.offerId)">我要竞价</u-button>
 											</view>
 										</view>
 									</view>
@@ -225,21 +225,21 @@
 			<view class="quotation_area" v-if="checkedNum>0">
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item per60">
-						<text class="text">有效期</text>
+						<view class="text">有效期</view>
 						<u-input :border-bottom="true" class="ufield" type="select" @click="showValidity" :label-width="0" :clearable="false" v-model="inquiryForm.validity" placeholder=" "></u-input>
 					</view>
 					<view class="quotation_area_oneline_item per40">
-						<text class="text">交货天数</text>
+						<view class="text">交货天数</view>
 						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.day"></u-field>
 					</view>
 				</view>
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item per60">
-						<text class="text">价格趋势</text>
+						<view class="text">价格趋势</view>
 						<u-input type="select" @click="showTrendSelect" placeholder="请选择价格趋势" v-model="inquiryForm.trend"/>
 					</view>
 					<view class="quotation_area_oneline_item per40">
-						<text class="text">趋势说明</text>
+						<view class="text">趋势说明</view>
 						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.explain"></u-field>
 					</view>
 				</view>
@@ -505,22 +505,22 @@
 			<view class="slot-content">
 				<view class="slot-content_oneline">
 					<u-row gutter="16">
-						<u-col span="6">
+						<u-col span="5">
 							<text>价格（USD）*</text>
 						</u-col>
-						<u-col span="6">
-							<text class="fr">1.63</text>
+						<u-col span="7">
+							<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 						</u-col>
 					</u-row>
 				</view>
 
 				<view class="slot-content_oneline">
 					<u-row gutter="16">
-						<u-col span="6">
+						<u-col span="4">
 							<text>有效期*</text>
 						</u-col>
-						<u-col span="6">
-							<text class="fr">2020-08-12</text>
+						<u-col span="8">
+							<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
 						</u-col>
 					</u-row>
 				</view>
@@ -534,7 +534,7 @@
 				<view class="remark">
 					<u-row gutter="16">
 						<u-col span="12">
-							<u-input v-model="remark" placeholder="请输入备注" />
+							<u-input v-model="inquiryForm.remark" placeholder="请输入备注" />
 						</u-col>
 					</u-row>
 				</view>
@@ -545,7 +545,7 @@
 							<u-button type="error" plain>取消</u-button>
 						</u-col>
 						<u-col span="6">
-							<u-button type="error">我要竞价</u-button>
+							<u-button type="error" @click="submitBidding">我要竞价</u-button>
 						</u-col>
 					</u-row>
 				</view>
@@ -721,7 +721,7 @@
 			},
 
 			//单选
-			checkboxOneChange(e) {
+			checkboxOneChange(offerId) {
 				this.resetInquiryForm()
 				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 				this.allChecked =
@@ -747,7 +747,12 @@
 			},
 
 			//点击我要竞价按钮打开竞价模态框
-			toBindding() {
+			toBindding(offerId) {
+				console.log(offerId)
+				this.resetInquiryForm()
+				if(offerId){
+					this.offerId = offerId[0]
+				}
 				this.binddingShow = true;
 			},
 
@@ -833,7 +838,7 @@
 
 			//询盘确实时间
 			confirmTime(e) {
-				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}:00`
+				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
 			},
 
 			//确认放弃报价
@@ -1140,17 +1145,18 @@
 
 				.quotation_area_oneline_item {
 					display: flex;
-					// width: 50%;
+					width: 50%;
                     /deep/.u-input__input{
 					  margin-top:8rpx;	
 					}
 					.ufield {
-						flex: 1;
+						// flex: 1;
 					}
 
 					.text {
 						align-self: center;
 						color: #868686;
+						
 					}
 				}
 			}
