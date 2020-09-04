@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "已报价",
+  "usingComponents": {
+    "u-checkbox": "/node-modules/uview-ui/components/u-checkbox/u-checkbox",
+    "u-field": "/node-modules/uview-ui/components/u-field/u-field",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-checkbox-group": "/node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group",
+    "u-collapse": "/node-modules/uview-ui/components/u-collapse/u-collapse",
+    "u-row": "/node-modules/uview-ui/components/u-row/u-row",
+    "u-col": "/node-modules/uview-ui/components/u-col/u-col",
+    "u-collapse-item": "/node-modules/uview-ui/components/u-collapse-item/u-collapse-item",
+    "tabbar": "/my_common_components/Tabbar"
+  }
+}

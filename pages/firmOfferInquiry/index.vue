@@ -278,7 +278,7 @@
 		</view>
 
 		<!-- 竞价模态框 -->
-		<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500" :mask-close-able="true">
+		<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
 			<view class="slot-content">
 				<view class="slot-content_oneline">
 					<u-row gutter="16">

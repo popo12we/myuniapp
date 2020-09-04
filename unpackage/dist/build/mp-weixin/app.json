@@ -1,6 +1,14 @@
 {
   "pages": [
-    "pages/login/index"
+    "pages/login/index",
+    "pages/commodity/index",
+    "pages/prepareQuoted/index",
+    "pages/profile/index",
+    "pages/quotedPrice/index",
+    "pages/firmOfferInquiry/index",
+    "pages/bidding/index",
+    "pages/editPassword/index",
+    "pages/batchQuotation/index"
   ],
   "subPackages": [],
   "window": {
@@ -8,6 +16,26 @@
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#303133",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/prepareQuoted/index"
+      },
+      {
+        "pagePath": "pages/quotedPrice/index"
+      },
+      {
+        "pagePath": "pages/commodity/index"
+      },
+      {
+        "pagePath": "pages/profile/index"
+      }
+    ]
   },
   "uniStatistics": {
     "enable": false

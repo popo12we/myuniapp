@@ -47,33 +47,33 @@
 												<text>{{item.brand}}</text>
 											</view>
 											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">规格</text>
-														<text class="mg15 gray">:</text>
-														<text class="gray">{{item.spuSpec}}</text>
-													</u-col>
-												</u-row>
+												<!-- <u-row>
+													<u-col span="12"> -->
+												<text class="gray">规格</text>
+												<text class="mg15 gray">:</text>
+												<text class="gray">{{item.spuSpec}}</text>
+												<!-- </u-col>
+												</u-row> -->
 											</view>
 											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">当前出价（USD):</text>
-														<text class="mg15"></text>
-														<text class="gray">1.63</text>
-													</u-col>
-												</u-row>
+												<!-- <u-row>
+													<u-col span="12"> -->
+												<text class="gray">当前出价（USD):</text>
+												<text class="mg15"></text>
+												<text class="gray">1.63</text>
+												<!-- </u-col>
+												</u-row> -->
 											</view>
 											<view class="swiper_center_oneline">
-												<u-row>
-													<u-col span="12">
-														<text class="gray">当前排名</text>
-														<text class="mg15 gray">:</text>
-														<text class="gray">2</text>
-													</u-col>
-												</u-row>
+												<!-- <u-row>
+													<u-col span="12"> -->
+												<text class="gray">当前排名</text>
+												<text class="mg15 gray">:</text>
+												<text class="gray">2</text>
+												<!-- </u-col>
+												</u-row> -->
 											</view>
-											<view class="swiper_center_oneline settimeout_btn clearfix">
+											<view class="swiper_center_oneline settimeout_btn">
 												<view class="settimeout">剩余1天12小时30分结束</view>
 											</view>
 											<view class="swiper_center_oneline center_btn_area">
@@ -92,8 +92,8 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange(item.offerId)" v-model="item.checked" v-for="(item, index) in Inquiry" :key="item.id"
-						 :name="item.name">
+						<u-checkbox @change="checkboxOneChange(item.offerId)" v-model="item.checked" v-for="(item, index) in Inquiry"
+						 :key="item.id" :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
 									<text class="checkbox_view_name gray">{{item.spuName}}</text>
@@ -146,9 +146,10 @@
 									<text class="mg15"></text>
 									<u-field :border-bottom="true" class="ufield" :label-width="0"></u-field>
 									<text class="mg15"></text>
-									<text>USD</text>
+									<text v-if="item.currency==='USD'">USD</text>
+									<text v-if="item.currency==='RMB'">RMB</text>
 									<text class="mg15"></text>
-									<text class="change">切换</text>
+									<text class="change" @click.stop="changeCurrency(item)">切换</text>
 								</view>
 								<u-collapse-item :index="index" @change="changeCollapseItem">
 									<view class="checkbox_view_oneline">
@@ -203,9 +204,10 @@
 										<text class="mg15"></text>
 										<u-field :border-bottom="true" class="ufield" :label-width="0"></u-field>
 										<text class="mg15"></text>
-										<text>USD</text>
+										<text v-if="item.currency==='USD'">USD</text>
+										<text v-if="item.currency==='RMB'">RMB</text>
 										<text class="mg15"></text>
-										<text class="change">切换</text>
+										<text class="change" @click.stop="showCurrencySelect">切换</text>
 									</view>
 									<view class="checkbox_view_oneline mt15">
 										<u-row gutter="16">
@@ -226,7 +228,8 @@
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item per60">
 						<view class="text">有效期</view>
-						<u-input :border-bottom="true" class="ufield" type="select" @click="showValidity" :label-width="0" :clearable="false" v-model="inquiryForm.validity" placeholder=" "></u-input>
+						<u-input :border-bottom="true" class="ufield" type="select" @click="showValidity" :label-width="0" :clearable="false"
+						 v-model="inquiryForm.validity" placeholder=" "></u-input>
 					</view>
 					<view class="quotation_area_oneline_item per40">
 						<view class="text">交货天数</view>
@@ -236,7 +239,7 @@
 				<view class="quotation_area_oneline">
 					<view class="quotation_area_oneline_item per60">
 						<view class="text">价格趋势</view>
-						<u-input type="select" @click="showTrendSelect" placeholder="请选择价格趋势" v-model="inquiryForm.trend"/>
+						<u-input type="select" @click="showTrendSelect" placeholder="请选择价格趋势" v-model="inquiryForm.trend" />
 					</view>
 					<view class="quotation_area_oneline_item per40">
 						<view class="text">趋势说明</view>
@@ -296,7 +299,7 @@
 											</view>
 											<view class="swiper_center_oneline">周一，周三，周五</view>
 											<view class="swiper_center_oneline">2020-08-05 至 2020-08-15</view>
-											<view class="swiper_center_oneline settimeout_btn clearfix">
+											<view class="swiper_center_oneline settimeout_btn">
 												<view class="settimeout">剩余1天12小时30分结束</view>
 											</view>
 											<view class="swiper_center_oneline center_btn_area">
@@ -458,7 +461,7 @@
 		<Tabbar></Tabbar>
 
 		<!-- 询盘模态框 -->
-		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false" :mask-close-able="true">
+		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false">
 			<view class="inquiryModal_content">
 				<u-form :model="inquiryForm" ref="iForm" :label-width="145">
 					<u-form-item label="币种">
@@ -501,7 +504,7 @@
 		</u-modal>
 
 		<!-- 竞价模态框 -->
-		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500" :mask-close-able="true">
+		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
 			<view class="slot-content">
 				<view class="slot-content_oneline">
 					<u-row gutter="16">
@@ -542,7 +545,7 @@
 				<view>
 					<u-row gutter="16">
 						<u-col span="6">
-							<u-button type="error" plain>取消</u-button>
+							<u-button type="error" plain @click="cancelBidding">取消</u-button>
 						</u-col>
 						<u-col span="6">
 							<u-button type="error" @click="submitBidding">我要竞价</u-button>
@@ -554,7 +557,7 @@
 		<!-- toast -->
 		<u-toast ref="toast" position="top" />
 		<!-- 放弃报价模态框 -->
-		<u-modal v-model="giveupbiddingShow" :mask-close-able="true" :show-title="false" :show-cancel-button="true" @confirm="sureGiveupBidding"
+		<u-modal v-model="giveupbiddingShow" :show-title="false" :show-cancel-button="true" @confirm="sureGiveupBidding"
 		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
 			<view class="giveupbiddingModal_oneline">确定放弃报价？</view>
 			<view class="red giveupbiddingModal_oneline">大豆分离蛋白</view>
@@ -688,6 +691,7 @@
 							item.down = false
 							item.name = index
 							item.id = index
+							item.currency = 'RMB'
 							if (item.biddingMode === '是') {
 								// 竞价数组
 								this.biddingList.push(item)
@@ -695,8 +699,8 @@
 								if (item.inquiryType === "询盘询价") {
 									//询盘数组
 									this.Inquiry.push(item)
-								} 
-								
+								}
+
 								if (item.inquiryType === "实单询价") {
 									//实单数组
 									this.realOrderList.push(item)
@@ -750,7 +754,7 @@
 			toBindding(offerId) {
 				console.log(offerId)
 				this.resetInquiryForm()
-				if(offerId){
+				if (offerId) {
 					this.offerId = offerId[0]
 				}
 				this.binddingShow = true;
@@ -764,6 +768,7 @@
 
 			//点击取消 取消询盘弹窗显示
 			showInquiryModalCancel() {
+				this.resetInquiryForm()
 				this.inquiryShow = false
 			},
 
@@ -795,6 +800,12 @@
 				this.inquiryForm.pricetrendValue = e[0].value
 			},
 
+			//取消报价
+			cancelBidding() {
+				this.resetInquiryForm()
+				this.binddingShow = false
+			},
+
 			//提交报价
 			async submitBidding() {
 				let res = await fetch(this.api.v2.submitQuotation, {
@@ -815,6 +826,7 @@
 				})
 
 				this.inquiryShow = false
+				this.binddingShow = false
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: res.data.msg,
@@ -823,7 +835,7 @@
 					})
 				} else {
 					this.$refs.toast.show({
-						title: res.data.msg,
+						title: '提交报价失败',
 						type: 'error',
 						position: 'top'
 					})
@@ -885,6 +897,22 @@
 					//备注
 					remark: "",
 				}
+			},
+
+			//切换币种
+			changeCurrency(item) {
+				console.log(item.currency)
+				if (item.currency === 'USD') {
+					item.currency = 'RMB'
+					this.$forceUpdate()
+					return;
+				}
+				if (item.currency === 'RMB') {
+					item.currency = 'USD'
+					this.$forceUpdate()
+					return;
+				}
+
 			}
 		},
 
@@ -904,7 +932,7 @@
 
 <style lang="scss" scoped>
 	//公共样式
-	
+
 	.gray {
 		color: #c9c9c9 !important;
 	}
@@ -916,13 +944,15 @@
 	.mt15 {
 		margin-top: 15rpx;
 	}
-    
-	.per60{
-		width:60% !important;
+
+	.per60 {
+		width: 60% !important;
 	}
-	.per40{
-		width:40% !important;
+
+	.per40 {
+		width: 40% !important;
 	}
+
 	.prepareQuoted {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
@@ -986,21 +1016,21 @@
 						}
 					}
 				}
-				
-				
+
+
 				.swiper-item_sign_box_yellow {
 					width: 110rpx;
 					height: 110rpx;
 					color: #fff;
 					text-align: center;
-				
+
 					.swiper-item_sign {
 						width: 0;
 						height: 0;
 						position: relative;
 						border-top: 110rpx solid #ff9900;
 						border-right: 110rpx solid transparent;
-				
+
 						text {
 							position: absolute;
 							left: 20rpx;
@@ -1046,7 +1076,6 @@
 					border-radius: 20rpx;
 					color: #fff;
 					text-align: center;
-					float: left;
 				}
 
 				.center_btn_area {
@@ -1146,9 +1175,11 @@
 				.quotation_area_oneline_item {
 					display: flex;
 					width: 50%;
-                    /deep/.u-input__input{
-					  margin-top:8rpx;	
+
+					/deep/.u-input__input {
+						margin-top: 8rpx;
 					}
+
 					.ufield {
 						// flex: 1;
 					}
@@ -1156,7 +1187,7 @@
 					.text {
 						align-self: center;
 						color: #868686;
-						
+
 					}
 				}
 			}
@@ -1433,10 +1464,11 @@
 				}
 			}
 		}
-		
-		.quotation_area_oneline.btnarea{
-			margin-top:20rpx;
-			.btn{
+
+		.quotation_area_oneline.btnarea {
+			margin-top: 20rpx;
+
+			.btn {
 				width: 100%;
 			}
 		}

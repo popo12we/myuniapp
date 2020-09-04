@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "批量报价",
+  "usingComponents": {
+    "u-field": "/node-modules/uview-ui/components/u-field/u-field",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "tabbar": "/my_common_components/Tabbar"
+  }
+}

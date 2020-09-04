@@ -1,6 +1,7 @@
 <template>
 	<!-- 登录 -->
 	<view class="login">
+		<u-loading mode="flower" :show="isLoading" class="loading"></u-loading>
 		<u-toast ref="errorLoginToast" position="top" />
 		<view class="login_center">
 			<view class="login_center_logo">Foodchem</view>
@@ -36,13 +37,16 @@
 				//账号的错误提示信息
 				errorTextValueMessage: '',
 				//密码的错误提示信息
-				errorPasswordValueMessage: ''
+				errorPasswordValueMessage: '',
+				//是否打开加载动画
+				isLoading:false
 			}
 		},
 
 		methods: {
 			//点击登录
 			async login() {
+				this.isLoading=true
 				//加密公钥私钥
 				let publicKey_pkcs1 =
 					`-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJUEyICiHyhpZPZM/qCJkHMXvrsbqPbhxGNp+rCBI4TTgpqlvyzJ5i0n3DIsF2rRT8kN0dETkCWlDwLnOqQnFN8CAwEAAQ==-----END PUBLIC KEY-----`;
@@ -60,7 +64,9 @@
 						password: encStr
 					}
 				})
-
+                if(res){
+					this.isLoading=false
+				}
 				if (res.data.code === '0') {
 					// res.data.supplierNature  1采购供应商2物流供应商
 					uni.setStorageSync('roleId', res.data.data.supplierNature)
@@ -103,35 +109,45 @@
 		}
 	}
 </script>
-<style lang="scss" scoped>
-	.login_center {
-		width: 70%;
-		margin: 100rpx auto;
-		z-index: 1;
+<style lang="scss" scoped>	
+	.login{
+		position: relative;
+		.loading{
+			position: absolute;
+			left: 50%;
+			top:50%;
+			transform: translate(-50%,-50%);
+		}
+		.login_center {
+			width: 70%;
+			margin: 100rpx auto;
+			z-index: 1;
+		}
+		
+		.login_center_logo {
+			color: #cb352f;
+			font-size: 80rpx;
+			font-weight: 700;
+		}
+		
+		.login_center_title {
+			margin: 25rpx 0 30rpx;
+			font-size: 32rpx;
+			font-weight: 700;
+		}
+		
+		.verificationcode-login-area {
+			margin-top: 40rpx;
+		}
+		
+		.verificationcode-login {
+			color: #4395ff;
+			float: right;
+		}
+		
+		.loginbtn-area {
+			margin-top: 40rpx;
+		}
 	}
-
-	.login_center_logo {
-		color: #cb352f;
-		font-size: 80rpx;
-		font-weight: 700;
-	}
-
-	.login_center_title {
-		margin: 25rpx 0 30rpx;
-		font-size: 32rpx;
-		font-weight: 700;
-	}
-
-	.verificationcode-login-area {
-		margin-top: 40rpx;
-	}
-
-	.verificationcode-login {
-		color: #4395ff;
-		float: right;
-	}
-
-	.loginbtn-area {
-		margin-top: 40rpx;
-	}
+	
 </style>
