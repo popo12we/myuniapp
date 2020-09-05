@@ -38,7 +38,7 @@
 											</view>
 										</view>
 										<view class="swiper-item_right">
-											<span class="iconfont icon_close" @click.stop="giveupbidding(item.offerId)">&#xe607;</span>
+											<span class="iconfont icon_close" @click.stop="giveupbidding(item)">&#xe607;</span>
 										</view>
 										<view class="swiper-item_center">
 											<view class="swiper_center_title">
@@ -212,7 +212,7 @@
 									<view class="checkbox_view_oneline mt15">
 										<u-row gutter="16">
 											<u-col span="12">
-												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding(item.offerId)">放弃报价</u-button>
+												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding(item)">放弃报价</u-button>
 												<u-button type="error" size="mini" plain @click="showInquiryModal(item.offerId)">我要报价</u-button>
 											</u-col>
 										</u-row>
@@ -560,7 +560,7 @@
 		<u-modal v-model="giveupbiddingShow" :show-title="false" :show-cancel-button="true" @confirm="sureGiveupBidding"
 		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
 			<view class="giveupbiddingModal_oneline">确定放弃报价？</view>
-			<view class="red giveupbiddingModal_oneline">大豆分离蛋白</view>
+			<view class="red giveupbiddingModal_oneline">{{giveupModalProduct}}</view>
 		</u-modal>
 		<!-- 价格趋势下拉框 -->
 		<u-select v-model="selectPriceTrendShow" :list="selectPriceTrendList" @confirm="confirmPriceTrend"></u-select>
@@ -645,6 +645,8 @@
 				binddingShow: false,
 				//放弃模态框是否显示
 				giveupbiddingShow: false,
+				//放弃模态框商品名
+				giveupModalProduct:"",
 				//记录哪些面板是展开的
 				collapseItemIsChecked: [],
 				//总的询价单列表
@@ -769,10 +771,11 @@
 			},
 
 			//点击放弃竞价出的弹框
-			giveupbidding(offerId) {
-				if (offerId) {
-					this.offerId = offerId.join(',')
+			giveupbidding(item) {
+				if (item.offerId) {
+					this.offerId = item.offerId.join(',')
 				}
+				this.giveupModalProduct=item.spuName
 				this.giveupbiddingShow = true;
 			},
 
@@ -872,6 +875,20 @@
 						offerId: this.offerId
 					}
 				})
+				
+				if (res.data.code === '0') {
+					this.$refs.toast.show({
+						title: '放弃报价成功',
+						type: 'success',
+						position: 'top'
+					})
+				} else {
+					this.$refs.toast.show({
+						title: '放弃报价失败',
+						type: 'error',
+						position: 'top'
+					})
+				}
 			},
 
 			//点轮播图跳转到待报价竞价模式
