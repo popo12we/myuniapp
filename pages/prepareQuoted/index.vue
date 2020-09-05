@@ -144,7 +144,7 @@
 								<view class="price_change" v-if="item.checked&&(!item.down)">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
-									<u-field :border-bottom="true" class="ufield" :label-width="0"></u-field>
+									<u-input :border-bottom="true" class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 									<text class="mg15"></text>
 									<text v-if="item.currency==='USD'">USD</text>
 									<text v-if="item.currency==='RMB'">RMB</text>
@@ -932,7 +932,7 @@
 					let obj={
 						offerId:item.offerId[0],
 						cur:item.currency,
-						// price: this.inquiryForm.price,
+						price: item.price,
 						deliveryDay: this.inquiryForm.day,
 						expiredDate: this.inquiryForm.validity,
 						pricetrend: this.inquiryForm.pricetrendValue,
@@ -947,6 +947,20 @@
 						list: tempArr
 					}
 				})
+				
+				if (res.data.code === '0') {
+					this.$refs.toast.show({
+						title: '提交报价成功',
+						type: 'success',
+						position: 'top'
+					})
+				} else {
+					this.$refs.toast.show({
+						title: '提交报价失败',
+						type: 'error',
+						position: 'top'
+					})
+				}
 			}
 		},
 
