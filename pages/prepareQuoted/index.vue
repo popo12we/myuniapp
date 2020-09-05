@@ -134,9 +134,9 @@
 									<u-row gutter="16">
 										<u-col span="12">
 											<view>
-												<text class="red">2020-07-30</text>
+												<text class="red">{{item.inquiryDeadline}}</text>
 												<text class="mg15"></text>
-												<text class="red">18：00截至报价</text>
+												<text class="red">截至报价</text>
 											</view>
 										</u-col>
 									</u-row>
@@ -725,7 +725,7 @@
 			},
 
 			//单选
-			checkboxOneChange(offerId) {
+			checkboxOneChange() {
 				this.resetInquiryForm()
 				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 				this.allChecked =
@@ -746,7 +746,9 @@
 			//点击询盘/我要报价打开询盘模态框
 			showInquiryModal(offerId) {
 				this.resetInquiryForm()
-				this.offerId = offerId
+				if (offerId) {
+					this.offerId = offerId.join(',')
+				}
 				this.inquiryShow = true;
 			},
 
@@ -755,14 +757,17 @@
 				console.log(offerId)
 				this.resetInquiryForm()
 				if (offerId) {
-					this.offerId = offerId[0]
+					this.offerId = offerId.join(',')
 				}
 				this.binddingShow = true;
+				this.inquiryForm.currency='USD'
 			},
 
 			//点击放弃竞价出的弹框
 			giveupbidding(offerId) {
-				this.offerId = offerId
+				if (offerId) {
+					this.offerId = offerId.join(',')
+				}
 				this.giveupbiddingShow = true;
 			},
 
