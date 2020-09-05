@@ -102,11 +102,13 @@
 				}) : this.list.map(val => {
 					val.checked = false;
 				})
+				this.$forceUpdate()
 			},
 
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
+				this.$forceUpdate()
 			},
 
 			//批量填写

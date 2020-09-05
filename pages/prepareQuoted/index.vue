@@ -92,7 +92,7 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange(item.offerId)" v-model="item.checked" v-for="(item, index) in Inquiry"
+						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in Inquiry"
 						 :key="item.id" :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
@@ -247,7 +247,7 @@
 					</view>
 				</view>
 				<view class="quotation_area_oneline btnarea">
-					<u-button type="error" class="btn" @click="submitBidding">批量报价</u-button>
+					<u-button type="error" class="btn" @click="submitSomeBidding">批量报价</u-button>
 				</view>
 			</view>
 		</view>
@@ -582,6 +582,9 @@
 		},
 		data() {
 			return {
+				//选中数据所组成的数组
+				checkedList:[],
+				//选中个数
 				checkedNum: 0,
 				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
 				//上方全局搜索
@@ -722,11 +725,13 @@
 					});
 				this.$forceUpdate()
 				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
+				this.checkedList=this.Inquiry.filter((val) => val.checked)
 			},
 
 			//单选
-			checkboxOneChange() {
+			checkboxOneChange(item) {
 				this.resetInquiryForm()
+				this.checkedList=this.Inquiry.filter((val) => val.checked)
 				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 				this.allChecked =
 					this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
@@ -834,7 +839,7 @@
 				this.binddingShow = false
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
-						title: res.data.msg,
+						title: '提交报价成功',
 						type: 'success',
 						position: 'top'
 					})
@@ -917,7 +922,31 @@
 					this.$forceUpdate()
 					return;
 				}
-
+			},
+			
+			//批量报价
+			async submitSomeBidding(){
+				console.log(this.checkedList)
+				let tempArr=[]
+				this.checkedList.forEach(item=>{
+					let obj={
+						offerId:item.offerId[0],
+						cur:item.currency,
+						// price: this.inquiryForm.price,
+						deliveryDay: this.inquiryForm.day,
+						expiredDate: this.inquiryForm.validity,
+						pricetrend: this.inquiryForm.pricetrendValue,
+						priceInfo: this.inquiryForm.explain,
+					}
+					tempArr.push(obj)
+				})
+				let res = await fetch(this.api.v2.submitQuotation, {
+					method: "post",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						list: tempArr
+					}
+				})
 			}
 		},
 
