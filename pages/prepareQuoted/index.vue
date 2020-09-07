@@ -98,7 +98,7 @@
 								<view class="checkbox_view_oneline">
 									<text class="checkbox_view_name gray">{{item.spuName}}</text>
 									<text class="mg15"></text>
-									<text class="checkbox_view_tab" @click="showInquiryModal">询盘</text>
+									<text class="checkbox_view_tab" @click.stop="showInquiryModal(item.offerId)">询盘</text>
 								</view>
 
 								<view class="checkbox_view_oneline">
@@ -328,7 +328,7 @@
 											<view>——</view>
 										</view>
 										<view class="fourthtext">奥德赛</view>
-										<text class="checkbox_view_tab" @click="showInquiryModal">询盘</text>
+										<text class="checkbox_view_tab" @click.stop="showInquiryModal">询盘</text>
 									</view>
 								</view>
 
