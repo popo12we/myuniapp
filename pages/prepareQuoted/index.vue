@@ -92,8 +92,8 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in Inquiry"
-						 :key="item.id" :name="item.name">
+						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in Inquiry" :key="item.id"
+						 :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
 									<text class="checkbox_view_name gray">{{item.spuName}}</text>
@@ -144,7 +144,8 @@
 								<view class="price_change" v-if="item.checked&&(!item.down)">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
-									<u-input :border-bottom="true" class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
+									<u-input :border-bottom="true" class="ufield" :label-width="0" v-model.number="item.price" @click.stop
+									 placeholder=" "></u-input>
 									<text class="mg15"></text>
 									<text v-if="item.currency==='USD'">USD</text>
 									<text v-if="item.currency==='RMB'">RMB</text>
@@ -464,17 +465,17 @@
 		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false">
 			<view class="inquiryModal_content">
 				<u-form :model="inquiryForm" ref="iForm" :label-width="145">
-					<u-form-item label="币种">
+					<u-form-item label="币种" prop="currency">
 						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
 					</u-form-item>
-					<u-form-item label="价格" v-if="inquiryForm.currency!=='USD'">
+					<u-form-item label="价格" prop="price" v-if="inquiryForm.currency!=='USD'">
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
 					<view class="red" v-if="inquiryForm.currency==='RMB'&&inquiryForm.price===''">请填写含税含运费价格</view>
-					<u-form-item label="美元价格" v-if="inquiryForm.currency==='USD'">
+					<u-form-item label="美元价格" prop="usaPrice" v-if="inquiryForm.currency==='USD'">
 						<u-input v-model="inquiryForm.usaPrice" placeholder="请输入美元价格" />
 					</u-form-item>
-					<u-form-item label="有效期">
+					<u-form-item label="有效期" prop="validity">
 						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
 					<u-form-item label="交货天数">
@@ -583,7 +584,7 @@
 		data() {
 			return {
 				//选中数据所组成的数组
-				checkedList:[],
+				checkedList: [],
 				//选中个数
 				checkedNum: 0,
 				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
@@ -641,12 +642,38 @@
 					//备注
 					remark: "",
 				},
+
+				//校验规则
+				rules: {
+					currency: [{
+						required: true,
+						message: '请选择币种',
+						trigger: ['change']
+					}],
+					price: [{
+						required: true,
+						type: 'number',
+						message: '请输入准确的价格',
+						trigger: ['blur','change']
+					}],
+					usaPrice: [{
+						required: true,
+						type: 'number',
+						message: '请输入准确的价格',
+						trigger: ['blur','change']
+					}],
+					validity: [{
+						required: true,
+						message: '请选择有效期',
+						trigger: ['change']
+					}]
+				},
 				//竞价模态框是否显示
 				binddingShow: false,
 				//放弃模态框是否显示
 				giveupbiddingShow: false,
 				//放弃模态框商品名
-				giveupModalProduct:"",
+				giveupModalProduct: "",
 				//记录哪些面板是展开的
 				collapseItemIsChecked: [],
 				//总的询价单列表
@@ -673,6 +700,9 @@
 		},
 		created() {
 			this.getInquiryList()
+		},
+		onReady() {
+			this.$refs.iForm.setRules(this.rules);
 		},
 		methods: {
 			//询价单列表
@@ -727,13 +757,13 @@
 					});
 				this.$forceUpdate()
 				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
-				this.checkedList=this.Inquiry.filter((val) => val.checked)
+				this.checkedList = this.Inquiry.filter((val) => val.checked)
 			},
 
 			//单选
 			checkboxOneChange(item) {
 				this.resetInquiryForm()
-				this.checkedList=this.Inquiry.filter((val) => val.checked)
+				this.checkedList = this.Inquiry.filter((val) => val.checked)
 				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 				this.allChecked =
 					this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
@@ -767,7 +797,7 @@
 					this.offerId = offerId.join(',')
 				}
 				this.binddingShow = true;
-				this.inquiryForm.currency='USD'
+				this.inquiryForm.currency = 'USD'
 			},
 
 			//点击放弃竞价出的弹框
@@ -775,7 +805,7 @@
 				if (item.offerId) {
 					this.offerId = item.offerId.join(',')
 				}
-				this.giveupModalProduct=item.spuName
+				this.giveupModalProduct = item.spuName
 				this.giveupbiddingShow = true;
 			},
 
@@ -821,39 +851,42 @@
 
 			//提交报价
 			async submitBidding() {
-				let res = await fetch(this.api.v2.submitQuotation, {
-					method: "post",
-					data: {
-						accessToken: uni.getStorageSync('accessToken'),
-						list: [{
-							offerId: this.offerId,
-							cur: this.inquiryForm.currency,
-							price: this.inquiryForm.price,
-							deliveryDay: this.inquiryForm.day,
-							expiredDate: this.inquiryForm.validity,
-							pricetrend: this.inquiryForm.pricetrendValue,
-							priceInfo: this.inquiryForm.explain,
-							remarks: this.inquiryForm.remark
-						}]
+				this.$refs.iForm.validate(async valid => {
+					if (valid) {
+						let res = await fetch(this.api.v2.submitQuotation, {
+							method: "post",
+							data: {
+								accessToken: uni.getStorageSync('accessToken'),
+								list: [{
+									offerId: this.offerId,
+									cur: this.inquiryForm.currency,
+									price: this.inquiryForm.price,
+									deliveryDay: this.inquiryForm.day,
+									expiredDate: this.inquiryForm.validity,
+									pricetrend: this.inquiryForm.pricetrendValue,
+									priceInfo: this.inquiryForm.explain,
+									remarks: this.inquiryForm.remark
+								}]
+							}
+						})
+
+						this.inquiryShow = false
+						this.binddingShow = false
+						if (res.data.code === '0') {
+							this.$refs.toast.show({
+								title: '提交报价成功',
+								type: 'success',
+								position: 'top'
+							})
+						} else {
+							this.$refs.toast.show({
+								title: '提交报价失败',
+								type: 'error',
+								position: 'top'
+							})
+						}
 					}
 				})
-
-				this.inquiryShow = false
-				this.binddingShow = false
-				if (res.data.code === '0') {
-					this.$refs.toast.show({
-						title: '提交报价成功',
-						type: 'success',
-						position: 'top'
-					})
-				} else {
-					this.$refs.toast.show({
-						title: '提交报价失败',
-						type: 'error',
-						position: 'top'
-					})
-				}
-
 			},
 
 			//询盘打开选时间
@@ -875,7 +908,7 @@
 						offerId: this.offerId
 					}
 				})
-				
+
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: '放弃报价成功',
@@ -940,15 +973,15 @@
 					return;
 				}
 			},
-			
+
 			//批量报价
-			async submitSomeBidding(){
+			async submitSomeBidding() {
 				console.log(this.checkedList)
-				let tempArr=[]
-				this.checkedList.forEach(item=>{
-					let obj={
-						offerId:item.offerId[0],
-						cur:item.currency,
+				let tempArr = []
+				this.checkedList.forEach(item => {
+					let obj = {
+						offerId: item.offerId[0],
+						cur: item.currency,
 						price: item.price,
 						deliveryDay: this.inquiryForm.day,
 						expiredDate: this.inquiryForm.validity,
@@ -964,7 +997,7 @@
 						list: tempArr
 					}
 				})
-				
+
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: '提交报价成功',

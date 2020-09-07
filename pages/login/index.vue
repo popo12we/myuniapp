@@ -66,7 +66,6 @@
 		created() {
 			this.isUpdated()
 		},
-		// 必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕
 		onReady() {
 			this.$refs.uForm.setRules(this.rules);
 		},
