@@ -506,7 +506,7 @@
 
 		<!-- 竞价模态框 -->
 		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
-			<view class="slot-content">
+		<!-- 	<view class="slot-content">
 				<view class="slot-content_oneline">
 					<u-row gutter="16">
 						<u-col span="5">
@@ -553,6 +553,33 @@
 						</u-col>
 					</u-row>
 				</view>
+			</view> -->
+			
+			<view class="inquiryModal_content">
+				<u-form :model="inquiryForm" ref="iForm" :label-width="165">
+					
+					<u-form-item label="价格(USD)*" prop="price">
+						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
+					</u-form-item>
+				
+					<u-form-item label="有效期" prop="validity">
+						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
+					</u-form-item>
+					
+					<u-form-item label="备注" placeholder="请输入备注">
+						<u-input v-model="inquiryForm.remark" />
+					</u-form-item>
+					<view class="btn-area">
+						<u-row gutter="16">
+							<u-col span="6">
+								<u-button type="error" plain @click="cancelBidding">取消</u-button>
+							</u-col>
+							<u-col span="6">
+								<u-button type="error" @click="submitBidding">提交报价</u-button>
+							</u-col>
+						</u-row>
+					</view>
+				</u-form>
 			</view>
 		</u-modal>
 		<!-- toast -->
@@ -957,6 +984,7 @@
 					//备注
 					remark: "",
 				}
+				this.$refs['iForm'].resetFields();
 			},
 
 			//切换币种
