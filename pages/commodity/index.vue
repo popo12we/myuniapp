@@ -116,6 +116,11 @@
 				uni.navigateTo({
 					url: '../batchQuotation/index'
 				});
+			},
+			
+			//点击搜索
+			checkedAll(){
+				
 			}
 
 		}

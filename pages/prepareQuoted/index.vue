@@ -478,7 +478,7 @@
 					<u-form-item label="有效期" prop="validity">
 						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
-					<u-form-item label="交货天数">
+					<u-form-item label="交货天数" prop="day">
 						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数" />
 					</u-form-item>
 					<u-form-item label="价格趋势">
@@ -646,6 +646,12 @@
 					}],
 					validity: [{
 						required: true,
+						message: '请选择有效期',
+						trigger: ['change']
+					}],
+					
+					day: [{
+						type:'number',
 						message: '请选择有效期',
 						trigger: ['change']
 					}]
