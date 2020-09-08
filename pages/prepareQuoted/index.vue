@@ -67,9 +67,9 @@
 											<view class="swiper_center_oneline">
 												<!-- <u-row>
 													<u-col span="12"> -->
-												<text class="gray">当前排名</text>
-												<text class="mg15 gray">:</text>
-												<text class="gray">2</text>
+												<text class="red">当前排名</text>
+												<text class="mg15 red">:</text>
+												<text class="red">2</text>
 												<!-- </u-col>
 												</u-row> -->
 											</view>
@@ -96,7 +96,7 @@
 						 :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
-									<text class="checkbox_view_name gray">{{item.spuName}}</text>
+									<text class="checkbox_view_name">{{item.spuName}}</text>
 									<text class="mg15"></text>
 									<text class="checkbox_view_tab" @click.stop="showInquiryModal(item.offerId)">询盘</text>
 								</view>
@@ -464,7 +464,7 @@
 		<!-- 询盘模态框 -->
 		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false">
 			<view class="inquiryModal_content">
-				<u-form :model="inquiryForm" ref="iForm" :label-width="145">
+				<u-form :model="inquiryForm" ref="iForm1" :label-width="145">
 					<u-form-item label="币种" prop="currency">
 						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
 					</u-form-item>
@@ -472,8 +472,8 @@
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
 					<view class="red" v-if="inquiryForm.currency==='RMB'&&inquiryForm.price===''">请填写含税含运费价格</view>
-					<u-form-item label="美元价格" prop="usaPrice" v-if="inquiryForm.currency==='USD'">
-						<u-input v-model="inquiryForm.usaPrice" placeholder="请输入美元价格" />
+					<u-form-item label="美元价格" prop="price" v-if="inquiryForm.currency==='USD'">
+						<u-input v-model="inquiryForm.price" placeholder="请输入美元价格" />
 					</u-form-item>
 					<u-form-item label="有效期" prop="validity">
 						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
@@ -506,66 +506,17 @@
 
 		<!-- 竞价模态框 -->
 		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
-		<!-- 	<view class="slot-content">
-				<view class="slot-content_oneline">
-					<u-row gutter="16">
-						<u-col span="5">
-							<text>价格（USD）*</text>
-						</u-col>
-						<u-col span="7">
-							<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
-						</u-col>
-					</u-row>
-				</view>
-
-				<view class="slot-content_oneline">
-					<u-row gutter="16">
-						<u-col span="4">
-							<text>有效期*</text>
-						</u-col>
-						<u-col span="8">
-							<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					<u-row gutter="16">
-						<u-col span="12">
-							<text>备注*</text>
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					<u-row gutter="16">
-						<u-col span="12">
-							<u-input v-model="inquiryForm.remark" placeholder="请输入备注" />
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">总共剩余1次报价机会</view>
-				<view>
-					<u-row gutter="16">
-						<u-col span="6">
-							<u-button type="error" plain @click="cancelBidding">取消</u-button>
-						</u-col>
-						<u-col span="6">
-							<u-button type="error" @click="submitBidding">我要竞价</u-button>
-						</u-col>
-					</u-row>
-				</view>
-			</view> -->
-			
 			<view class="inquiryModal_content">
-				<u-form :model="inquiryForm" ref="iForm" :label-width="165">
-					
+				<u-form :model="inquiryForm" ref="iForm2" :label-width="165">
+
 					<u-form-item label="价格(USD)*" prop="price">
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
-				
+
 					<u-form-item label="有效期" prop="validity">
 						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
-					
+
 					<u-form-item label="备注" placeholder="请输入备注">
 						<u-input v-model="inquiryForm.remark" />
 					</u-form-item>
@@ -575,7 +526,7 @@
 								<u-button type="error" plain @click="cancelBidding">取消</u-button>
 							</u-col>
 							<u-col span="6">
-								<u-button type="error" @click="submitBidding">提交报价</u-button>
+								<u-button type="error" @click="submitBidding2">提交报价</u-button>
 							</u-col>
 						</u-row>
 					</view>
@@ -655,8 +606,7 @@
 					currency: "",
 					//价格
 					price: "",
-					//美元价格
-					usaPrice: "",
+
 					//有效期
 					validity: "",
 					//交货天数
@@ -671,23 +621,28 @@
 				},
 
 				//校验规则
-				rules: {
+				rules1: {
 					currency: [{
 						required: true,
 						message: '请选择币种',
-						trigger: ['change']
+						// 可以单个或者同时写两个触发验证方式 
+						trigger: ['change', 'blur'],
 					}],
+
 					price: [{
+						trigger: ['blur', 'change'],
 						required: true,
-						type: 'number',
-						message: '请输入准确的价格',
-						trigger: ['blur','change']
-					}],
-					usaPrice: [{
-						required: true,
-						type: 'number',
-						message: '请输入准确的价格',
-						trigger: ['blur','change']
+						validator: (rule, value, callback) => {
+							let reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/
+							if (!reg.test(value)) {
+								callback(new Error('请输入准确的价格'))
+							} else {
+								callback()
+							}
+							return
+						}
+
+
 					}],
 					validity: [{
 						required: true,
@@ -695,6 +650,28 @@
 						trigger: ['change']
 					}]
 				},
+
+				rules2: {
+					price: [{
+						trigger: ['blur', 'change'],
+						required: true,
+						validator: (rule, value, callback) => {
+							let reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/
+							if (!reg.test(value)) {
+								callback(new Error('请输入准确的价格'))
+							} else {
+								callback()
+							}
+							return
+						}
+					}],
+					validity: [{
+						required: true,
+						message: '请选择有效期',
+						trigger: ['change']
+					}]
+				},
+
 				//竞价模态框是否显示
 				binddingShow: false,
 				//放弃模态框是否显示
@@ -729,7 +706,8 @@
 			this.getInquiryList()
 		},
 		onReady() {
-			this.$refs.iForm.setRules(this.rules);
+			this.$refs.iForm1.setRules(this.rules1);
+			this.$refs.iForm2.setRules(this.rules2);
 		},
 		methods: {
 			//询价单列表
@@ -878,7 +856,7 @@
 
 			//提交报价
 			async submitBidding() {
-				this.$refs.iForm.validate(async valid => {
+				this.$refs.iForm1.validate(async valid => {
 					if (valid) {
 						let res = await fetch(this.api.v2.submitQuotation, {
 							method: "post",
@@ -916,6 +894,45 @@
 				})
 			},
 
+
+			async submitBidding2() {
+				this.$refs.iForm2.validate(async valid => {
+					if (valid) {
+						let res = await fetch(this.api.v2.submitQuotation, {
+							method: "post",
+							data: {
+								accessToken: uni.getStorageSync('accessToken'),
+								list: [{
+									offerId: this.offerId,
+									cur: this.inquiryForm.currency,
+									price: this.inquiryForm.price,
+									deliveryDay: this.inquiryForm.day,
+									expiredDate: this.inquiryForm.validity,
+									pricetrend: this.inquiryForm.pricetrendValue,
+									priceInfo: this.inquiryForm.explain,
+									remarks: this.inquiryForm.remark
+								}]
+							}
+						})
+
+						this.inquiryShow = false
+						this.binddingShow = false
+						if (res.data.code === '0') {
+							this.$refs.toast.show({
+								title: '提交报价成功',
+								type: 'success',
+								position: 'top'
+							})
+						} else {
+							this.$refs.toast.show({
+								title: '提交报价失败',
+								type: 'error',
+								position: 'top'
+							})
+						}
+					}
+				})
+			},
 			//询盘打开选时间
 			showValidity() {
 				this.dateTime = true
@@ -970,8 +987,7 @@
 					currency: "",
 					//价格
 					price: "",
-					//美元价格
-					usaPrice: "",
+
 					//有效期
 					validity: "",
 					//交货天数
@@ -984,12 +1000,11 @@
 					//备注
 					remark: "",
 				}
-				this.$refs['iForm'].resetFields();
+				this.$refs['iForm1'].resetFields();
 			},
 
 			//切换币种
 			changeCurrency(item) {
-				console.log(item.currency)
 				if (item.currency === 'USD') {
 					item.currency = 'RMB'
 					this.$forceUpdate()
@@ -1060,7 +1075,7 @@
 	//公共样式
 
 	.gray {
-		color: #c9c9c9 !important;
+		color: #868686 !important;
 	}
 
 	.red {
@@ -1190,10 +1205,14 @@
 				.swiper_center_title {
 					margin-top: 30rpx;
 					text-align: center;
+					text{
+						font-weight: 700;
+					}
 				}
 
 				.swiper_center_oneline {
 					margin: 10rpx 0;
+					color:#868686 !important;
 				}
 
 				.settimeout {
@@ -1522,7 +1541,7 @@
 					.checkbox_view_name {
 						font-weight: 700;
 						font-size: 32rpx;
-						color: #666;
+						color: #333;
 					}
 
 					.checkbox_view_tab {
