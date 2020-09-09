@@ -7,6 +7,11 @@ decode-uri-component@^0.2.0:
   resolved "https://r.cnpmjs.org/decode-uri-component/download/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
 
+moment@^2.27.0:
+  version "2.27.0"
+  resolved "https://r.cnpmjs.org/moment/download/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha1-i/9OPiaiNiIN/j423nVrbrqgEF0=
+
 query-string@^6.12.1:
   version "6.13.1"
   resolved "https://r.cnpmjs.org/query-string/download/query-string-6.13.1.tgz#d913ccfce3b4b3a713989fe6d39466d92e71ccad"
@@ -32,3 +37,13 @@ uni-simple-router@^1.5.5:
   integrity sha1-WY9K2+zpg3L3z+s7imJwibQgOJk=
   dependencies:
     query-string "^6.12.1"
+
+uview-ui@^1.6.0:
+  version "1.6.8"
+  resolved "https://r.cnpmjs.org/uview-ui/download/uview-ui-1.6.8.tgz#57efe4cdaba462a9b9e6db6200ebc19a1ecb55b5"
+  integrity sha1-V+/kzaukYqm55ttiAOvBmh7LVbU=
+
+vuex@^3.5.1:
+  version "3.5.1"
+  resolved "https://r.cnpmjs.org/vuex/download/vuex-3.5.1.tgz#f1b8dcea649bc25254cf4f4358081dbf5da18b3d"
+  integrity sha1-8bjc6mSbwlJUz09DWAgdv12hiz0=

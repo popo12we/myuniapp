@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "moment": "^2.27.0",
     "uni-simple-router": "^1.5.5",
     "uview-ui": "^1.6.0"
   }

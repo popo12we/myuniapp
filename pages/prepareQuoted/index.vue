@@ -152,6 +152,14 @@
 									<text class="mg15"></text>
 									<text class="change" @click.stop="changeCurrency(item)">切换</text>
 								</view>
+								<view class="checkbox_view_oneline mt15" v-if="(!item.down)&&(!item.checked)">
+									<u-row gutter="16">
+										<u-col span="12">
+											<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding(item)">放弃报价</u-button>
+											<u-button type="error" size="mini" plain @click="showInquiryModal(item.offerId)">我要报价</u-button>
+										</u-col>
+									</u-row>
+								</view>
 								<u-collapse-item :index="index" @change="changeCollapseItem">
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
@@ -200,7 +208,7 @@
 											</u-col>
 										</u-row>
 									</view>
-									<view class="price_change" v-if="list[index].checked&&item.down">
+									<view class="price_change" v-if="Inquiry[index].checked&&item.down">
 										<text class="gray pricetext">价格</text>
 										<text class="mg15"></text>
 										<u-field :border-bottom="true" class="ufield" :label-width="0"></u-field>
@@ -210,7 +218,8 @@
 										<text class="mg15"></text>
 										<text class="change" @click.stop="showCurrencySelect">切换</text>
 									</view>
-									<view class="checkbox_view_oneline mt15">
+									
+									<view class="checkbox_view_oneline mt15" v-if="!item.checked">
 										<u-row gutter="16">
 											<u-col span="12">
 												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding(item)">放弃报价</u-button>
@@ -825,6 +834,7 @@
 
 			//点的折叠面板是开启还是关闭的 方便后续操作
 			changeCollapseItem(e) {
+				console.log(e)
 				if (e.show === true) {
 					if (this.collapseItemIsChecked.length === 0) {
 						this.collapseItemIsChecked.push(e.index);
@@ -838,7 +848,8 @@
 						(item) => item !== e.index
 					);
 				}
-				this.inquiryList[e.index].down = e.show;
+				// this.inquiryList[e.index].down = e.show;
+				this.Inquiry[e.index].down = e.show;
 			},
 
 			//确认币种

@@ -58,7 +58,9 @@
 		components: {
 			Tabbar
 		},
-
+        created(){
+			console.log(this.$store)
+		},
 		data() {
 			return {
 				name: "",
