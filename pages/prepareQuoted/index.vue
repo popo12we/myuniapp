@@ -21,7 +21,7 @@
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
 							<!-- autoplay='true' :circular='true' -->
-							<swiper class="swiper" :indicator-dots="indicatorDots">
+							<swiper class="swiper" :indicator-dots="indicatorDots"  indicator-color='rgba(0, 0, 0, .1)' indicator-active-color='#666'>
 								<swiper-item v-for="item in swiperList" :key="item.id" @click="navigateTobidding">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
@@ -227,22 +227,22 @@
 
 			<view class="quotation_area" v-if="checkedNum>0">
 				<view class="quotation_area_oneline">
-					<view class="quotation_area_oneline_item per60">
+					<view class="quotation_area_oneline_item">
 						<view class="text">有效期</view>
 						<u-input :border-bottom="true" class="ufield" type="select" @click="showValidity" :label-width="0" :clearable="false"
 						 v-model="inquiryForm.validity" placeholder=" "></u-input>
 					</view>
-					<view class="quotation_area_oneline_item per40">
+					<view class="quotation_area_oneline_item">
 						<view class="text">交货天数</view>
 						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.day"></u-field>
 					</view>
 				</view>
 				<view class="quotation_area_oneline">
-					<view class="quotation_area_oneline_item per60">
+					<view class="quotation_area_oneline_item">
 						<view class="text">价格趋势</view>
 						<u-input type="select" @click="showTrendSelect" placeholder="请选择价格趋势" v-model="inquiryForm.trend" />
 					</view>
-					<view class="quotation_area_oneline_item per40">
+					<view class="quotation_area_oneline_item">
 						<view class="text">趋势说明</view>
 						<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.explain"></u-field>
 					</view>
@@ -641,8 +641,6 @@
 							}
 							return
 						}
-
-
 					}],
 					validity: [{
 						required: true,
@@ -652,7 +650,7 @@
 					
 					day: [{
 						type:'number',
-						message: '请选择有效期',
+						message: '请填写正确的交货天数',
 						trigger: ['change']
 					}]
 				},
@@ -802,7 +800,6 @@
 
 			//点击我要竞价按钮打开竞价模态框
 			toBindding(offerId) {
-				console.log(offerId)
 				this.resetInquiryForm()
 				if (offerId) {
 					this.offerId = offerId.join(',')
@@ -1025,7 +1022,6 @@
 
 			//批量报价
 			async submitSomeBidding() {
-				console.log(this.checkedList)
 				let tempArr = []
 				this.checkedList.forEach(item => {
 					let obj = {
@@ -1090,14 +1086,6 @@
 
 	.mt15 {
 		margin-top: 15rpx;
-	}
-
-	.per60 {
-		width: 60% !important;
-	}
-
-	.per40 {
-		width: 40% !important;
 	}
 
 	.prepareQuoted {
@@ -1338,7 +1326,7 @@
 					.text {
 						align-self: center;
 						color: #868686;
-
+                        width:180rpx;
 					}
 				}
 			}
