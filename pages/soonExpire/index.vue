@@ -1,20 +1,6 @@
 <template>
-	<!-- 商品（没有点批量报价的商品） -->
-	<view class="commodity">
-		<!-- 输入框 -->
-		<view class="inp_area">
-			<!-- 全选 -->
-			<view class="allChoose">
-				<u-checkbox v-model="allChecked" :active-color='activeColor' @change="checkboxAllChange">
-					<text class="allChoose_text">全选</text>
-				</u-checkbox>
-			</view>
-			<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
-			</u-field>
-			<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
-		</view>
-		<view class="commodity_list_tips" @click="toSoonExpire">您有{{day3AfterList.length}}个产品价格将在3天之后过期</view>
-
+	<!-- 产品供应商商品（即将过期） -->
+	<view class="soonExpire">
 		<!-- 商品列表 -->
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
@@ -36,8 +22,8 @@
 							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">最新报价(USD)</text>
 							<text class="mg15">:</text>
 							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.bidAmount}}</text>
-							<u-tag text="已失效" type="info" class="utag" v-if="new Date(item.expiredDate).getTime()<(new Date()).valueOf()"/>
-							<u-tag text="三天后到期" type="error" plain class="utag" v-if="((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<day3After)"/>
+							<u-tag text="已失效" type="info" class="utag" v-if="new Date(item.expiredDate).getTime()<(new Date()).valueOf()" />
+							<u-tag text="三天后到期" type="error" plain class="utag" v-if="((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<day3After)" />
 						</view>
 						<view class="checkbox_view_oneline">
 							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">有效期</text>
@@ -66,7 +52,7 @@
 		components: {
 			Tabbar
 		},
-        
+
 		data() {
 			return {
 				name: "",
@@ -75,10 +61,9 @@
 				//全选
 				allChecked: false,
 				//三天后过期的时间戳
-				day3After:(new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)).valueOf(),
-			   //所有数据
-				list: [
-					{
+				day3After: (new Date(new Date(new Date().toLocaleDateString()).getTime() + 3 * 24 * 60 * 60 * 1000 - 1)).valueOf(),
+				//所有数据
+				list: [{
 						bidAmount: 200,
 						cur: "USD",
 						enSpuName: "",
@@ -91,7 +76,7 @@
 						state: 0,
 						unit: 18
 					},
-					
+
 					{
 						bidAmount: 200,
 						cur: "USD",
@@ -131,7 +116,7 @@
 						state: 0,
 						unit: 18
 					},
-					
+
 					{
 						bidAmount: 200,
 						cur: "USD",
@@ -146,7 +131,7 @@
 						unit: 18
 					},
 				],
-				
+
 			};
 		},
 
@@ -159,10 +144,10 @@
 				let res = await fetch(this.api.v2.supplier_product, {
 					method: "get",
 					data: {
-						accessToken:uni.getStorageSync('accessToken')
+						accessToken: uni.getStorageSync('accessToken')
 					}
 				})
-			
+
 				if (res.data.code === '0') {
 					// this.list=res.data.data
 					// if (this.list.length > 0) {
@@ -197,25 +182,26 @@
 					url: '../batchQuotation/index'
 				});
 			},
-			
+
 			//点击去过期页面
 			toSoonExpire() {
 				uni.navigateTo({
 					url: '../soonExpire/index'
 				});
 			},
-			
+
 			//点击搜索
-			checkedAll(){
-				
+			checkedAll() {
+
 			}
 
 		},
-		computed:{
+		computed: {
 			//三天后就过期的数据
-			day3AfterList(){
-				return this.list.filter(item=>{
-				 return	((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<this.day3After)
+			day3AfterList() {
+				return this.list.filter(item => {
+					return ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate).getTime() <
+						this.day3After)
 				})
 			}
 		}
@@ -227,11 +213,12 @@
 	.gray {
 		color: #c9c9c9 !important;
 	}
-	.deepgray{
-		color:#868686 !important;
+
+	.deepgray {
+		color: #868686 !important;
 	}
 
-	.commodity {
+	.soonExpire {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
@@ -272,6 +259,7 @@
 				margin-left: 20rpx;
 				padding: 25rpx 0;
 				color: #868686;
+
 				.checkbox_view_name {
 					font-weight: 700;
 					font-size: 32rpx;
@@ -281,7 +269,8 @@
 				.utag {
 					margin-left: 30rpx;
 				}
-				.checkbox_view_oneline{
+
+				.checkbox_view_oneline {
 					font-size: 24rpx;
 				}
 			}
