@@ -47,31 +47,25 @@
 												<text>{{item.brand}}</text>
 											</view>
 											<view class="swiper_center_oneline">
-												<!-- <u-row>
-													<u-col span="12"> -->
+											
 												<text class="gray">规格</text>
 												<text class="mg15 gray">:</text>
 												<text class="gray">{{item.spuSpec}}</text>
-												<!-- </u-col>
-												</u-row> -->
+												
 											</view>
 											<view class="swiper_center_oneline">
-												<!-- <u-row>
-													<u-col span="12"> -->
+												
 												<text class="gray">当前出价（USD):</text>
 												<text class="mg15"></text>
 												<text class="gray">1.63</text>
-												<!-- </u-col>
-												</u-row> -->
+												
 											</view>
 											<view class="swiper_center_oneline">
-												<!-- <u-row>
-													<u-col span="12"> -->
+												
 												<text class="red">当前排名</text>
 												<text class="mg15 red">:</text>
 												<text class="red">2</text>
-												<!-- </u-col>
-												</u-row> -->
+												
 											</view>
 											<view class="swiper_center_oneline settimeout_btn">
 												<view class="settimeout">剩余1天12小时30分结束</view>
@@ -144,7 +138,7 @@
 								<view class="price_change" v-if="item.checked&&(!item.down)">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
-									<u-input :border-bottom="true" class="ufield" :label-width="0" v-model.number="item.price" @click.stop
+									<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop
 									 placeholder=" "></u-input>
 									<text class="mg15"></text>
 									<text v-if="item.currency==='USD'">USD</text>
@@ -211,7 +205,8 @@
 									<view class="price_change" v-if="Inquiry[index].checked&&item.down">
 										<text class="gray pricetext">价格</text>
 										<text class="mg15"></text>
-										<u-field :border-bottom="true" class="ufield" :label-width="0"></u-field>
+										<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop
+										 placeholder=" "></u-input>
 										<text class="mg15"></text>
 										<text v-if="item.currency==='USD'">USD</text>
 										<text v-if="item.currency==='RMB'">RMB</text>
@@ -359,7 +354,7 @@
 								<view class="price_change" v-if="item.checked&&(!item.down)">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
-									<u-field :border-bottom="true" class="ufield" :label-width="0"></u-field>
+									<u-field class="ufield" :label-width="0"></u-field>
 									<text class="mg15"></text>
 									<text>USD</text>
 									<text class="mg15"></text>
@@ -421,7 +416,7 @@
 									<view class="price_change" v-if="list[index].checked&&item.down">
 										<text class="gray pricetext">价格</text>
 										<text class="mg15"></text>
-										<u-field :border-bottom="true" class="ufield" :label-width="0"></u-field>
+										<u-field class="ufield" :label-width="0"></u-field>
 										<text class="mg15"></text>
 										<text>USD</text>
 										<text class="mg15"></text>
@@ -1287,16 +1282,19 @@
 				.checkbox_view_oneline_btn {
 					margin-left: 20rpx;
 				}
-
+                 
 				.price_change {
 					display: flex;
-
+					/deep/ .u-input__input{
+						min-height: 30px !important;
+					}
 					.pricetext {
 						margin-left: 6rpx;
 					}
 
 					.ufield {
 						flex: 1;
+						border-bottom:2rpx solid #ccc;
 					}
 
 					text {
@@ -1337,7 +1335,6 @@
 					.text {
 						align-self: center;
 						color: #868686;
-                        width:180rpx;
 					}
 				}
 			}
