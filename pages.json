@@ -4,12 +4,6 @@
 	},
 	"pages": [
 		{
-			"path": "pages/soonExpire/index",
-			"style": {
-				"navigationBarTitleText": "即将过期"
-			}
-		},
-		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录页"
@@ -21,6 +15,15 @@
 				"navigationBarTitleText": "商品"
 			}
 		},
+		
+		{
+			"path": "pages/soonExpire/index",
+			"style": {
+				"navigationBarTitleText": "即将过期"
+			}
+		},
+		
+		
 		
 		{
 			"path": "pages/prepareQuoted/index",

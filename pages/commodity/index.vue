@@ -20,31 +20,30 @@
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
 				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="item.id"
 				 :name="item.name">
-				{{item.checked}}
 					<view class="checkbox_view">
 						<view class="checkbox_view_oneline">
-							<text :class="{checkbox_view_name:true,gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf()}">{{item.spuName}}</text>
+							<text :class="{checkbox_view_name:true,gray:item.isGray}">{{item.spuName}}</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.brand}}</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.brand}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
-							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">规格</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">规格</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.spuSpec}}</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.spuSpec}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
-							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">最新报价(USD)</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">最新报价(USD)</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.bidAmount?bidAmount:"未报价"}}</text>
-							<u-tag text="已失效" type="info" class="utag" v-if="new Date(item.expiredDate).getTime()<(new Date()).valueOf()"/>
-							<u-tag text="三天后到期" type="error" plain class="utag" v-if="((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<day3After)"/>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.bidAmount?item.bidAmount:"未报价"}}</text>
+							<u-tag text="已失效" type="info" class="utag" v-if="item.isGray"/>
+							<u-tag text="三天后到期" type="error" plain class="utag" v-if="item.day3After"/>
 						</view>
 						<view class="checkbox_view_oneline">
-							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">有效期</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">有效期</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.expiredDate||'NA'}}</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
 						</view>
 						<view class="checkbox_view_oneline">
 							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain>更新报价</u-button>
@@ -79,76 +78,58 @@
 				//三天后过期的时间戳
 				day3After:(new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)).valueOf(),
 			   //所有数据
-				list: [
-					// {
-					// 	bidAmount: 200,
-					// 	cur: "USD",
-					// 	enSpuName: "",
-					// 	expiredDate: "2020-09-08",
-					// 	skuCode: "",
-					// 	skuId: 1186884,
-					// 	spuId: 6359071,
-					// 	spuName: "冯振鑫商品",
-					// 	spuSpec: "SW001",
-					// 	state: 0,
-					// 	unit: 18
-					// },
-					
-					// {
-					// 	bidAmount: 200,
-					// 	cur: "USD",
-					// 	enSpuName: "",
-					// 	expiredDate: "2020-09-11",
-					// 	skuCode: "",
-					// 	skuId: 1186884,
-					// 	spuId: 6359071,
-					// 	spuName: "冯振鑫商品",
-					// 	spuSpec: "SW001",
-					// 	state: 0,
-					// 	unit: 18
-					// },
-					// {
-					// 	bidAmount: 200,
-					// 	cur: "USD",
-					// 	enSpuName: "",
-					// 	expiredDate: "2020-09-12",
-					// 	skuCode: "",
-					// 	skuId: 1186884,
-					// 	spuId: 6359071,
-					// 	spuName: "冯振鑫商品",
-					// 	spuSpec: "SW001",
-					// 	state: 0,
-					// 	unit: 18
-					// },
-					// {
-					// 	bidAmount: 200,
-					// 	cur: "USD",
-					// 	enSpuName: "",
-					// 	expiredDate: "2020-09-12",
-					// 	skuCode: "",
-					// 	skuId: 1186884,
-					// 	spuId: 6359071,
-					// 	spuName: "冯振鑫商品",
-					// 	spuSpec: "SW001",
-					// 	state: 0,
-					// 	unit: 18
-					// },
-					
-					// {
-					// 	bidAmount: 200,
-					// 	cur: "USD",
-					// 	enSpuName: "",
-					// 	expiredDate: "2020-09-16",
-					// 	skuCode: "",
-					// 	skuId: 1186884,
-					// 	spuId: 6359071,
-					// 	spuName: "冯振鑫商品",
-					// 	spuSpec: "SW001",
-					// 	state: 0,
-					// 	unit: 18
-					// },
-				],
-				
+				list: [ {
+            bidAmount: 200,
+            cur: "USD",
+            enSpuName: "",
+            expiredDate: "2020-09-08",
+            skuCode: "",
+            skuId: 1186884,
+            spuId: 6359071,
+            spuName: "冯振鑫商品",
+            spuSpec: "SW001",
+            state: 0,
+            unit: 18
+          },
+          {
+            bidAmount: 200,
+            cur: "USD",
+            enSpuName: "",
+            expiredDate: "2020-09-11",
+            skuCode: "",
+            skuId: 1186884,
+            spuId: 6359071,
+            spuName: "冯振鑫商品",
+            spuSpec: "SW001",
+            state: 0,
+            unit: 18
+          },
+          {
+            bidAmount: 200,
+            cur: "USD",
+            enSpuName: "",
+            expiredDate: "2020-09-12",
+            skuCode: "",
+            skuId: 1186884,
+            spuId: 6359071,
+            spuName: "冯振鑫商品",
+            spuSpec: "SW001",
+            state: 0,
+            unit: 18
+          },
+          {
+            bidAmount: 200,
+            cur: "USD",
+            enSpuName: "",
+            expiredDate: "2020-09-15",
+            skuCode: "",
+            skuId: 1186884,
+            spuId: 6359071,
+            spuName: "冯振鑫商品",
+            spuSpec: "SW001",
+            state: 0,
+            unit: 18
+          }],
 			};
 		},
 
@@ -168,12 +149,67 @@
 			
 				if (res.data.code === '0') {
 					this.list=res.data.data
+					this.list.push(
+					 {
+					            bidAmount: 200,
+					            cur: "USD",
+					            enSpuName: "",
+					            expiredDate: "2020-09-08",
+					            skuCode: "",
+					            skuId: 1186884,
+					            spuId: 6359071,
+					            spuName: "冯振鑫商品",
+					            spuSpec: "SW001",
+					            state: 0,
+					            unit: 18
+					          },
+					          {
+					            bidAmount: 200,
+					            cur: "USD",
+					            enSpuName: "",
+					            expiredDate: "2020-09-11",
+					            skuCode: "",
+					            skuId: 1186884,
+					            spuId: 6359071,
+					            spuName: "冯振鑫商品",
+					            spuSpec: "SW001",
+					            state: 0,
+					            unit: 18
+					          },
+					          {
+					            bidAmount: 200,
+					            cur: "USD",
+					            enSpuName: "",
+					            expiredDate: "2020-09-12",
+					            skuCode: "",
+					            skuId: 1186884,
+					            spuId: 6359071,
+					            spuName: "冯振鑫商品",
+					            spuSpec: "SW001",
+					            state: 0,
+					            unit: 18
+					          },
+					          {
+					            bidAmount: 200,
+					            cur: "USD",
+					            enSpuName: "",
+					            expiredDate: "2020-09-15",
+					            skuCode: "",
+					            skuId: 1186884,
+					            spuId: 6359071,
+					            spuName: "冯振鑫商品",
+					            spuSpec: "SW001",
+					            state: 0,
+					            unit: 18
+					          })
 					if (this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
 							item.down = false
 							item.name = index
 							item.id = index
+							item.isGray=new Date(item.expiredDate).getTime()<(+new Date())
+							item.day3After=((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<this.day3After)
 						})
 					}
 				}
