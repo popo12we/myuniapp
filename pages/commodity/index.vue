@@ -13,7 +13,7 @@
 			</u-field>
 			<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
 		</view>
-		<view class="commodity_list_tips">您有两个产品价格将在三天之后过期</view>
+		<view class="commodity_list_tips">您有{{day3AfterList.length}}个产品价格将在3天之后过期</view>
 
 		<!-- 商品列表 -->
 		<view class="commodity_list">
@@ -21,28 +21,28 @@
 				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="item.id" :name="item.name">
 					<view class="checkbox_view">
 						<view class="checkbox_view_oneline">
-							<text class="checkbox_view_name gray">{{item.spuName}}</text>
+							<text :class="{checkbox_view_name:true,gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf()}">{{item.spuName}}</text>
 							<text class="mg15">:</text>
-							<text class="gray">{{item.brand}}</text>
+							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.brand}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
-							<text class="gray">规格</text>
+							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">规格</text>
 							<text class="mg15">:</text>
-							<text class="gray">{{item.spuSpec}}</text>
+							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.spuSpec}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
-							<text class="gray">最新报价(USD)</text>
+							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">最新报价(USD)</text>
 							<text class="mg15">:</text>
-							<text class="gray">{{item.bidAmount}}</text>
+							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.bidAmount}}</text>
 							<u-tag text="已失效" type="info" class="utag" v-if="new Date(item.expiredDate).getTime()<(new Date()).valueOf()"/>
 							<u-tag text="三天后到期" type="error" plain class="utag" v-if="((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<day3After)"/>
 						</view>
 						<view class="checkbox_view_oneline">
-							<text class="gray">有效期</text>
+							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">有效期</text>
 							<text class="mg15">:</text>
-							<text class="gray">{{item.expiredDate||'NA'}}</text>
+							<text :class="{gray:new Date(item.expiredDate).getTime()<(new Date()).valueOf(),deepgray:new Date(item.expiredDate).getTime()>=(new Date()).valueOf()}">{{item.expiredDate||'NA'}}</text>
 						</view>
 						<view class="checkbox_view_oneline">
 							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain>更新报价</u-button>
@@ -74,13 +74,28 @@
 				activeColor: "#D0021B",
 				//全选
 				allChecked: false,
+				//三天后过期的时间戳
 				day3After:(new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)).valueOf(),
+			   //所有数据
 				list: [
 					{
 						bidAmount: 200,
 						cur: "USD",
 						enSpuName: "",
 						expiredDate: "2020-09-08",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-10",
 						skuCode: "",
 						skuId: 1186884,
 						spuId: 6359071,
@@ -119,7 +134,7 @@
 						bidAmount: 200,
 						cur: "USD",
 						enSpuName: "",
-						expiredDate: "2020-09-15",
+						expiredDate: "2020-09-13",
 						skuCode: "",
 						skuId: 1186884,
 						spuId: 6359071,
@@ -128,7 +143,21 @@
 						state: 0,
 						unit: 18
 					},
-				]
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-16",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+				],
+				
 			};
 		},
 
@@ -185,14 +214,25 @@
 				
 			}
 
+		},
+		computed:{
+			//三天后就过期的数据
+			day3AfterList(){
+				return this.list.filter(item=>{
+				 return	((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<this.day3After)
+				})
+			}
 		}
-	};
+	}
 </script>
 
 <style lang="scss" scoped>
 	//公共样式
 	.gray {
 		color: #c9c9c9 !important;
+	}
+	.deepgray{
+		color:#868686 !important;
 	}
 
 	.commodity {
@@ -243,12 +283,10 @@
 				}
 
 				.utag {
-					margin-left: 20rpx;
+					margin-left: 30rpx;
 				}
-
-				.checkbox_view_oneline_btn {
-					// margin-left: 120rpx;
-					// float: right;
+				.checkbox_view_oneline{
+					font-size: 24rpx;
 				}
 			}
 		}
