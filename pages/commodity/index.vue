@@ -36,7 +36,8 @@
 							<text class="gray">最新报价(USD)</text>
 							<text class="mg15">:</text>
 							<text class="gray">{{item.bidAmount}}</text>
-							<u-tag text="已失效" type="info" class="utag" />
+							<u-tag text="已失效" type="info" class="utag" v-if="new Date(item.expiredDate).getTime()<(new Date()).valueOf()"/>
+							<u-tag text="三天后到期" type="error" plain class="utag" v-if="((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<day3After)"/>
 							<u-button type="error" size="mini" class="checkbox_view_oneline_btn">更新报价</u-button>
 						</view>
 					</view>
@@ -68,12 +69,15 @@
 				activeColor: "#D0021B",
 				//全选
 				allChecked: false,
+				day3After:(new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)).valueOf(),
 				list: []
 			};
 		},
 
 		created() {
 			this.getSupplierProduct()
+			console.log((new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)))
+			console.log(this.day3After)
 		},
 		methods: {
 			//获取商品列表
