@@ -38,7 +38,14 @@
 							<text class="gray">{{item.bidAmount}}</text>
 							<u-tag text="已失效" type="info" class="utag" v-if="new Date(item.expiredDate).getTime()<(new Date()).valueOf()"/>
 							<u-tag text="三天后到期" type="error" plain class="utag" v-if="((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<day3After)"/>
-							<u-button type="error" size="mini" class="checkbox_view_oneline_btn">更新报价</u-button>
+						</view>
+						<view class="checkbox_view_oneline">
+							<text class="gray">有效期</text>
+							<text class="mg15">:</text>
+							<text class="gray">{{item.expiredDate||'NA'}}</text>
+						</view>
+						<view class="checkbox_view_oneline">
+							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain>更新报价</u-button>
 						</view>
 					</view>
 				</u-checkbox>
@@ -59,9 +66,7 @@
 		components: {
 			Tabbar
 		},
-        created(){
-			console.log(this.$store)
-		},
+        
 		data() {
 			return {
 				name: "",
@@ -70,14 +75,65 @@
 				//全选
 				allChecked: false,
 				day3After:(new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)).valueOf(),
-				list: []
+				list: [
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-08",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-11",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-12",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-15",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+				]
 			};
 		},
 
 		created() {
 			this.getSupplierProduct()
-			console.log((new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)))
-			console.log(this.day3After)
 		},
 		methods: {
 			//获取商品列表
@@ -90,15 +146,15 @@
 				})
 			
 				if (res.data.code === '0') {
-					this.list=res.data.data
-					if (this.list.length > 0) {
-						this.list.forEach((item, index) => {
-							item.checked = false
-							item.down = false
-							item.name = index
-							item.id = index
-						})
-					}
+					// this.list=res.data.data
+					// if (this.list.length > 0) {
+					// 	this.list.forEach((item, index) => {
+					// 		item.checked = false
+					// 		item.down = false
+					// 		item.name = index
+					// 		item.id = index
+					// 	})
+					// }
 				}
 			},
 			// 全选
@@ -177,13 +233,9 @@
 			}
 
 			.checkbox_view {
-				float: none;
-				display: block;
 				margin-left: 20rpx;
 				padding: 25rpx 0;
-				width: 100%;
 				color: #868686;
-
 				.checkbox_view_name {
 					font-weight: 700;
 					font-size: 32rpx;
@@ -195,7 +247,8 @@
 				}
 
 				.checkbox_view_oneline_btn {
-					margin-left: 20rpx;
+					// margin-left: 120rpx;
+					// float: right;
 				}
 			}
 		}

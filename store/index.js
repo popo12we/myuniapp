@@ -6,3 +6,4 @@ const store = new Vuex.Store({
         num:100  
     } 
 }) 
+export default store
