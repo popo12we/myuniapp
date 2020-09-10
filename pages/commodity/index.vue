@@ -200,6 +200,7 @@
 			
 			//点击去过期页面
 			toSoonExpire() {
+				uni.setStorageSync('day3AfterList', this.day3AfterList)
 				uni.navigateTo({
 					url: '../soonExpire/index'
 				});

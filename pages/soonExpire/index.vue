@@ -52,10 +52,8 @@
 		components: {
 			Tabbar
 		},
-
 		data() {
 			return {
-				name: "",
 				//默认checkbox选中颜色
 				activeColor: "#D0021B",
 				//全选
@@ -63,103 +61,10 @@
 				//三天后过期的时间戳
 				day3After: (new Date(new Date(new Date().toLocaleDateString()).getTime() + 3 * 24 * 60 * 60 * 1000 - 1)).valueOf(),
 				//所有数据
-				list: [{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-08",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-
-					{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-11",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-					{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-12",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-					{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-12",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-
-					{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-16",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-				],
-
-			};
-		},
-
-		created() {
-			this.getSupplierProduct()
+				list: uni.getStorageSync('day3AfterList')
+			}
 		},
 		methods: {
-			//获取商品列表
-			async getSupplierProduct() {
-				let res = await fetch(this.api.v2.supplier_product, {
-					method: "get",
-					data: {
-						accessToken: uni.getStorageSync('accessToken')
-					}
-				})
-
-				if (res.data.code === '0') {
-					// this.list=res.data.data
-					// if (this.list.length > 0) {
-					// 	this.list.forEach((item, index) => {
-					// 		item.checked = false
-					// 		item.down = false
-					// 		item.name = index
-					// 		item.id = index
-					// 	})
-					// }
-				}
-			},
 			// 全选
 			checkboxAllChange() {
 				this.allChecked ? this.list.map(val => {
@@ -174,35 +79,6 @@
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
 				this.$forceUpdate()
-			},
-
-			//批量填写
-			batchFilling() {
-				uni.navigateTo({
-					url: '../batchQuotation/index'
-				});
-			},
-
-			//点击去过期页面
-			toSoonExpire() {
-				uni.navigateTo({
-					url: '../soonExpire/index'
-				});
-			},
-
-			//点击搜索
-			checkedAll() {
-
-			}
-
-		},
-		computed: {
-			//三天后就过期的数据
-			day3AfterList() {
-				return this.list.filter(item => {
-					return ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate).getTime() <
-						this.day3After)
-				})
 			}
 		}
 	}
