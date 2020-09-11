@@ -134,6 +134,12 @@
 				</u-form>
 			</view>
 		</u-modal>
+		<!-- 价格趋势下拉框 -->
+		<u-select v-model="selectPriceTrendShow" :list="selectPriceTrendList" @confirm="confirmPriceTrend"></u-select>
+		<!-- 报价币种下拉框 -->
+		<u-select v-model="selectTypesCurrencyShow" :list="selectTypesCurrencyList" @confirm="confirmCurrency"></u-select>
+		<!-- 时间选择 -->
+		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
 	</view>
@@ -142,6 +148,7 @@
 <script>
 	import Tabbar from '../../my_common_components/Tabbar.vue'
 	import fetch from '../../utils/fetch.js'
+	import moment from 'moment'
 	export default {
 		components: {
 			Tabbar
@@ -159,59 +166,7 @@
 				//三天后过期的时间戳
 				day3After: (new Date(new Date(new Date().toLocaleDateString()).getTime() + 3 * 24 * 60 * 60 * 1000 - 1)).valueOf(),
 				//所有数据
-				list: [{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-08",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-					{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-11",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-					{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-12",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					},
-					{
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-15",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					}
-				],
+				list: [],
 				//询盘模态框是否显示
 				inquiryShow: false,
 				// 报价表格
@@ -265,7 +220,42 @@
 						message: '请填写正确的交货天数',
 						trigger: ['change']
 					}]
-				}
+				},
+				selectPriceTrendShow: false,
+				selectPriceTrendList: [{
+						value: "1",
+						label: "上升",
+					},
+					{
+						value: "2",
+						label: "平稳",
+					},
+					{
+						value: "3",
+						label: "下降",
+					},
+				],
+				// 报价币种
+				selectTypesCurrencyShow: false,
+				selectTypesCurrencyList: [{
+						value: "1",
+						label: "RMB",
+					},
+					{
+						value: "2",
+						label: "USD",
+					},
+				],
+				//时间选择器
+				dateTime: false,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: true,
+					minute: true
+				},
+				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
 			}
 		},
 
@@ -478,6 +468,32 @@
 				}
 				this.$refs['iForm1'].resetFields();
 			},
+			//点击打开价格趋势下拉框
+			showTrendSelect() {
+				this.selectPriceTrendShow = true;
+			},
+			//确认价格趋势
+			confirmPriceTrend(e) {
+				this.inquiryForm.trend = e[0].label
+				this.inquiryForm.pricetrendValue = e[0].value
+			},
+			//点击打开币种拉框
+			showCurrencySelect() {
+				this.selectTypesCurrencyShow = true;
+			},
+			//确认币种
+			confirmCurrency(e) {
+				this.inquiryForm.currency = e[0].label
+			},
+			//确认价格趋势
+			confirmPriceTrend(e) {
+				this.inquiryForm.trend = e[0].label
+				this.inquiryForm.pricetrendValue = e[0].value
+			},
+			//询盘确实时间
+			confirmTime(e) {
+				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
+			},
 		},
 		computed: {
 			//三天后就过期的数据
@@ -499,6 +515,10 @@
 
 	.deepgray {
 		color: #868686 !important;
+	}
+	
+	.red {
+		color: #d0021b !important;
 	}
 
 	.commodity {
