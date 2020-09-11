@@ -32,20 +32,32 @@
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.spuSpec}}</text>
 						</view>
 
-						<view class="checkbox_view_oneline">
+						<view class="checkbox_view_oneline" v-if="!item.checked">
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">最新报价(USD)</text>
 							<text class="mg15">:</text>
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.bidAmount?item.bidAmount:"未报价"}}</text>
 							<u-tag text="已失效" type="info" class="utag" v-if="item.isGray" />
 							<u-tag text="三天后到期" type="error" plain class="utag" v-if="item.day3After" />
 						</view>
-						<view class="checkbox_view_oneline">
+						<view class="checkbox_view_oneline" v-if="!item.checked">
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">有效期</text>
 							<text class="mg15">:</text>
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
 						</view>
-						<view class="checkbox_view_oneline">
+						<view class="checkbox_view_oneline" v-if="!item.checked">
 							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain>更新报价</u-button>
+						</view>
+						
+						<view class="price_change" v-if="item.checked">
+							<text class="gray pricetext">价格</text>
+							<text class="mg15"></text>
+							<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop
+							 placeholder=" "></u-input>
+							<text class="mg15"></text>
+							<text v-if="item.currency==='USD'">USD</text>
+							<text v-if="item.currency==='RMB'">RMB</text>
+							<text class="mg15"></text>
+							<text class="change" @click.stop="changeCurrency(item)">切换</text>
 						</view>
 					</view>
 				</u-checkbox>
@@ -250,6 +262,7 @@
 							item.down = false
 							item.name = index
 							item.id = index
+							item.currency = 'RMB'
 							item.isGray = new Date(item.expiredDate).getTime() < (+new Date())
 							item.day3After = ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate)
 								.getTime() < this.day3After)
@@ -295,8 +308,21 @@
 			//点击搜索
 			checkedAll() {
 				this.getSupplierProduct()
+			},
+			
+			//切换币种
+			changeCurrency(item) {
+				if (item.currency === 'USD') {
+					item.currency = 'RMB'
+					this.$forceUpdate()
+					return;
+				}
+				if (item.currency === 'RMB') {
+					item.currency = 'USD'
+					this.$forceUpdate()
+					return;
+				}
 			}
-
 		},
 		computed: {
 			//三天后就过期的数据
@@ -374,6 +400,29 @@
 
 				.checkbox_view_oneline {
 					font-size: 24rpx;
+				}
+				
+				.price_change {
+					display: flex;
+					/deep/ .u-input__input{
+						min-height: 30px !important;
+					}
+					.pricetext {
+						margin-left: 6rpx;
+					}
+				
+					.ufield {
+						flex: 1;
+						border-bottom:2rpx solid #ccc;
+					}
+				
+					text {
+						align-self: center;
+					}
+				
+					.change {
+						color: #00a6db;
+					}
 				}
 			}
 		}
