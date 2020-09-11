@@ -216,6 +216,7 @@
 					}],
 					
 					day: [{
+						required: true,
 						type:'number',
 						message: '请填写正确的交货天数',
 						trigger: ['change']
@@ -278,55 +279,6 @@
 
 				if (res.data.code === '0') {
 					this.list = res.data.data
-					this.list.push({
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-08",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					}, {
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-11",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					}, {
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-12",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					}, {
-						bidAmount: 200,
-						cur: "USD",
-						enSpuName: "",
-						expiredDate: "2020-09-15",
-						skuCode: "",
-						skuId: 1186884,
-						spuId: 6359071,
-						spuName: "冯振鑫商品",
-						spuSpec: "SW001",
-						state: 0,
-						unit: 18
-					})
 					if (this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
@@ -493,6 +445,10 @@
 			//询盘确实时间
 			confirmTime(e) {
 				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
+			},
+			//询盘打开选时间
+			showValidity() {
+				this.dateTime = true
 			},
 		},
 		computed: {
