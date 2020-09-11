@@ -232,11 +232,48 @@
 					//备注
 					remark: "",
 				},
-			};
+				//校验规则
+				rules1: {
+					currency: [{
+						required: true,
+						message: '请选择币种',
+						// 可以单个或者同时写两个触发验证方式 
+						trigger: ['change', 'blur'],
+					}],
+				
+					price: [{
+						trigger: ['blur', 'change'],
+						required: true,
+						validator: (rule, value, callback) => {
+							let reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/
+							if (!reg.test(value)) {
+								callback(new Error('请输入准确的价格'))
+							} else {
+								callback()
+							}
+							return
+						}
+					}],
+					validity: [{
+						required: true,
+						message: '请选择有效期',
+						trigger: ['change']
+					}],
+					
+					day: [{
+						type:'number',
+						message: '请填写正确的交货天数',
+						trigger: ['change']
+					}]
+				}
+			}
 		},
 
 		created() {
 			this.getSupplierProduct()
+		},
+		onReady() {
+			this.$refs.iForm1.setRules(this.rules1)
 		},
 		methods: {
 			//获取商品列表
@@ -378,6 +415,46 @@
 			showInquiryModal() {
 				this.resetInquiryForm()
 				this.inquiryShow = true
+			},
+			
+			//提交报价
+			async submitBidding() {
+				this.$refs.iForm1.validate(async valid => {
+			// 		if (valid) {
+			// 			let res = await fetch(this.api.v2.submitQuotation, {
+			// 				method: "post",
+			// 				data: {
+			// 					accessToken: uni.getStorageSync('accessToken'),
+			// 					list: [{
+			// 						offerId: this.offerId,
+			// 						cur: this.inquiryForm.currency,
+			// 						price: this.inquiryForm.price,
+			// 						deliveryDay: this.inquiryForm.day,
+			// 						expiredDate: this.inquiryForm.validity,
+			// 						pricetrend: this.inquiryForm.pricetrendValue,
+			// 						priceInfo: this.inquiryForm.explain,
+			// 						remarks: this.inquiryForm.remark
+			// 					}]
+			// 				}
+			// 			})
+			
+			// 			this.inquiryShow = false
+			// 			this.binddingShow = false
+			// 			if (res.data.code === '0') {
+			// 				this.$refs.toast.show({
+			// 					title: '提交报价成功',
+			// 					type: 'success',
+			// 					position: 'top'
+			// 				})
+			// 			} else {
+			// 				this.$refs.toast.show({
+			// 					title: '提交报价失败',
+			// 					type: 'error',
+			// 					position: 'top'
+			// 				})
+			// 			}
+			// 		}
+				})
 			},
 			
 			//重置报价模态框
