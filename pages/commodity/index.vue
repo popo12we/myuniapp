@@ -18,8 +18,7 @@
 		<!-- 商品列表 -->
 		<view class="commodity_list">
 			<u-checkbox-group :wrap="true" :active-color='activeColor'>
-				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="item.id"
-				 :name="item.name">
+				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="item.id" :name="item.name">
 					<view class="checkbox_view">
 						<view class="checkbox_view_oneline">
 							<text :class="{checkbox_view_name:true,gray:item.isGray}">{{item.spuName}}</text>
@@ -37,8 +36,8 @@
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">最新报价(USD)</text>
 							<text class="mg15">:</text>
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.bidAmount?item.bidAmount:"未报价"}}</text>
-							<u-tag text="已失效" type="info" class="utag" v-if="item.isGray"/>
-							<u-tag text="三天后到期" type="error" plain class="utag" v-if="item.day3After"/>
+							<u-tag text="已失效" type="info" class="utag" v-if="item.isGray" />
+							<u-tag text="三天后到期" type="error" plain class="utag" v-if="item.day3After" />
 						</view>
 						<view class="checkbox_view_oneline">
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">有效期</text>
@@ -52,6 +51,34 @@
 				</u-checkbox>
 			</u-checkbox-group>
 		</view>
+
+		<!-- 底部批量报价区域 -->
+		<view class="quotation_area" v-if="checkedNum>0">
+			<view class="quotation_area_oneline">
+				<view class="quotation_area_oneline_item">
+					<view class="text">有效期</view>
+					<u-input :border-bottom="true" class="ufield" type="select" @click="showValidity" :label-width="0" :clearable="false"
+					 v-model="inquiryForm.validity" placeholder=" "></u-input>
+				</view>
+				<view class="quotation_area_oneline_item">
+					<view class="text">交货天数</view>
+					<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.day"></u-field>
+				</view>
+			</view>
+			<view class="quotation_area_oneline">
+				<view class="quotation_area_oneline_item">
+					<view class="text">价格趋势</view>
+					<u-input type="select" @click="showTrendSelect" placeholder="请选择价格趋势" v-model="inquiryForm.trend" />
+				</view>
+				<view class="quotation_area_oneline_item">
+					<view class="text">趋势说明</view>
+					<u-field :border-bottom="true" class="ufield" :label-width="0" :clearable="false" v-model="inquiryForm.explain"></u-field>
+				</view>
+			</view>
+			<view class="quotation_area_oneline btnarea">
+				<u-button type="error" class="btn" @click="submitSomeBidding">批量报价</u-button>
+			</view>
+		</view>
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
 	</view>
@@ -64,69 +91,91 @@
 		components: {
 			Tabbar
 		},
-        
+
 		data() {
 			return {
 				name: "",
 				//默认checkbox选中颜色
 				activeColor: "#D0021B",
+				//选中个数
+				checkedNum: 0,
 				//全选
 				allChecked: false,
 				//三天后过期的时间戳
-				day3After:(new Date(new Date(new Date().toLocaleDateString()).getTime()+3*24*60*60*1000-1)).valueOf(),
-			   //所有数据
-				list: [ {
-            bidAmount: 200,
-            cur: "USD",
-            enSpuName: "",
-            expiredDate: "2020-09-08",
-            skuCode: "",
-            skuId: 1186884,
-            spuId: 6359071,
-            spuName: "冯振鑫商品",
-            spuSpec: "SW001",
-            state: 0,
-            unit: 18
-          },
-          {
-            bidAmount: 200,
-            cur: "USD",
-            enSpuName: "",
-            expiredDate: "2020-09-11",
-            skuCode: "",
-            skuId: 1186884,
-            spuId: 6359071,
-            spuName: "冯振鑫商品",
-            spuSpec: "SW001",
-            state: 0,
-            unit: 18
-          },
-          {
-            bidAmount: 200,
-            cur: "USD",
-            enSpuName: "",
-            expiredDate: "2020-09-12",
-            skuCode: "",
-            skuId: 1186884,
-            spuId: 6359071,
-            spuName: "冯振鑫商品",
-            spuSpec: "SW001",
-            state: 0,
-            unit: 18
-          },
-          {
-            bidAmount: 200,
-            cur: "USD",
-            enSpuName: "",
-            expiredDate: "2020-09-15",
-            skuCode: "",
-            skuId: 1186884,
-            spuId: 6359071,
-            spuName: "冯振鑫商品",
-            spuSpec: "SW001",
-            state: 0,
-            unit: 18
-          }],
+				day3After: (new Date(new Date(new Date().toLocaleDateString()).getTime() + 3 * 24 * 60 * 60 * 1000 - 1)).valueOf(),
+				//所有数据
+				list: [{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-08",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-11",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-12",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					},
+					{
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-15",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					}
+				],
+				
+				// 报价表格
+				inquiryForm: {
+					//币种
+					currency: "",
+					//价格
+					price: "",
+					//有效期
+					validity: "",
+					//交货天数
+					day: "",
+					//价格趋势
+					trend: "",
+					pricetrendValue: "",
+					//趋势说明
+					explain: "",
+					//备注
+					remark: "",
+				},
 			};
 		},
 
@@ -139,74 +188,71 @@
 				let res = await fetch(this.api.v2.supplier_product, {
 					method: "get",
 					data: {
-						accessToken:uni.getStorageSync('accessToken'),
-						keyword:this.name
+						accessToken: uni.getStorageSync('accessToken'),
+						keyword: this.name
 					}
 				})
-			
+
 				if (res.data.code === '0') {
-					this.list=res.data.data
-					this.list.push(
-					 {
-					            bidAmount: 200,
-					            cur: "USD",
-					            enSpuName: "",
-					            expiredDate: "2020-09-08",
-					            skuCode: "",
-					            skuId: 1186884,
-					            spuId: 6359071,
-					            spuName: "冯振鑫商品",
-					            spuSpec: "SW001",
-					            state: 0,
-					            unit: 18
-					          },
-					          {
-					            bidAmount: 200,
-					            cur: "USD",
-					            enSpuName: "",
-					            expiredDate: "2020-09-11",
-					            skuCode: "",
-					            skuId: 1186884,
-					            spuId: 6359071,
-					            spuName: "冯振鑫商品",
-					            spuSpec: "SW001",
-					            state: 0,
-					            unit: 18
-					          },
-					          {
-					            bidAmount: 200,
-					            cur: "USD",
-					            enSpuName: "",
-					            expiredDate: "2020-09-12",
-					            skuCode: "",
-					            skuId: 1186884,
-					            spuId: 6359071,
-					            spuName: "冯振鑫商品",
-					            spuSpec: "SW001",
-					            state: 0,
-					            unit: 18
-					          },
-					          {
-					            bidAmount: 200,
-					            cur: "USD",
-					            enSpuName: "",
-					            expiredDate: "2020-09-15",
-					            skuCode: "",
-					            skuId: 1186884,
-					            spuId: 6359071,
-					            spuName: "冯振鑫商品",
-					            spuSpec: "SW001",
-					            state: 0,
-					            unit: 18
-					          })
+					this.list = res.data.data
+					this.list.push({
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-08",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					}, {
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-11",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					}, {
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-12",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					}, {
+						bidAmount: 200,
+						cur: "USD",
+						enSpuName: "",
+						expiredDate: "2020-09-15",
+						skuCode: "",
+						skuId: 1186884,
+						spuId: 6359071,
+						spuName: "冯振鑫商品",
+						spuSpec: "SW001",
+						state: 0,
+						unit: 18
+					})
 					if (this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
 							item.down = false
 							item.name = index
 							item.id = index
-							item.isGray=new Date(item.expiredDate).getTime()<(+new Date())
-							item.day3After=((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<this.day3After)
+							item.isGray = new Date(item.expiredDate).getTime() < (+new Date())
+							item.day3After = ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate)
+								.getTime() < this.day3After)
 						})
 					}
 				}
@@ -220,12 +266,14 @@
 					this.list.map((val) => {
 						val.checked = false;
 					});
+				this.checkedNum = this.list.filter((val) => val.checked).length
 				this.$forceUpdate()
 			},
 
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
+				this.checkedNum = this.list.filter((val) => val.checked).length
 				this.$forceUpdate()
 			},
 
@@ -235,7 +283,7 @@
 					url: '../batchQuotation/index'
 				});
 			},
-			
+
 			//点击去过期页面
 			toSoonExpire() {
 				uni.setStorageSync('day3AfterList', this.day3AfterList)
@@ -243,18 +291,19 @@
 					url: '../soonExpire/index'
 				});
 			},
-			
+
 			//点击搜索
-			checkedAll(){
+			checkedAll() {
 				this.getSupplierProduct()
 			}
 
 		},
-		computed:{
+		computed: {
 			//三天后就过期的数据
-			day3AfterList(){
-				return this.list.filter(item=>{
-				 return	((new Date()).valueOf()<new Date(item.expiredDate).getTime())&&(new Date(item.expiredDate).getTime()<this.day3After)
+			day3AfterList() {
+				return this.list.filter(item => {
+					return ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate).getTime() <
+						this.day3After)
 				})
 			}
 		}
@@ -266,8 +315,9 @@
 	.gray {
 		color: #c9c9c9 !important;
 	}
-	.deepgray{
-		color:#868686 !important;
+
+	.deepgray {
+		color: #868686 !important;
 	}
 
 	.commodity {
@@ -311,6 +361,7 @@
 				margin-left: 20rpx;
 				padding: 25rpx 0;
 				color: #868686;
+
 				.checkbox_view_name {
 					font-weight: 700;
 					font-size: 32rpx;
@@ -320,7 +371,8 @@
 				.utag {
 					margin-left: 30rpx;
 				}
-				.checkbox_view_oneline{
+
+				.checkbox_view_oneline {
 					font-size: 24rpx;
 				}
 			}
@@ -328,6 +380,45 @@
 
 		.btn {
 			padding: 0 40rpx;
+		}
+		
+		//底部批量报价区域
+		.quotation_area {
+			position: fixed;
+			bottom: 165rpx;
+			z-index: 999;
+			border-top: 5rpx solid #f8f8f8;
+			background-color: #fefefe;
+		
+			.quotation_area_oneline {
+				padding: 0 20rpx;
+				display: flex;
+		
+				.quotation_area_oneline_item {
+					display: flex;
+					width: 50%;
+		
+					/deep/.u-input__input {
+						margin-top: 8rpx;
+					}
+		
+					.ufield {
+						// flex: 1;
+					}
+		
+					.text {
+						align-self: center;
+						color: #868686;
+					}
+				}
+			}
+			.quotation_area_oneline.btnarea {
+				margin-top: 20rpx;
+			
+				.btn {
+					width: 100%;
+				}
+			}
 		}
 	}
 </style>

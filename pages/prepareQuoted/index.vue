@@ -610,7 +610,6 @@
 					currency: "",
 					//价格
 					price: "",
-
 					//有效期
 					validity: "",
 					//交货天数
