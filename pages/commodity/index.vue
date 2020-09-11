@@ -45,7 +45,7 @@
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
 						</view>
 						<view class="checkbox_view_oneline" v-if="!item.checked">
-							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain>更新报价</u-button>
+							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain @click.stop="showInquiryModal">更新报价</u-button>
 						</view>
 						
 						<view class="price_change" v-if="item.checked">
@@ -91,6 +91,49 @@
 				<u-button type="error" class="btn" @click="submitSomeBidding">批量报价</u-button>
 			</view>
 		</view>
+		
+		<!-- 询盘模态框 -->
+		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false">
+			<view class="inquiryModal_content">
+				<u-form :model="inquiryForm" ref="iForm1" :label-width="145">
+					<u-form-item label="币种" prop="currency">
+						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
+					</u-form-item>
+					<u-form-item label="价格" prop="price" v-if="inquiryForm.currency!=='USD'">
+						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
+					</u-form-item>
+					<view class="red" v-if="inquiryForm.currency==='RMB'&&inquiryForm.price===''">请填写含税含运费价格</view>
+					<u-form-item label="美元价格" prop="price" v-if="inquiryForm.currency==='USD'">
+						<u-input v-model="inquiryForm.price" placeholder="请输入美元价格" />
+					</u-form-item>
+					<u-form-item label="有效期" prop="validity">
+						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
+					</u-form-item>
+					<u-form-item label="交货天数" prop="day">
+						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数" />
+					</u-form-item>
+					<u-form-item label="价格趋势">
+						<u-input v-model="inquiryForm.trend" type="select" @click="showTrendSelect" placeholder="请选择价格趋势" />
+					</u-form-item>
+					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
+						<u-input v-model="inquiryForm.explain" />
+					</u-form-item>
+					<u-form-item label="备注" placeholder="请输入备注">
+						<u-input v-model="inquiryForm.remark" />
+					</u-form-item>
+					<view class="btn-area">
+						<u-row gutter="16">
+							<u-col span="6">
+								<u-button type="error" plain @click="showInquiryModalCancel">取消</u-button>
+							</u-col>
+							<u-col span="6">
+								<u-button type="error" @click="submitBidding">提交报价</u-button>
+							</u-col>
+						</u-row>
+					</view>
+				</u-form>
+			</view>
+		</u-modal>
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
 	</view>
@@ -169,7 +212,8 @@
 						unit: 18
 					}
 				],
-				
+				//询盘模态框是否显示
+				inquiryShow: false,
 				// 报价表格
 				inquiryForm: {
 					//币种
@@ -322,7 +366,41 @@
 					this.$forceUpdate()
 					return;
 				}
-			}
+			},
+			
+			//点击取消 取消询盘弹窗显示
+			showInquiryModalCancel() {
+				this.resetInquiryForm()
+				this.inquiryShow = false
+			},
+			
+			//点击报价
+			showInquiryModal() {
+				this.resetInquiryForm()
+				this.inquiryShow = true
+			},
+			
+			//重置报价模态框
+			resetInquiryForm() {
+				this.inquiryForm = {
+					//币种
+					currency: "",
+					//价格
+					price: "",
+					//有效期
+					validity: "",
+					//交货天数
+					day: "",
+					//价格趋势
+					trend: "",
+					pricetrendValue: "",
+					//趋势说明
+					explain: "",
+					//备注
+					remark: "",
+				}
+				this.$refs['iForm1'].resetFields();
+			},
 		},
 		computed: {
 			//三天后就过期的数据
@@ -467,6 +545,15 @@
 				.btn {
 					width: 100%;
 				}
+			}
+		}
+		
+		// 报价模态框
+		.inquiryModal_content {
+			padding: 20rpx;
+		
+			.btn-area {
+				margin-top: 20rpx;
 			}
 		}
 	}
