@@ -52,9 +52,6 @@
 				</u-checkbox>
 			</u-checkbox-group>
 		</view>
-		<view class="btn">
-			<u-button @click="batchFilling" type="error" plain>批量填写</u-button>
-		</view>
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
 	</view>

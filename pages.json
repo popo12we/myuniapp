@@ -4,17 +4,18 @@
 	},
 	"pages": [
 		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": "登录页"
-			}
-		},
-		{
 			"path": "pages/commodity/index",
 			"style": {
 				"navigationBarTitleText": "商品"
 			}
 		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录页"
+			}
+		},
+		
 		
 		{
 			"path": "pages/soonExpire/index",
