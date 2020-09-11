@@ -45,17 +45,16 @@
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
 						</view>
 						<view class="checkbox_view_oneline" v-if="!item.checked">
-							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain @click.stop="showInquiryModal">更新报价</u-button>
+							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain @click.stop="showInquiryModal(item)">更新报价</u-button>
 						</view>
-						
+
 						<view class="price_change" v-if="item.checked">
 							<text class="gray pricetext">价格</text>
 							<text class="mg15"></text>
-							<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop
-							 placeholder=" "></u-input>
+							<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 							<text class="mg15"></text>
 							<text v-if="item.currency==='USD'">USD</text>
-							<text v-if="item.currency==='RMB'">RMB</text>
+							<text v-if="item.currency==='CNY'">CNY</text>
 							<text class="mg15"></text>
 							<text class="change" @click.stop="changeCurrency(item)">切换</text>
 						</view>
@@ -91,7 +90,7 @@
 				<u-button type="error" class="btn" @click="submitSomeBidding">批量报价</u-button>
 			</view>
 		</view>
-		
+
 		<!-- 询盘模态框 -->
 		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false">
 			<view class="inquiryModal_content">
@@ -102,7 +101,7 @@
 					<u-form-item label="价格" prop="price" v-if="inquiryForm.currency!=='USD'">
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
-					<view class="red" v-if="inquiryForm.currency==='RMB'&&inquiryForm.price===''">请填写含税含运费价格</view>
+					<view class="red" v-if="inquiryForm.currency==='CNY'&&inquiryForm.price===''">请填写含税含运费价格</view>
 					<u-form-item label="美元价格" prop="price" v-if="inquiryForm.currency==='USD'">
 						<u-input v-model="inquiryForm.price" placeholder="请输入美元价格" />
 					</u-form-item>
@@ -140,6 +139,8 @@
 		<u-select v-model="selectTypesCurrencyShow" :list="selectTypesCurrencyList" @confirm="confirmCurrency"></u-select>
 		<!-- 时间选择 -->
 		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
+		<!-- toast -->
+		<u-toast ref="toast" position="top" />
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
 	</view>
@@ -195,7 +196,7 @@
 						// 可以单个或者同时写两个触发验证方式 
 						trigger: ['change', 'blur'],
 					}],
-				
+
 					price: [{
 						trigger: ['blur', 'change'],
 						required: true,
@@ -214,10 +215,10 @@
 						message: '请选择有效期',
 						trigger: ['change']
 					}],
-					
+
 					day: [{
 						required: true,
-						type:'number',
+						type: 'number',
 						message: '请填写正确的交货天数',
 						trigger: ['change']
 					}]
@@ -240,7 +241,7 @@
 				selectTypesCurrencyShow: false,
 				selectTypesCurrencyList: [{
 						value: "1",
-						label: "RMB",
+						label: "CNY",
 					},
 					{
 						value: "2",
@@ -257,6 +258,15 @@
 					minute: true
 				},
 				defaultTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+				commodityInfo: {
+					spuId: "",
+					spuName: "",
+					skuId: "",
+					spuSpec: "",
+					unit: "",
+				},
+				//选中数据所组成的数组
+				checkedList: []
 			}
 		},
 
@@ -285,7 +295,7 @@
 							item.down = false
 							item.name = index
 							item.id = index
-							item.currency = 'RMB'
+							item.currency = 'CNY'
 							item.isGray = new Date(item.expiredDate).getTime() < (+new Date())
 							item.day3After = ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate)
 								.getTime() < this.day3After)
@@ -303,6 +313,7 @@
 						val.checked = false;
 					});
 				this.checkedNum = this.list.filter((val) => val.checked).length
+				this.checkedList = this.list.filter((val) => val.checked)
 				this.$forceUpdate()
 			},
 
@@ -310,6 +321,7 @@
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
 				this.checkedNum = this.list.filter((val) => val.checked).length
+				this.checkedList = this.list.filter((val) => val.checked)
 				this.$forceUpdate()
 			},
 
@@ -332,73 +344,81 @@
 			checkedAll() {
 				this.getSupplierProduct()
 			},
-			
+
 			//切换币种
 			changeCurrency(item) {
 				if (item.currency === 'USD') {
-					item.currency = 'RMB'
+					item.currency = 'CNY'
 					this.$forceUpdate()
 					return;
 				}
-				if (item.currency === 'RMB') {
+				if (item.currency === 'CNY') {
 					item.currency = 'USD'
 					this.$forceUpdate()
 					return;
 				}
 			},
-			
+
 			//点击取消 取消询盘弹窗显示
 			showInquiryModalCancel() {
 				this.resetInquiryForm()
 				this.inquiryShow = false
 			},
-			
+
 			//点击报价
-			showInquiryModal() {
+			showInquiryModal(item) {
 				this.resetInquiryForm()
 				this.inquiryShow = true
+				this.commodityInfo = {
+					spuId: item.spuId,
+					spuName: item.spuName,
+					skuId: item.skuId,
+					spuSpec: item.spuSpec,
+					unit: item.unit,
+				}
 			},
-			
+
 			//提交报价
 			async submitBidding() {
 				this.$refs.iForm1.validate(async valid => {
-			// 		if (valid) {
-			// 			let res = await fetch(this.api.v2.submitQuotation, {
-			// 				method: "post",
-			// 				data: {
-			// 					accessToken: uni.getStorageSync('accessToken'),
-			// 					list: [{
-			// 						offerId: this.offerId,
-			// 						cur: this.inquiryForm.currency,
-			// 						price: this.inquiryForm.price,
-			// 						deliveryDay: this.inquiryForm.day,
-			// 						expiredDate: this.inquiryForm.validity,
-			// 						pricetrend: this.inquiryForm.pricetrendValue,
-			// 						priceInfo: this.inquiryForm.explain,
-			// 						remarks: this.inquiryForm.remark
-			// 					}]
-			// 				}
-			// 			})
-			
-			// 			this.inquiryShow = false
-			// 			this.binddingShow = false
-			// 			if (res.data.code === '0') {
-			// 				this.$refs.toast.show({
-			// 					title: '提交报价成功',
-			// 					type: 'success',
-			// 					position: 'top'
-			// 				})
-			// 			} else {
-			// 				this.$refs.toast.show({
-			// 					title: '提交报价失败',
-			// 					type: 'error',
-			// 					position: 'top'
-			// 				})
-			// 			}
-			// 		}
+					if (valid) {
+						let res = await fetch(this.api.v2.submitProduct, {
+							method: "post",
+							data: {
+								accessToken: uni.getStorageSync('accessToken'),
+								list: [{
+									cur: this.inquiryForm.currency,
+									price: this.inquiryForm.price,
+									deliveryDay: this.inquiryForm.day,
+									expiredDate: this.inquiryForm.validity,
+									spuId: this.commodityInfo.spuId,
+									spuName: this.commodityInfo.spuName,
+									skuId: this.commodityInfo.skuId,
+									spuSpec: this.commodityInfo.spuSpec,
+									unit: this.commodityInfo.unit
+								}]
+							}
+						})
+
+						this.inquiryShow = false
+						if (res.data.code === '0') {
+							this.$refs.toast.show({
+								title: '提交报价成功',
+								type: 'success',
+								position: 'top'
+							})
+							this.getSupplierProduct()
+						} else {
+							this.$refs.toast.show({
+								title: '提交报价失败',
+								type: 'error',
+								position: 'top'
+							})
+						}
+					}
 				})
 			},
-			
+
 			//重置报价模态框
 			resetInquiryForm() {
 				this.inquiryForm = {
@@ -450,6 +470,47 @@
 			showValidity() {
 				this.dateTime = true
 			},
+
+			//批量报价
+			async submitSomeBidding() {
+				let tempArr = []
+				this.checkedList.forEach(item => {
+					let obj = {
+						cur: item.currency,
+						price: item.price,
+						deliveryDay: this.inquiryForm.day,
+						expiredDate: this.inquiryForm.validity,
+						spuId: item.spuId,
+						spuName: item.spuName,
+						skuId: item.skuId,
+						spuSpec: item.spuSpec,
+						unit: item.unit
+					}
+					tempArr.push(obj)
+				})
+				let res = await fetch(this.api.v2.submitProduct, {
+					method: "post",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						list: tempArr
+					}
+				})
+
+				if (res.data.code === '0') {
+					this.$refs.toast.show({
+						title: '提交报价成功',
+						type: 'success',
+						position: 'top'
+					})
+					this.getSupplierProduct()
+				} else {
+					this.$refs.toast.show({
+						title: '提交报价失败',
+						type: 'error',
+						position: 'top'
+					})
+				}
+			}
 		},
 		computed: {
 			//三天后就过期的数据
@@ -472,7 +533,7 @@
 	.deepgray {
 		color: #868686 !important;
 	}
-	
+
 	.red {
 		color: #d0021b !important;
 	}
@@ -532,25 +593,27 @@
 				.checkbox_view_oneline {
 					font-size: 24rpx;
 				}
-				
+
 				.price_change {
 					display: flex;
-					/deep/ .u-input__input{
+
+					/deep/ .u-input__input {
 						min-height: 30px !important;
 					}
+
 					.pricetext {
 						margin-left: 6rpx;
 					}
-				
+
 					.ufield {
 						flex: 1;
-						border-bottom:2rpx solid #ccc;
+						border-bottom: 2rpx solid #ccc;
 					}
-				
+
 					text {
 						align-self: center;
 					}
-				
+
 					.change {
 						color: #00a6db;
 					}
@@ -561,7 +624,7 @@
 		.btn {
 			padding: 0 40rpx;
 		}
-		
+
 		//底部批量报价区域
 		.quotation_area {
 			position: fixed;
@@ -569,42 +632,43 @@
 			z-index: 999;
 			border-top: 5rpx solid #f8f8f8;
 			background-color: #fefefe;
-		
+
 			.quotation_area_oneline {
 				padding: 0 20rpx;
 				display: flex;
-		
+
 				.quotation_area_oneline_item {
 					display: flex;
 					width: 50%;
-		
+
 					/deep/.u-input__input {
 						margin-top: 8rpx;
 					}
-		
+
 					.ufield {
 						// flex: 1;
 					}
-		
+
 					.text {
 						align-self: center;
 						color: #868686;
 					}
 				}
 			}
+
 			.quotation_area_oneline.btnarea {
 				margin-top: 20rpx;
-			
+
 				.btn {
 					width: 100%;
 				}
 			}
 		}
-		
+
 		// 报价模态框
 		.inquiryModal_content {
 			padding: 20rpx;
-		
+
 			.btn-area {
 				margin-top: 20rpx;
 			}

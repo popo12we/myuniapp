@@ -142,7 +142,7 @@
 									 placeholder=" "></u-input>
 									<text class="mg15"></text>
 									<text v-if="item.currency==='USD'">USD</text>
-									<text v-if="item.currency==='RMB'">RMB</text>
+									<text v-if="item.currency==='CNY'">CNY</text>
 									<text class="mg15"></text>
 									<text class="change" @click.stop="changeCurrency(item)">切换</text>
 								</view>
@@ -209,7 +209,7 @@
 										 placeholder=" "></u-input>
 										<text class="mg15"></text>
 										<text v-if="item.currency==='USD'">USD</text>
-										<text v-if="item.currency==='RMB'">RMB</text>
+										<text v-if="item.currency==='CNY'">CNY</text>
 										<text class="mg15"></text>
 										<text class="change" @click.stop="showCurrencySelect">切换</text>
 									</view>
@@ -475,7 +475,7 @@
 					<u-form-item label="价格" prop="price" v-if="inquiryForm.currency!=='USD'">
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
-					<view class="red" v-if="inquiryForm.currency==='RMB'&&inquiryForm.price===''">请填写含税含运费价格</view>
+					<view class="red" v-if="inquiryForm.currency==='CNY'&&inquiryForm.price===''">请填写含税含运费价格</view>
 					<u-form-item label="美元价格" prop="price" v-if="inquiryForm.currency==='USD'">
 						<u-input v-model="inquiryForm.price" placeholder="请输入美元价格" />
 					</u-form-item>
@@ -578,7 +578,7 @@
 				selectTypesCurrencyShow: false,
 				selectTypesCurrencyList: [{
 						value: "1",
-						label: "RMB",
+						label: "CNY",
 					},
 					{
 						value: "2",
@@ -738,7 +738,7 @@
 							item.down = false
 							item.name = index
 							item.id = index
-							item.currency = 'RMB'
+							item.currency = 'CNY'
 							if (item.biddingMode === '是') {
 								// 竞价数组
 								this.biddingList.push(item)
@@ -1013,11 +1013,11 @@
 			//切换币种
 			changeCurrency(item) {
 				if (item.currency === 'USD') {
-					item.currency = 'RMB'
+					item.currency = 'CNY'
 					this.$forceUpdate()
 					return;
 				}
-				if (item.currency === 'RMB') {
+				if (item.currency === 'CNY') {
 					item.currency = 'USD'
 					this.$forceUpdate()
 					return;
