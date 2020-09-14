@@ -58,7 +58,7 @@
 
 												<text class="gray">当前出价（USD):</text>
 												<text class="mg15"></text>
-												<text class="gray">1.63</text>
+												<text class="gray">{{item.bidAmount}}</text>
 
 											</view>
 											<view class="swiper_center_oneline">
@@ -69,7 +69,7 @@
 
 											</view>
 											<view class="swiper_center_oneline settimeout_btn">
-												<view class="settimeout">剩余1天12小时30分结束</view>
+												<InquiryDeadline :endTime="item.inquiryDeadline"></InquiryDeadline>
 											</view>
 											<view class="swiper_center_oneline center_btn_area">
 												<u-button type="error" size="mini" plain class="btn_end" @click="toBindding(item.offerId)">我要竞价</u-button>
@@ -390,25 +390,10 @@
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-col span="6">
-												<text class="gray">装货码头</text>
-												<text class="mg15">:</text>
-												<text class="gray">卸货码头</text>
-											</u-col>
-											<u-col span="6">
-												<text class="gray">货物类型</text>
-												<text class="mg15">:</text>
-												<text class="gray">一般化工品</text>
-											</u-col>
-										</u-row>
-									</view>
-
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
 											<u-col span="12">
-												<text class="gray">货物描述</text>
+												<text class="gray">备注</text>
 												<text class="mg15">:</text>
-												<text class="gray">一种食品添加剂</text>
+												<text class="gray">{{item.remarks}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -709,33 +694,34 @@
 				},
 
 				//物流部分
-				list: [{
-					cargoWeight: "",
-					destinationPort: "天津",
-					expectedshipdate: "2020-09-24 00:00:00.0",
-					gw: "0.000000",
-					remarks: "",
-					startPort: "宁波",
-					inquirydeadline: "2020-09-01 00:00:00.0",
-				},
-				{
-					cargoWeight: "",
-					destinationPort: "天津",
-					expectedshipdate: "2020-09-24 00:00:00.0",
-					gw: "0.000000",
-					remarks: "",
-					startPort: "宁波",
-					inquirydeadline: "2020-09-14 15:21:00.0",
-				},
-				{
-					cargoWeight: "",
-					destinationPort: "天津",
-					expectedshipdate: "2020-09-24 00:00:00.0",
-					gw: "0.000000",
-					remarks: "",
-					startPort: "宁波",
-					inquirydeadline: "2020-09-21 00:00:00.0",
-				}]
+				// {
+				// 	cargoWeight: "",
+				// 	destinationPort: "天津",
+				// 	expectedshipdate: "2020-09-24 00:00:00.0",
+				// 	gw: "0.000000",
+				// 	remarks: "",
+				// 	startPort: "宁波",
+				// 	inquirydeadline: "2020-09-01 00:00:00.0",
+				// },
+				// {
+				// 	cargoWeight: "",
+				// 	destinationPort: "天津",
+				// 	expectedshipdate: "2020-09-24 00:00:00.0",
+				// 	gw: "0.000000",
+				// 	remarks: "",
+				// 	startPort: "宁波",
+				// 	inquirydeadline: "2020-09-14 15:21:00.0",
+				// },
+				// {
+				// 	cargoWeight: "",
+				// 	destinationPort: "天津",
+				// 	expectedshipdate: "2020-09-24 00:00:00.0",
+				// 	gw: "0.000000",
+				// 	remarks: "",
+				// 	startPort: "宁波",
+				// 	inquirydeadline: "2020-09-21 00:00:00.0",
+				// }
+				list: []
 
 			};
 		},
