@@ -294,7 +294,7 @@
 											<view class="swiper_center_oneline_title clearfix">
 												<view class="secondtext">{{item.startPort}}</view>
 												<view class="thirdtext">
-													<view>{{item.transfer}}</view>
+													<view class="unlinetext">{{item.transfer==="1"?"直达":item.transfer=="2"?"中转":""}}</view>
 													<view>——</view>
 												</view>
 												<view class="fourthtext">{{item.destinationPort}}</view>
@@ -328,7 +328,7 @@
 									<view class="checkbox_view_oneline_title clearfix">
 										<view class="secondtext">{{item.startPort}}</view>
 										<view class="thirdtext">
-											<view>直达</view>
+											<view class="unlinetext">{{item.transfer==="1"?"直达":item.transfer=="2"?"中转":""}}</view>
 											<view>——</view>
 										</view>
 										<view class="fourthtext">{{item.destinationPort}}</view>
@@ -1610,6 +1610,9 @@
 						.thirdtext {
 							line-height: 20rpx;
 							font-size: 20rpx;
+						}
+						.unlinetext{
+							height: 18rpx;
 						}
 
 						.fourthtext {
