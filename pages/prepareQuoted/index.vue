@@ -163,7 +163,7 @@
 												<text class="gray">{{item.destinationPort}}</text>
 											</u-col>
 											<u-col span="5">
-												<text class="gray">20GP</text>
+												<text class="gray">{{item.cargoWeight}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -298,7 +298,7 @@
 													<view>——</view>
 												</view>
 												<view class="fourthtext">{{item.destinationPort}}</view>
-												<view class="fifthtext">1*20'GP</view>
+												<view class="fifthtext">{{item.cargoWeight}}</view>
 											</view>
 											<view class="swiper_center_oneline">{{item.shippingSchedule}}</view>
 											<view class="swiper_center_oneline">{{item.expectedShipDate}}</view>
@@ -341,7 +341,7 @@
 										<u-col span="6">
 											<text class="gray">箱型</text>
 											<text class="mg15">:</text>
-											<text class="gray">20GP</text>
+											<text class="gray">{{item.cabinetType}}</text>
 										</u-col>
 										<u-col span="6">
 											<text class="red">截止日期</text>
@@ -365,12 +365,12 @@
 											<u-col span="6">
 												<text class="gray">货盘类型</text>
 												<text class="mg15">:</text>
-												<text class="gray">海运整箱</text>
+												<text class="gray">{{item.pallettypestr}}</text>
 											</u-col>
 											<u-col span="6">
 												<text class="gray">货物总量</text>
 												<text class="mg15">:</text>
-												<text class="gray">1*20‘GP</text>
+												<text class="gray">{{item.cargoWeight}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -379,12 +379,12 @@
 											<u-col span="6">
 												<text class="gray">货物毛重</text>
 												<text class="mg15">:</text>
-												<text class="gray">200KG</text>
+												<text class="gray">{{item.gw}}</text>
 											</u-col>
 											<u-col span="6">
 												<text class="gray">预计出运</text>
 												<text class="mg15">:</text>
-												<text class="gray">2020-08-05</text>
+												<text class="gray">{{item.expectedshipdate}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -725,6 +725,15 @@
 					gw: "0.000000",
 					remarks: "",
 					startPort: "宁波",
+					inquirydeadline: "2020-09-14 15:21:00.0",
+				},
+				{
+					cargoWeight: "",
+					destinationPort: "天津",
+					expectedshipdate: "2020-09-24 00:00:00.0",
+					gw: "0.000000",
+					remarks: "",
+					startPort: "宁波",
 					inquirydeadline: "2020-09-21 00:00:00.0",
 				}]
 
@@ -799,14 +808,14 @@
 				// this.Inquiry = []
 				// this.realOrderList = []
 				if (res.data.code === '0') {
-					// 	this.list = res.data.data.list
-					// 	if (this.list.length > 0) {
-					// 		this.list.forEach((item, index) => {
-					// 			item.checked = false
-					// 			item.down = false
-					// 			item.name = index
-					// 			item.id = index
-					// 			item.currency = 'CNY'
+						this.list = res.data.data.list
+						if (this.list.length > 0) {
+							this.list.forEach((item, index) => {
+								item.checked = false
+								item.down = false
+								item.name = index
+								item.id = index
+								item.currency = 'CNY'
 					// // 			if (item.biddingMode === '是') {
 					// // 				// 竞价数组
 					// // 				this.biddingList.push(item)
@@ -821,8 +830,8 @@
 					// // 					this.realOrderList.push(item)
 					// // 				}
 					// // 			}
-					// 		})
-					// 	}
+							})
+						}
 				}
 			},
 			// 全选
@@ -911,7 +920,12 @@
 					);
 				}
 				// this.inquiryList[e.index].down = e.show;
-				this.Inquiry[e.index].down = e.show;
+				if(this.isRole){
+					this.Inquiry[e.index].down = e.show
+				}else{
+					this.list[e.index].down = e.show
+				}
+				
 			},
 
 			//确认币种
