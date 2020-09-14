@@ -32,14 +32,14 @@
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.spuSpec}}</text>
 						</view>
 
-						<view class="checkbox_view_oneline" v-if="!item.checked">
+						<view class="checkbox_view_oneline">
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">最新报价(USD)</text>
 							<text class="mg15">:</text>
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.bidAmount?item.bidAmount:"未报价"}}</text>
 							<u-tag text="已失效" type="info" class="utag" v-if="item.isGray" />
 							<u-tag text="三天后到期" type="error" plain class="utag" v-if="item.day3After" />
 						</view>
-						<view class="checkbox_view_oneline" v-if="!item.checked">
+						<view class="checkbox_view_oneline">
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">有效期</text>
 							<text class="mg15">:</text>
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
