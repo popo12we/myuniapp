@@ -21,7 +21,8 @@
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
 							<!-- autoplay='true' :circular='true' -->
-							<swiper class="swiper" :indicator-dots="indicatorDots"  indicator-color='rgba(0, 0, 0, .1)' indicator-active-color='#666'>
+							<swiper class="swiper" :indicator-dots="indicatorDots" indicator-color='rgba(0, 0, 0, .1)'
+							 indicator-active-color='#666'>
 								<swiper-item v-for="item in swiperList" :key="item.id" @click="navigateTobidding">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
@@ -47,25 +48,25 @@
 												<text>{{item.brand}}</text>
 											</view>
 											<view class="swiper_center_oneline">
-											
+
 												<text class="gray">规格</text>
 												<text class="mg15 gray">:</text>
 												<text class="gray">{{item.spuSpec}}</text>
-												
+
 											</view>
 											<view class="swiper_center_oneline">
-												
+
 												<text class="gray">当前出价（USD):</text>
 												<text class="mg15"></text>
 												<text class="gray">1.63</text>
-												
+
 											</view>
 											<view class="swiper_center_oneline">
-												
+
 												<text class="red">当前排名</text>
 												<text class="mg15 red">:</text>
 												<text class="red">2</text>
-												
+
 											</view>
 											<view class="swiper_center_oneline settimeout_btn">
 												<view class="settimeout">剩余1天12小时30分结束</view>
@@ -128,7 +129,7 @@
 									<u-row gutter="16">
 										<u-col span="12">
 											<view>
-												<text class="red">{{item.inquiryDeadline}}</text>
+												<text class="red">{{item.inquirydeadline}}</text>
 												<text class="mg15"></text>
 												<text class="red">截至报价</text>
 											</view>
@@ -138,8 +139,7 @@
 								<view class="price_change" v-if="item.checked&&(!item.down)">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
-									<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop
-									 placeholder=" "></u-input>
+									<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 									<text class="mg15"></text>
 									<text v-if="item.currency==='USD'">USD</text>
 									<text v-if="item.currency==='CNY'">CNY</text>
@@ -205,15 +205,14 @@
 									<view class="price_change" v-if="Inquiry[index].checked&&item.down">
 										<text class="gray pricetext">价格</text>
 										<text class="mg15"></text>
-										<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop
-										 placeholder=" "></u-input>
+										<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 										<text class="mg15"></text>
 										<text v-if="item.currency==='USD'">USD</text>
 										<text v-if="item.currency==='CNY'">CNY</text>
 										<text class="mg15"></text>
 										<text class="change" @click.stop="showCurrencySelect">切换</text>
 									</view>
-									
+
 									<view class="checkbox_view_oneline mt15" v-if="!item.checked">
 										<u-row gutter="16">
 											<u-col span="12">
@@ -273,12 +272,12 @@
 			<view class="commodity_list_tips">您现在有 2 条实盘询价</view>
 
 			<!-- 轮播图区域 -->
-			<view class="swiper_box">
+			<view class="swiper_box" v-if="logicSwiperList.length>0">
 				<view class="uni-padding-wrap">
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
 							<swiper class="swiper" :indicator-dots="indicatorDots">
-								<swiper-item>
+								<swiper-item v-for="item in logicSwiperList" :key="item.id">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
 										<view class="swiper-item_left">
@@ -293,19 +292,18 @@
 										</view>
 										<view class="swiper-item_center">
 											<view class="swiper_center_oneline_title clearfix">
-												<view class="firsttext">黑海</view>
-												<view class="secondtext">上海</view>
+												<view class="secondtext">{{item.startPort}}</view>
 												<view class="thirdtext">
-													<view>直达</view>
+													<view>{{item.transfer}}</view>
 													<view>——</view>
 												</view>
-												<view class="fourthtext">奥德赛</view>
+												<view class="fourthtext">{{item.destinationPort}}</view>
 												<view class="fifthtext">1*20'GP</view>
 											</view>
-											<view class="swiper_center_oneline">周一，周三，周五</view>
-											<view class="swiper_center_oneline">2020-08-05 至 2020-08-15</view>
+											<view class="swiper_center_oneline">{{item.shippingSchedule}}</view>
+											<view class="swiper_center_oneline">{{item.expectedShipDate}}</view>
 											<view class="swiper_center_oneline settimeout_btn">
-												<view class="settimeout">剩余1天12小时30分结束</view>
+												<InquiryDeadline :endTime="item.inquirydeadline"></InquiryDeadline>
 											</view>
 											<view class="swiper_center_oneline center_btn_area">
 												<u-button type="error" size="mini" plain class="btn_end" @click="toBindding">我要竞价</u-button>
@@ -322,17 +320,18 @@
 			<!-- 商品列表 -->
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
-					<u-collapse>
-						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
+					<u-collapse :accordion="false">
+						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in list" :key="item.id"
+						 :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
 									<view class="checkbox_view_oneline_title clearfix">
-										<view class="secondtext">上海</view>
+										<view class="secondtext">{{item.startPort}}</view>
 										<view class="thirdtext">
 											<view>直达</view>
 											<view>——</view>
 										</view>
-										<view class="fourthtext">奥德赛</view>
+										<view class="fourthtext">{{item.destinationPort}}</view>
 										<text class="checkbox_view_tab" @click.stop="showInquiryModal">询盘</text>
 									</view>
 								</view>
@@ -555,13 +554,15 @@
 </template>
 
 <script>
-	import Tabbar from "../../my_common_components/Tabbar.vue";
-	import "../../common/font/iconfont.css";
+	import Tabbar from "../../my_common_components/Tabbar.vue"
+	import InquiryDeadline from "../../my_common_components/InquiryDeadline.vue"
+	import "../../common/font/iconfont.css"
 	import fetch from '../../utils/fetch.js'
 	import moment from 'moment'
 	export default {
 		components: {
 			Tabbar,
+			InquiryDeadline
 		},
 		data() {
 			return {
@@ -650,9 +651,9 @@
 						message: '请选择有效期',
 						trigger: ['change']
 					}],
-					
+
 					day: [{
-						type:'number',
+						type: 'number',
 						message: '请填写正确的交货天数',
 						trigger: ['change']
 					}]
@@ -707,10 +708,36 @@
 					minute: true
 				},
 
+				//物流部分
+				list: [{
+					cargoWeight: "",
+					destinationPort: "天津",
+					expectedshipdate: "2020-09-24 00:00:00.0",
+					gw: "0.000000",
+					remarks: "",
+					startPort: "宁波",
+					inquirydeadline: "2020-09-01 00:00:00.0",
+				},
+				{
+					cargoWeight: "",
+					destinationPort: "天津",
+					expectedshipdate: "2020-09-24 00:00:00.0",
+					gw: "0.000000",
+					remarks: "",
+					startPort: "宁波",
+					inquirydeadline: "2020-09-21 00:00:00.0",
+				}]
+
 			};
 		},
 		created() {
-			this.getInquiryList()
+			//是展示产品询价单数据还是物流询价单数据
+			if (this.isRole) {
+				this.getInquiryList()
+			} else {
+				this.logicInquiryList()
+			}
+
 		},
 		onReady() {
 			this.$refs.iForm1.setRules(this.rules1);
@@ -755,6 +782,47 @@
 							}
 						})
 					}
+				}
+			},
+
+			// 物流供应商列表
+			async logicInquiryList() {
+				let res = await fetch(this.api.v2.logicInquiry, {
+					method: "get",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						keywords: this.keywords
+					}
+				})
+				// this.biddingList = []
+				// this.inquiryList = []
+				// this.Inquiry = []
+				// this.realOrderList = []
+				if (res.data.code === '0') {
+					// 	this.list = res.data.data.list
+					// 	if (this.list.length > 0) {
+					// 		this.list.forEach((item, index) => {
+					// 			item.checked = false
+					// 			item.down = false
+					// 			item.name = index
+					// 			item.id = index
+					// 			item.currency = 'CNY'
+					// // 			if (item.biddingMode === '是') {
+					// // 				// 竞价数组
+					// // 				this.biddingList.push(item)
+					// // 			} else {
+					// // 				if (item.inquiryType === "询盘询价") {
+					// // 					//询盘数组
+					// // 					this.Inquiry.push(item)
+					// // 				}
+
+					// // 				if (item.inquiryType === "实单询价") {
+					// // 					//实单数组
+					// // 					this.realOrderList.push(item)
+					// // 				}
+					// // 			}
+					// 		})
+					// 	}
 				}
 			},
 			// 全选
@@ -1071,9 +1139,20 @@
 
 			swiperList() {
 				return [...this.biddingList, ...this.realOrderList]
-			}
-		},
+			},
 
+			//是否还没有结束(询价截止日期>当前时间)
+			// isLiving() {
+			// 	const endTime = new Date(this.endTime)
+			// 	const nowTime = new Date()
+			// 	return nowTime.getTime() - endTime.getTime() > 0 ? true : false
+			// },
+			logicSwiperList() {
+				return this.list.filter(item => {
+					return new Date(item.inquirydeadline) > new Date()
+				})
+			}
+		}
 	};
 </script>
 
@@ -1203,14 +1282,15 @@
 				.swiper_center_title {
 					margin-top: 30rpx;
 					text-align: center;
-					text{
+
+					text {
 						font-weight: 700;
 					}
 				}
 
 				.swiper_center_oneline {
 					margin: 10rpx 0;
-					color:#868686 !important;
+					color: #868686 !important;
 				}
 
 				.settimeout {
@@ -1280,19 +1360,21 @@
 				.checkbox_view_oneline_btn {
 					margin-left: 20rpx;
 				}
-                 
+
 				.price_change {
 					display: flex;
-					/deep/ .u-input__input{
+
+					/deep/ .u-input__input {
 						min-height: 30px !important;
 					}
+
 					.pricetext {
 						margin-left: 6rpx;
 					}
 
 					.ufield {
 						flex: 1;
-						border-bottom:2rpx solid #ccc;
+						border-bottom: 2rpx solid #ccc;
 					}
 
 					text {

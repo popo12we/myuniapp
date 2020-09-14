@@ -12,5 +12,6 @@ export default {
 		codeSession: 'v2/wx/codeSession',// 小程序授权获取用户信息
 		supplier_product:'v2/wx/supplier/product',//获取供应商产品
 		submitProduct:'v2/wx/submitProduct',//小程序供应商商品报价
+		logicInquiry:'v2/wx/logicInquiry',// 小程序物流供应商列表
     }
 }
