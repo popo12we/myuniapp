@@ -11,7 +11,7 @@
 					<u-input v-model="form.username" placeholder="请输入账号" />
 				</u-form-item>
 				<u-form-item label="密码" prop="password">
-					<u-input v-model="form.password" placeholder="请输入密码" />
+					<u-input v-model="form.password" type="password" placeholder="请输入密码" />
 				</u-form-item>
 			</u-form>
 			<view class="verificationcode-login-area clearfix">
