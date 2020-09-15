@@ -18,7 +18,8 @@
 				<text class="verificationcode-login">验证码登录</text>
 			</view>
 			<view class="loginbtn-area">
-				<u-button type="error" @click="login">登录</u-button>
+				<!-- <button open-type="getUserInfo" @getuserinfo="onGotUserInfo">按钮</button> -->
+				<u-button type="error" open-type="getUserInfo" @getuserinfo="onGotUserInfo">登录</u-button>
 			</view>
 		</view>
 
@@ -53,11 +54,10 @@
 						}
 					],
 					password: [{
-							required: true,
-							message: '请输入密码',
-							trigger: ['change', 'blur']
-						}
-					]
+						required: true,
+						message: '请输入密码',
+						trigger: ['change', 'blur']
+					}]
 				},
 				//是否打开加载动画
 				isLoading: false,
@@ -97,7 +97,10 @@
 				})
 			},
 			//点击登录
-			async login() {
+			async onGotUserInfo(e) {
+				let encryptedData=e.mp.detail.encryptedData
+				let iv=e.mp.detail.iv
+				
 				this.$refs.uForm.validate(async valid => {
 					if (valid) {
 						this.isLoading = true
@@ -126,20 +129,28 @@
 							uni.setStorageSync('roleId', res.data.data.supplierNature)
 							uni.setStorageSync('accessToken', res.data.data.accessToken)
 							var accessToken = res.data.data.accessToken
+							// 1调wx.login
 							wx.login({
 								success: async res => {
 									if (res.code) {
-										// console.log(res.code)
-										let res1 = await fetch(this.api.v2.codeSession, {
-											method: "get",
+										let res1 = await fetch(this.api.v2.encryedData, {
+											method: "post",
 											data: {
 												code: res.code,
+												encryptedData,
+												iv,
 												accessToken
 											}
 										})
 										if (res1.data.code === '0') {
 											uni.switchTab({
 												url: '../prepareQuoted/index'
+											})
+										}else{
+											this.$refs.errorLoginToast.show({
+												title: res1.data.msg,
+												type: 'error',
+												position: 'top'
 											})
 										}
 									} else {
@@ -162,6 +173,10 @@
 					}
 				})
 			}
+
+			// onGotUserInfo: function(e) {
+			// 	console.log(e)
+			// },
 		}
 	}
 </script>

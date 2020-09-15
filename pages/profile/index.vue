@@ -29,6 +29,7 @@
 		</view>
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
+		<u-modal v-model="modelShow" content="是否退出登录" :show-title='false' :show-cancel-button="true" cancel-text="取消" @confirm="confirmLoginOut" confirm-color="#D0021B"></u-modal>
 	</view>
 </template>
 
@@ -49,7 +50,9 @@
 				//报价次数
 				offerCount:0,
 				//放弃报价次数
-				giveupCount:0
+				giveupCount:0,
+				//退出模态框
+				modelShow:false
 			}
 		},
 		methods: {
@@ -61,7 +64,6 @@
 						accessToken: uni.getStorageSync('accessToken')
 					}
 				})
-				console.log(res)
 				if (res.data.code === '0') {
 					this.userName = res.data.data.userName
 					this.offerCount = res.data.data.offerCount
@@ -76,7 +78,7 @@
 			},
 			//退出登录
 			loginOut(){
-				
+				this.modelShow=true
 			}
 		}
 	}
