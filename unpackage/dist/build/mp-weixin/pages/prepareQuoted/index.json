@@ -16,6 +16,7 @@
     "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
     "u-select": "/node-modules/uview-ui/components/u-select/u-select",
     "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker",
-    "tabbar": "/my_common_components/Tabbar"
+    "tabbar": "/my_common_components/Tabbar",
+    "inquiry-deadline": "/my_common_components/InquiryDeadline"
   }
 }

@@ -6,6 +6,15 @@
     "u-button": "/node-modules/uview-ui/components/u-button/u-button",
     "u-checkbox-group": "/node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group",
     "u-tag": "/node-modules/uview-ui/components/u-tag/u-tag",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "u-form": "/node-modules/uview-ui/components/u-form/u-form",
+    "u-form-item": "/node-modules/uview-ui/components/u-form-item/u-form-item",
+    "u-row": "/node-modules/uview-ui/components/u-row/u-row",
+    "u-col": "/node-modules/uview-ui/components/u-col/u-col",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select",
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
     "tabbar": "/my_common_components/Tabbar"
   }
 }

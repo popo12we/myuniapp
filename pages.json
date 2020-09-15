@@ -4,17 +4,30 @@
 	},
 	"pages": [
 		{
-			"path": "pages/prepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
-			}
-		},
-		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录页"
 			}
 		},
+		{
+			"path": "pages/editPassword/index",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/profile/index",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/prepareQuoted/index",
+			"style": {
+				"navigationBarTitleText": "待报价"
+			}
+		},
+		
 		
 		
 		{
@@ -29,12 +42,7 @@
 				"navigationBarTitleText": "即将过期"
 			}
 		},
-		{
-			"path": "pages/profile/index",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
+		
 		
 		{
 			"path": "pages/quotedPrice/index",
@@ -56,12 +64,7 @@
 				"navigationBarTitleText": "竞价"
 			}
 		},
-		{
-			"path": "pages/editPassword/index",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
+		
 		{
 			"path": "pages/batchQuotation/index",
 			"style": {

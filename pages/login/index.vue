@@ -27,7 +27,7 @@
 
 <script>
 	import fetch from '../../utils/fetch.js'
-	var RSA = require('../../utils/wxapp_rsa.js')
+	let RSA = require('../../utils/wxapp_rsa.js')
 	export default {
 		data() {
 			return {
@@ -160,7 +160,7 @@
 							})
 						}
 					}
-				});
+				})
 			}
 		}
 	}

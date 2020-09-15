@@ -324,7 +324,7 @@
 			}
 		},
 		created(){
-			this.getBiddingData()
+			// this.getBiddingData()
 		},
 		methods: {
 			//拿到详细的数据

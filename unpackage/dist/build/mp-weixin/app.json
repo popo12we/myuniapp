@@ -1,13 +1,14 @@
 {
   "pages": [
+    "pages/editPassword/index",
+    "pages/profile/index",
+    "pages/prepareQuoted/index",
     "pages/login/index",
     "pages/commodity/index",
-    "pages/prepareQuoted/index",
-    "pages/profile/index",
+    "pages/soonExpire/index",
     "pages/quotedPrice/index",
     "pages/firmOfferInquiry/index",
     "pages/bidding/index",
-    "pages/editPassword/index",
     "pages/batchQuotation/index"
   ],
   "subPackages": [],
