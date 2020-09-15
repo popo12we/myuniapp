@@ -10,26 +10,25 @@
 			}
 		},
 		{
-			"path": "pages/editPassword/index",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
-		{
 			"path": "pages/profile/index",
 			"style": {
 				"navigationBarTitleText": "个人中心"
 			}
 		},
+		
+		{
+			"path": "pages/editPassword/index",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		
 		{
 			"path": "pages/prepareQuoted/index",
 			"style": {
 				"navigationBarTitleText": "待报价"
 			}
 		},
-		
-		
-		
 		{
 			"path": "pages/commodity/index",
 			"style": {
@@ -42,8 +41,6 @@
 				"navigationBarTitleText": "即将过期"
 			}
 		},
-		
-		
 		{
 			"path": "pages/quotedPrice/index",
 			"style": {
@@ -56,15 +53,12 @@
 				"navigationBarTitleText": "实盘询价"
 			}
 		},
-		
-		
 		{
 			"path": "pages/bidding/index",
 			"style": {
 				"navigationBarTitleText": "竞价"
 			}
 		},
-		
 		{
 			"path": "pages/batchQuotation/index",
 			"style": {

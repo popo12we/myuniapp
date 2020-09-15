@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/editPassword/index",
-    "pages/profile/index",
-    "pages/prepareQuoted/index",
     "pages/login/index",
+    "pages/profile/index",
+    "pages/editPassword/index",
+    "pages/prepareQuoted/index",
     "pages/commodity/index",
     "pages/soonExpire/index",
     "pages/quotedPrice/index",

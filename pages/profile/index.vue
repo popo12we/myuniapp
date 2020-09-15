@@ -24,7 +24,7 @@
 		<view class="editpassword" @click="toEditPassword">
 			修改密码
 		</view>
-		<view class="loginout">
+		<view class="loginout" @click="loginOut">
 			退出登录
 		</view>
 		<!-- 底部导航 -->
@@ -68,10 +68,15 @@
 					this.giveupCount = res.data.data.giveupCount
 				}
 			},
+			//跳转到修改密码
 			toEditPassword() {
 				uni.navigateTo({
 					url: '../editPassword/index'
 				});
+			},
+			//退出登录
+			loginOut(){
+				
 			}
 		}
 	}
