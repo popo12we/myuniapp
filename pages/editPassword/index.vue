@@ -87,7 +87,11 @@
 								type: 'success',
 								position: 'top'
 							})
-
+							setTimeout(function(){
+								uni.navigateTo({
+									url: '../login/index'
+								})
+							},2000)
 						} else {
 							this.$refs.toast.show({
 								title: '修改密码失败',
