@@ -173,10 +173,6 @@
 					}
 				})
 			}
-
-			// onGotUserInfo: function(e) {
-			// 	console.log(e)
-			// },
 		}
 	}
 </script>

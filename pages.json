@@ -4,11 +4,25 @@
 	},
 	"pages": [
 		{
+			"path": "pages/prepareQuoted/index",
+			"style": {
+				"navigationBarTitleText": "待报价"
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录页"
 			}
 		},
+		
+		{
+			"path": "pages/bidding/index",
+			"style": {
+				"navigationBarTitleText": "竞价"
+			}
+		},
+		
 		{
 			"path": "pages/profile/index",
 			"style": {
@@ -20,13 +34,6 @@
 			"path": "pages/editPassword/index",
 			"style": {
 				"navigationBarTitleText": "个人中心"
-			}
-		},
-		
-		{
-			"path": "pages/prepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
 			}
 		},
 		{
@@ -51,12 +58,6 @@
 			"path": "pages/firmOfferInquiry/index",
 			"style": {
 				"navigationBarTitleText": "实盘询价"
-			}
-		},
-		{
-			"path": "pages/bidding/index",
-			"style": {
-				"navigationBarTitleText": "竞价"
 			}
 		},
 		{

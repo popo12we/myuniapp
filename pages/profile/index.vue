@@ -79,6 +79,15 @@
 			//退出登录
 			loginOut(){
 				this.modelShow=true
+			},
+			
+			//点击确定退出登录
+			confirmLoginOut(){
+				uni.removeStorageSync('roleId')
+				uni.removeStorageSync('accessToken')
+				uni.navigateTo({
+					url: '../login/index'
+				});
 			}
 		}
 	}
