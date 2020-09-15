@@ -23,7 +23,7 @@
 							<!-- autoplay='true' :circular='true' -->
 							<swiper class="swiper" :indicator-dots="indicatorDots" indicator-color='rgba(0, 0, 0, .1)'
 							 indicator-active-color='#666'>
-								<swiper-item v-for="item in swiperList" :key="item.id" @click="navigateTobidding">
+								<swiper-item v-for="item in swiperList" :key="item.id" @click="navigateTobidding(item)">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
 										<view class="swiper-item_left">
@@ -1045,7 +1045,8 @@
 			},
 
 			//点轮播图跳转到待报价竞价模式
-			navigateTobidding() {
+			navigateTobidding(obj) {
+				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
 					url: '../bidding/index'
 				})

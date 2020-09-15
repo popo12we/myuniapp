@@ -321,11 +321,25 @@
 				//竞价模态框是否显示
 				modalShow: false,
 				remark: "",
-				//是已报价还是未报价 已报价true 未报价false
-				quotedPrice:true
 			}
 		},
+		created(){
+			this.getBiddingData()
+		},
 		methods: {
+			//拿到详细的数据
+			async getBiddingData(){
+				let inquiryCode=this.$store.state.checkedData.inquiryCode
+				// let custId=
+				// let res = await fetch(this.api.v2.inquiryDetail, {
+				// 	method: "get",
+				// 	data: {
+				// 		accessToken: uni.getStorageSync('accessToken'),
+				// 		inquiryCode: this.name,
+				// 		custId:1
+				// 	}
+				// })
+			},
 			//点击打开竞价模态框
 			modalOpen() {
 				this.modalShow = true

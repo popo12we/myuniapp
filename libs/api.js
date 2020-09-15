@@ -16,5 +16,6 @@ export default {
 		logisticsBidQuotation:'v2/wx/logisticsBidQuotation',// 小程序物流竞价单竞价
 		giveUpLogisticsBid:'v2/wx/giveUpLogisticsBid',// 小程序物流竞价单放弃报价
 		inquiryDetail:'v2/wx/inquiryDetail',// 小程序采购供应商详情
+		updatePassword:'v2/wx/updatePassword',// 小程序修改密码
     }
 }
