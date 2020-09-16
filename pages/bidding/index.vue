@@ -176,7 +176,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="6">
-						<u-button type="error" plain>放弃报价</u-button>
+						<u-button type="error" plain @click="giveupbidding">放弃报价</u-button>
 					</u-col>
 					<u-col span="6">
 						<u-button type="error" @click="modalOpen">我要竞价</u-button>
@@ -186,58 +186,41 @@
 		</view>
 
 		<!-- 竞价模态框 -->
-		<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
-			<view class="slot-content">
-				<view class="slot-content_oneline">
-					<u-row gutter="16">
-						<u-col span="6">
-							<text>价格（USD）*</text>
-						</u-col>
-						<u-col span="6">
-							<text class="fr">1.63</text>
-						</u-col>
-					</u-row>
-				</view>
-
-				<view class="slot-content_oneline">
-					<u-row gutter="16">
-						<u-col span="6">
-							<text>有效期*</text>
-						</u-col>
-						<u-col span="6">
-							<text class="fr">2020-08-12</text>
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					<u-row gutter="16">
-						<u-col span="12">
-							<text>备注*</text>
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					<u-row gutter="16">
-						<u-col span="12">
-							<u-input v-model="remark" placeholder="请输入备注" />
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					总共剩余1次报价机会
-				</view>
-				<view>
-					<u-row gutter="16">
-						<u-col span="6">
-							<u-button type="error" plain>放弃报价</u-button>
-						</u-col>
-						<u-col span="6">
-							<u-button type="error">我要竞价</u-button>
-						</u-col>
-					</u-row>
-				</view>
+		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
+			<view class="inquiryModal_content">
+				<u-form :model="inquiryForm" ref="iForm2" :label-width="165">
+					<u-form-item label="价格(USD)*" prop="price">
+						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
+					</u-form-item>
+					<u-form-item label="有效期" prop="validity">
+						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
+					</u-form-item>
+					<u-form-item label="备注" placeholder="请输入备注">
+						<u-input v-model="inquiryForm.remark" />
+					</u-form-item>
+					<view class="btn-area">
+						<u-row gutter="16">
+							<u-col span="6">
+								<u-button type="error" plain @click="cancelBidding">取消</u-button>
+							</u-col>
+							<u-col span="6">
+								<u-button type="error" @click="submitBidding2">提交报价</u-button>
+							</u-col>
+						</u-row>
+					</view>
+				</u-form>
 			</view>
 		</u-modal>
+		<!-- 放弃报价模态框 -->
+		<u-modal v-model="giveupbiddingShow" :show-title="false" :show-cancel-button="true" @confirm="sureGiveupBidding"
+		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
+			<view class="giveupbiddingModal_oneline">确定放弃报价？</view>
+			<view class="red giveupbiddingModal_oneline colorred">{{bindingData.detail.spuName}}</view>
+		</u-modal>
+		<!-- 时间选择 -->
+		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
+		<!-- toast -->
+		<u-toast ref="toast" position="top" />
 	</view>
 </template>
 
@@ -247,10 +230,62 @@
 		data() {
 			return {
 				//竞价模态框是否显示
-				modalShow: false,
+				binddingShow: false,
 				remark: "",
-				bindingData:{}
+				bindingData: {},
+				inquiryForm: {
+					//币种
+					currency: "",
+					//价格
+					price: "",
+					//有效期
+					validity: "",
+					//交货天数
+					day: "",
+					//价格趋势
+					trend: "",
+					pricetrendValue: "",
+					//趋势说明
+					explain: "",
+					//备注
+					remark: "",
+				},
+
+				rules2: {
+					price: [{
+						trigger: ['blur', 'change'],
+						required: true,
+						validator: (rule, value, callback) => {
+							let reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/
+							if (!reg.test(value)) {
+								callback(new Error('请输入准确的价格'))
+							} else {
+								callback()
+							}
+							return
+						}
+					}],
+					validity: [{
+						required: true,
+						message: '请选择有效期',
+						trigger: ['change']
+					}]
+				},
+				//时间选择器
+				dateTime: false,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: true,
+					minute: true
+				},
+				//放弃模态框是否显示
+				giveupbiddingShow: false
 			}
+		},
+		onReady() {
+			this.$refs.iForm2.setRules(this.rules2);
 		},
 		created() {
 			this.getBiddingData()
@@ -269,13 +304,108 @@
 				})
 				console.log(res)
 				if (res.data.code === '0') {
-					this.bindingData=res.data.data
+					this.bindingData = res.data.data
 				}
 			},
 			//点击打开竞价模态框
 			modalOpen() {
-				this.modalShow = true
+				this.binddingShow = true
+			},
+			
+			//取消关闭竞价模态框
+			cancelBidding(){
+				this.binddingShow = false
+			},
+			
+			// 打开选时间
+			showValidity() {
+				this.dateTime = true
+			},
+			//报价确认时间
+			confirmTime(e) {
+				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
+			},
+			
+			//点击放弃竞价出的弹框
+			giveupbidding() {
+				console.log(this.bindingData.detail)
+				this.giveupbiddingShow = true;
+			},
+			
+			//提交报价
+			async submitBidding2() {
+				let offerId=''
+				if(this.$store.state.checkedData.offerId.length>0){
+					offerId=this.$store.state.checkedData.offerId[0]
+				}
+				
+				this.$refs.iForm2.validate(async valid => {
+					if (valid) {
+						let res = await fetch(this.api.v2.submitQuotation, {
+							method: "post",
+							data: {
+								accessToken: uni.getStorageSync('accessToken'),
+								list: [{
+									offerId,
+									cur: 'USD',
+									price: this.inquiryForm.price,
+									deliveryDay: this.inquiryForm.day,
+									expiredDate: this.inquiryForm.validity,
+									pricetrend: this.inquiryForm.pricetrendValue,
+									priceInfo: this.inquiryForm.explain,
+									remarks: this.inquiryForm.remark
+								}]
+							}
+						})
+			
+						this.inquiryShow = false
+						this.binddingShow = false
+						if (res.data.code === '0') {
+							this.$refs.toast.show({
+								title: '提交报价成功',
+								type: 'success',
+								position: 'top'
+							})
+						} else {
+							this.$refs.toast.show({
+								title: '提交报价失败',
+								type: 'error',
+								position: 'top'
+							})
+						}
+					}
+				})
+			},
+			
+			//确认放弃报价
+			async sureGiveupBidding() {
+				let offerId=''
+				if(this.$store.state.checkedData.offerId.length>0){
+					offerId=this.$store.state.checkedData.offerId[0]
+				}
+				let res = await fetch(this.api.v2.giveupOffer, {
+					method: "post",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						offerId
+					}
+				})
+			
+				if (res.data.code === '0') {
+					this.$refs.toast.show({
+						title: '放弃报价成功',
+						type: 'success',
+						position: 'top'
+					})
+				} else {
+					this.$refs.toast.show({
+						title: '放弃报价失败',
+						type: 'error',
+						position: 'top'
+					})
+				}
 			}
+				
 		}
 	}
 </script>
@@ -418,7 +548,7 @@
 		}
 
 		//竞价模态框
-		.slot-content {
+		.inquiryModal_content {
 			padding: 30rpx;
 
 			.slot-content_oneline {
@@ -431,6 +561,14 @@
 				height: 84rpx;
 				line-height: 84rpx;
 				overflow: hidden;
+			}
+		}
+		
+		//放弃报价模态框
+		.giveupbiddingModal {
+			.giveupbiddingModal_oneline {
+				text-align: center;
+				margin: 20rpx 0;
 			}
 		}
 	}

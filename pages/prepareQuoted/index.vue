@@ -496,15 +496,12 @@
 		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
 			<view class="inquiryModal_content">
 				<u-form :model="inquiryForm" ref="iForm2" :label-width="165">
-
 					<u-form-item label="价格(USD)*" prop="price">
 						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
 					</u-form-item>
-
 					<u-form-item label="有效期" prop="validity">
 						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
-
 					<u-form-item label="备注" placeholder="请输入备注">
 						<u-input v-model="inquiryForm.remark" />
 					</u-form-item>
@@ -1014,7 +1011,7 @@
 				this.dateTime = true
 			},
 
-			//询盘确实时间
+			//询盘确认时间
 			confirmTime(e) {
 				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
 			},
@@ -1730,7 +1727,8 @@
 			overflow: hidden;
 		}
 	}
-
+    
+	//放弃报价模态框
 	.giveupbiddingModal {
 		.giveupbiddingModal_oneline {
 			text-align: center;
