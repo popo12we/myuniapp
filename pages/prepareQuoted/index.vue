@@ -420,7 +420,7 @@
 					</u-collapse>
 				</u-checkbox-group>
 				<!-- 报价 -->
-				<view class="quotation_area">
+				<view class="quotation_area" v-if="checkedNum>0">
 					<view class="quotation_area_oneline">
 						<view class="quotation_area_oneline_item">
 							<text class="text">有效期</text>
@@ -791,55 +791,77 @@
 				// this.Inquiry = []
 				// this.realOrderList = []
 				if (res.data.code === '0') {
-						this.list = res.data.data.list
-						if (this.list.length > 0) {
-							this.list.forEach((item, index) => {
-								item.checked = false
-								item.down = false
-								item.name = index
-								item.id = index
-								item.currency = 'CNY'
-					// // 			if (item.biddingMode === '是') {
-					// // 				// 竞价数组
-					// // 				this.biddingList.push(item)
-					// // 			} else {
-					// // 				if (item.inquiryType === "询盘询价") {
-					// // 					//询盘数组
-					// // 					this.Inquiry.push(item)
-					// // 				}
+					this.list = res.data.data.list
+					if (this.list.length > 0) {
+						this.list.forEach((item, index) => {
+							item.checked = false
+							item.down = false
+							item.name = index
+							item.id = index
+							item.currency = 'CNY'
+							// // 			if (item.biddingMode === '是') {
+							// // 				// 竞价数组
+							// // 				this.biddingList.push(item)
+							// // 			} else {
+							// // 				if (item.inquiryType === "询盘询价") {
+							// // 					//询盘数组
+							// // 					this.Inquiry.push(item)
+							// // 				}
 
-					// // 				if (item.inquiryType === "实单询价") {
-					// // 					//实单数组
-					// // 					this.realOrderList.push(item)
-					// // 				}
-					// // 			}
-							})
-						}
+							// // 				if (item.inquiryType === "实单询价") {
+							// // 					//实单数组
+							// // 					this.realOrderList.push(item)
+							// // 				}
+							// // 			}
+						})
+					}
 				}
 			},
 			// 全选
 			checkboxAllChange() {
 				this.resetInquiryForm()
-				this.allChecked ?
-					this.Inquiry.map((val) => {
-						val.checked = true;
-					}) :
-					this.Inquiry.map((val) => {
-						val.checked = false;
-					});
-				this.$forceUpdate()
-				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
-				this.checkedList = this.Inquiry.filter((val) => val.checked)
+				if (this.isRole) {
+					this.allChecked ?
+						this.Inquiry.map((val) => {
+							val.checked = true;
+						}) :
+						this.Inquiry.map((val) => {
+							val.checked = false;
+						});
+					this.$forceUpdate()
+					this.checkedNum = this.Inquiry.filter((val) => val.checked).length
+					this.checkedList = this.Inquiry.filter((val) => val.checked)
+				} else {
+					this.allChecked ?
+						this.list.map((val) => {
+							val.checked = true;
+						}) :
+						this.list.map((val) => {
+							val.checked = false;
+						});
+					this.$forceUpdate()
+					this.checkedNum = this.list.filter((val) => val.checked).length
+					this.checkedList = this.list.filter((val) => val.checked)
+				}
+
 			},
 
 			//单选
 			checkboxOneChange(item) {
 				this.resetInquiryForm()
-				this.checkedList = this.Inquiry.filter((val) => val.checked)
-				this.checkedNum = this.Inquiry.filter((val) => val.checked).length
-				this.allChecked =
-					this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
-				this.$forceUpdate()
+				if(this.isRole){
+					this.checkedList = this.Inquiry.filter((val) => val.checked)
+					this.checkedNum = this.Inquiry.filter((val) => val.checked).length
+					this.allChecked =
+						this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
+					this.$forceUpdate()
+				}else{
+					this.checkedList = this.list.filter((val) => val.checked)
+					this.checkedNum = this.list.filter((val) => val.checked).length
+					this.allChecked =
+						this.list.length === this.list.filter((val) => val.checked).length;
+					this.$forceUpdate()
+				}
 			},
 
 			//点击打开价格趋势下拉框
@@ -903,12 +925,12 @@
 					);
 				}
 				// this.inquiryList[e.index].down = e.show;
-				if(this.isRole){
+				if (this.isRole) {
 					this.Inquiry[e.index].down = e.show
-				}else{
+				} else {
 					this.list[e.index].down = e.show
 				}
-				
+
 			},
 
 			//确认币种
@@ -1609,7 +1631,8 @@
 							line-height: 20rpx;
 							font-size: 20rpx;
 						}
-						.unlinetext{
+
+						.unlinetext {
 							height: 18rpx;
 						}
 
@@ -1727,7 +1750,7 @@
 			overflow: hidden;
 		}
 	}
-    
+
 	//放弃报价模态框
 	.giveupbiddingModal {
 		.giveupbiddingModal_oneline {
