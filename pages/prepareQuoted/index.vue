@@ -294,7 +294,7 @@
 											<view class="swiper_center_oneline_title clearfix">
 												<view class="secondtext">{{item.startPort}}</view>
 												<view class="thirdtext">
-													<view class="unlinetext">{{item.transfer==="1"?"直达":item.transfer=="2"?"中转":""}}</view>
+													<view class="unlinetext">{{item.transferMethod}}</view>
 													<view>——</view>
 												</view>
 												<view class="fourthtext">{{item.arrivePort}}</view>
