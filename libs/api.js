@@ -18,5 +18,6 @@ export default {
 		inquiryDetail:'v2/wx/inquiryDetail',// 小程序采购供应商详情
 		updatePassword:'v2/wx/login/updatePassword',// 小程序修改密码
 		encryedData:'v2/wx/encryedData',// 解密用户信息
+		logisticssupplier:'v2/wx/logistics/logisticssupplier',// 解密用户信息
     }
 }

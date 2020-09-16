@@ -272,7 +272,7 @@
 			<view class="commodity_list_tips">您现在有 2 条实盘询价</view>
 
 			<!-- 轮播图区域 -->
-			<view class="swiper_box" v-if="logicSwiperList.length>0">
+			<view class="swiper_box" v-if="logisticRealOrderList.length>0">
 				<view class="uni-padding-wrap">
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
@@ -297,13 +297,13 @@
 													<view class="unlinetext">{{item.transfer==="1"?"直达":item.transfer=="2"?"中转":""}}</view>
 													<view>——</view>
 												</view>
-												<view class="fourthtext">{{item.destinationPort}}</view>
+												<view class="fourthtext">{{item.arrivePort}}</view>
 												<view class="fifthtext">{{item.cargoWeight}}</view>
 											</view>
-											<view class="swiper_center_oneline">{{item.shippingSchedule}}</view>
-											<view class="swiper_center_oneline">{{item.expectedShipDate}}</view>
+											<view class="swiper_center_oneline" v-if="item.schedule">{{`周`+item.schedule}}</view>
+											<view class="swiper_center_oneline" v-if="item.planshipDate">预计出运:{{item.planshipDate}}</view>
 											<view class="swiper_center_oneline settimeout_btn">
-												<InquiryDeadline :endTime="item.inquirydeadline"></InquiryDeadline>
+												<view class="settimeout">{{item.daysRemaining}}</view>
 											</view>
 											<view class="swiper_center_oneline center_btn_area">
 												<u-button type="error" size="mini" plain class="btn_end" @click="toBindding">我要竞价</u-button>
@@ -321,7 +321,7 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in list" :key="item.id"
+						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in logisticRoutineList" :key="item.id"
 						 :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
@@ -331,7 +331,7 @@
 											<view class="unlinetext">{{item.transfer==="1"?"直达":item.transfer=="2"?"中转":""}}</view>
 											<view>——</view>
 										</view>
-										<view class="fourthtext">{{item.destinationPort}}</view>
+										<view class="fourthtext">{{item.arrivePort}}</view>
 										<text class="checkbox_view_tab">常规</text>
 									</view>
 								</view>
@@ -346,15 +346,15 @@
 										<u-col span="6">
 											<text class="red">截止日期</text>
 											<text class="mg15">:</text>
-											<text class="red">{{item.inquiryDeadline}}</text>
+											<text class="red inquiryDeadline">{{item.inquiryDeadline}}</text>
 										</u-col>
 									</u-row>
 								</view>
 								<view class="checkbox_view_oneline" v-if="(!item.checked)&&(!item.down)">
 									<u-row gutter="16">
 										<u-col span="12">
-											<u-button type="info" size="mini" plain class="giveupbindding">放弃报价</u-button>
-											<u-button type="error" size="mini" plain @click="toLogisticQuotation">我要报价</u-button>
+											<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding(item)">放弃报价</u-button>
+											<u-button type="error" size="mini" plain @click="toLogisticQuotation(item)">我要报价</u-button>
 										</u-col>
 									</u-row>
 								</view>
@@ -393,7 +393,7 @@
 											<u-col span="6">
 												<text class="gray">预计出运</text>
 												<text class="mg15">:</text>
-												<text class="gray">{{item.expectedshipdate}}</text>
+												<text class="gray">{{item.planshipDate}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -406,7 +406,7 @@
 											</u-col>
 										</u-row>
 									</view>
-									<view class="price_change" v-if="list[index].checked&&item.down">
+									<view class="price_change" v-if="logisticRoutineList[index].checked&&item.down">
 										<text class="gray pricetext">价格</text>
 										<text class="mg15"></text>
 										<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
@@ -419,8 +419,8 @@
 									<view class="checkbox_view_oneline mt15">
 										<u-row gutter="16">
 											<u-col span="12">
-												<u-button type="info" size="mini" plain class="giveupbindding">放弃报价</u-button>
-												<u-button type="error" size="mini" plain @click="toLogisticQuotation">我要报价</u-button>
+												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding(item)">放弃报价</u-button>
+												<u-button type="error" size="mini" plain @click="toLogisticQuotation(item)">我要报价</u-button>
 											</u-col>
 										</u-row>
 									</view>
@@ -557,7 +557,7 @@
 						<u-input v-model="logisticQuotationForm.shippingName" placeholder="请输入船公司" />
 					</u-form-item>
 					<u-form-item label="船期">
-						<u-input v-model="logisticQuotationForm.schedule"  placeholder="请输入船期" />
+						<u-input v-model="logisticQuotationForm.schedule" placeholder="请输入船期" />
 					</u-form-item>
 					<u-form-item label="转运方式" placeholder="请输入转运方式">
 						<u-input v-model="logisticQuotationForm.transferMethod" />
@@ -566,7 +566,8 @@
 						<u-input v-model="logisticQuotationForm.voyage" />
 					</u-form-item>
 					<u-form-item label="鉴定书" placeholder="是否有鉴定书">
-						<u-input v-model="logisticQuotationForm.appraisalCertificate" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
+						<u-input v-model="logisticQuotationForm.appraisalCertificate" type="select" @click="showCurrencySelect"
+						 placeholder="请选择币种" />
 					</u-form-item>
 					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
 						<u-input v-model="logisticQuotationForm.explain" />
@@ -778,23 +779,23 @@
 				//物流报价模态框
 				logisticQuotationForm: {
 					// 价格
-					price:"",
+					price: "",
 					// 有效期
-					expiredDate:"",
+					expiredDate: "",
 					// 船公司
-					shippingName:"",
+					shippingName: "",
 					// 船期
-					schedule:"",
+					schedule: "",
 					// 转运方式
-					transferMethod:"",
+					transferMethod: "",
 					// 航程
-					voyage:"",
+					voyage: "",
 					// 鉴定书
-					appraisalCertificate:"",
+					appraisalCertificate: "",
 					// 趋势说明
-					explain:"",
+					explain: "",
 					// 备注
-					remark:""
+					remark: ""
 				},
 				rules3: {
 					price: [{
@@ -818,6 +819,13 @@
 				},
 				//是否展示物流报价模态框
 				logisticQuotationFormShow: false,
+				//报价参数
+				bidId: '',
+				custId: '',
+				//物流实单数组
+				logisticRealOrderList: [],
+				//物流常规数组
+				logisticRoutineList: []
 			}
 		},
 		created() {
@@ -830,7 +838,7 @@
 
 		},
 		onReady() {
-			
+
 			if (this.isRole) {
 				this.$refs.iForm1.setRules(this.rules1);
 				this.$refs.iForm2.setRules(this.rules2);
@@ -881,19 +889,19 @@
 
 			// 物流供应商列表
 			async logicInquiryList() {
-				let res = await fetch(this.api.v2.logicInquiry, {
+				let res = await fetch(this.api.v2.logisticssupplier, {
 					method: "get",
 					data: {
 						accessToken: uni.getStorageSync('accessToken'),
-						keywords: this.keywords
+						actionType: "pendingList"
+						// keywords: this.keywords
 					}
 				})
-				// this.biddingList = []
-				// this.inquiryList = []
-				// this.Inquiry = []
-				// this.realOrderList = []
+
+				this.logisticRoutineList = []
+				this.logisticRealOrderList = []
 				if (res.data.code === '0') {
-					this.list = res.data.data.list
+					this.list = res.data.data
 					if (this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
@@ -901,20 +909,15 @@
 							item.name = index
 							item.id = index
 							item.currency = 'CNY'
-							// // 			if (item.biddingMode === '是') {
-							// // 				// 竞价数组
-							// // 				this.biddingList.push(item)
-							// // 			} else {
-							// // 				if (item.inquiryType === "询盘询价") {
-							// // 					//询盘数组
-							// // 					this.Inquiry.push(item)
-							// // 				}
-
-							// // 				if (item.inquiryType === "实单询价") {
-							// // 					//实单数组
-							// // 					this.realOrderList.push(item)
-							// // 				}
-							// // 			}
+							if (item.moduleCode === 'PC007') {
+								// 实单数组
+								this.logisticRealOrderList.push(item)
+							}
+							console.log(this.logisticRealOrderList)
+							if (item.moduleCode === 'PC006') {
+								// 常规数组
+								this.logisticRoutineList.push(item)
+							}
 						})
 					}
 				}
@@ -935,10 +938,10 @@
 					this.checkedList = this.Inquiry.filter((val) => val.checked)
 				} else {
 					this.allChecked ?
-						this.list.map((val) => {
+						this.logisticRoutineList.map((val) => {
 							val.checked = true;
 						}) :
-						this.list.map((val) => {
+						this.logisticRoutineList.map((val) => {
 							val.checked = false;
 						});
 					this.$forceUpdate()
@@ -958,10 +961,10 @@
 						this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
 					this.$forceUpdate()
 				} else {
-					this.checkedList = this.list.filter((val) => val.checked)
-					this.checkedNum = this.list.filter((val) => val.checked).length
+					this.checkedList = this.logisticRoutineList.filter((val) => val.checked)
+					this.checkedNum = this.logisticRoutineList.filter((val) => val.checked).length
 					this.allChecked =
-						this.list.length === this.list.filter((val) => val.checked).length;
+						this.logisticRoutineList.length === this.logisticRoutineList.filter((val) => val.checked).length;
 					this.$forceUpdate()
 				}
 			},
@@ -1136,36 +1139,40 @@
 
 			//询盘确认时间
 			confirmTime(e) {
-				if(this.isRole){
+				if (this.isRole) {
 					this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
-				}else{
-					this.logisticQuotationForm.expiredDate= `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
+				} else {
+					this.logisticQuotationForm.expiredDate = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
 				}
-				
+
 			},
 
 			//确认放弃报价
 			async sureGiveupBidding() {
-				let res = await fetch(this.api.v2.giveupOffer, {
-					method: "post",
-					data: {
-						accessToken: uni.getStorageSync('accessToken'),
-						offerId: this.offerId
-					}
-				})
+				if (this.isRole) {
+					let res = await fetch(this.api.v2.giveupOffer, {
+						method: "post",
+						data: {
+							accessToken: uni.getStorageSync('accessToken'),
+							offerId: this.offerId
+						}
+					})
 
-				if (res.data.code === '0') {
-					this.$refs.toast.show({
-						title: '放弃报价成功',
-						type: 'success',
-						position: 'top'
-					})
+					if (res.data.code === '0') {
+						this.$refs.toast.show({
+							title: '放弃报价成功',
+							type: 'success',
+							position: 'top'
+						})
+					} else {
+						this.$refs.toast.show({
+							title: '放弃报价失败',
+							type: 'error',
+							position: 'top'
+						})
+					}
 				} else {
-					this.$refs.toast.show({
-						title: '放弃报价失败',
-						type: 'error',
-						position: 'top'
-					})
+
 				}
 			},
 
@@ -1259,17 +1266,37 @@
 
 			//物流
 			//物流展示报价模态框
-			toLogisticQuotation() {
+			toLogisticQuotation(item) {
+				console.log(item)
+				this.bidId = item.bidId
+				this.custId = item.custId
 				this.logisticQuotationFormShow = true
 			},
 			giveuptoLogisticQuotation() {
 				this.logisticQuotationFormShow = false
 			},
 			//物流模态框提价报价
-			logisticSubmitBidding(){
+			logisticSubmitBidding() {
 				this.$refs.iForm3.validate(async valid => {
 					if (valid) {
-						console.log("验证成功")
+						let res = await fetch(this.api.v2.logisticsBidQuotation, {
+							method: "post",
+							data: {
+								accessToken: uni.getStorageSync('accessToken'),
+								list: [{
+									bidId: this.bidId,
+									custId: this.custId
+								}]
+							}
+						})
+
+
+
+
+
+
+
+
 					}
 				})
 			}
@@ -1292,8 +1319,10 @@
 			// 	return nowTime.getTime() - endTime.getTime() > 0 ? true : false
 			// },
 			logicSwiperList() {
-				return this.list.filter(item => {
-					return new Date(item.inquirydeadline) > new Date()
+				return this.logisticRealOrderList.filter(item => {
+					console.log(new Date(item.biddeadLine))
+					console.log(new Date())
+					return new Date(item.biddeadLine) > new Date()
 				})
 			}
 		}
@@ -1735,6 +1764,12 @@
 
 				.checkbox_view_oneline_first {
 					margin-top: 10rpx;
+
+					.checkbox_view_oneline_first_time {
+						>view {
+							float: left;
+						}
+					}
 				}
 
 				.checkbox_view_oneline {
@@ -1799,30 +1834,30 @@
 					margin-left: 20rpx;
 				}
 
-			.price_change {
-				display: flex;
-			
-				/deep/ .u-input__input {
-					min-height: 30px !important;
+				.price_change {
+					display: flex;
+
+					/deep/ .u-input__input {
+						min-height: 30px !important;
+					}
+
+					.pricetext {
+						margin-left: 6rpx;
+					}
+
+					.ufield {
+						flex: 1;
+						border-bottom: 2rpx solid #ccc;
+					}
+
+					text {
+						align-self: center;
+					}
+
+					.change {
+						color: #00a6db;
+					}
 				}
-			
-				.pricetext {
-					margin-left: 6rpx;
-				}
-			
-				.ufield {
-					flex: 1;
-					border-bottom: 2rpx solid #ccc;
-				}
-			
-				text {
-					align-self: center;
-				}
-			
-				.change {
-					color: #00a6db;
-				}
-			}
 			}
 		}
 
