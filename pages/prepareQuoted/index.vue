@@ -332,7 +332,7 @@
 											<view>——</view>
 										</view>
 										<view class="fourthtext">{{item.destinationPort}}</view>
-										<text class="checkbox_view_tab" @click.stop="showInquiryModal">询盘</text>
+										<text class="checkbox_view_tab" @click.stop="showInquiryModal">常规</text>
 									</view>
 								</view>
 
@@ -409,8 +409,8 @@
 									<view class="checkbox_view_oneline mt15">
 										<u-row gutter="16">
 											<u-col span="12">
-												<u-button type="info" size="mini" plain class="giveupbindding" @click="giveupbidding">放弃报价</u-button>
-												<u-button type="error" size="mini" plain>我要报价</u-button>
+												<u-button type="info" size="mini" plain class="giveupbindding">放弃报价</u-button>
+												<u-button type="error" size="mini" plain @click="toLogisticQuotation">我要报价</u-button>
 											</u-col>
 										</u-row>
 									</view>
@@ -532,6 +532,49 @@
 		<u-select v-model="selectTypesCurrencyShow" :list="selectTypesCurrencyList" @confirm="confirmCurrency"></u-select>
 		<!-- 时间选择 -->
 		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
+
+		<!-- 物流报价模态框 -->
+		<u-modal v-model="logisticQuotationFormShow" :show-title="false" :show-confirm-button="false">
+			<view class="inquiryModal_content">
+				<u-form :model="logisticQuotationForm" ref="iForm1" :label-width="145">
+					<u-form-item label="币种" prop="currency">
+						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
+					</u-form-item>
+					<u-form-item label="价格" prop="price" v-if="inquiryForm.currency!=='USD'">
+						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
+					</u-form-item>
+					<view class="red" v-if="inquiryForm.currency==='CNY'&&inquiryForm.price===''">请填写含税含运费价格</view>
+					<u-form-item label="美元价格" prop="price" v-if="inquiryForm.currency==='USD'">
+						<u-input v-model="inquiryForm.price" placeholder="请输入美元价格" />
+					</u-form-item>
+					<u-form-item label="有效期" prop="validity">
+						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
+					</u-form-item>
+					<u-form-item label="交货天数" prop="day">
+						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数" />
+					</u-form-item>
+					<u-form-item label="价格趋势">
+						<u-input v-model="inquiryForm.trend" type="select" @click="showTrendSelect" placeholder="请选择价格趋势" />
+					</u-form-item>
+					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
+						<u-input v-model="inquiryForm.explain" />
+					</u-form-item>
+					<u-form-item label="备注" placeholder="请输入备注">
+						<u-input v-model="inquiryForm.remark" />
+					</u-form-item>
+					<view class="btn-area">
+						<u-row gutter="16">
+							<u-col span="6">
+								<u-button type="error" plain @click="giveuptoLogisticQuotation">取消</u-button>
+							</u-col>
+							<u-col span="6">
+								<u-button type="error" @click="submitBidding">提交报价</u-button>
+							</u-col>
+						</u-row>
+					</view>
+				</u-form>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -718,9 +761,29 @@
 				// 	startPort: "宁波",
 				// 	inquirydeadline: "2020-09-21 00:00:00.0",
 				// }
-				list: []
-
-			};
+				//物流供应商数据
+				list: [],
+				//物流报价模态框
+				logisticQuotationForm: {
+					//币种
+					currency: "",
+					//价格
+					price: "",
+					//有效期
+					validity: "",
+					//交货天数
+					day: "",
+					//价格趋势
+					trend: "",
+					pricetrendValue: "",
+					//趋势说明
+					explain: "",
+					//备注
+					remark: "",
+				},
+				//是否展示物流报价模态框
+				logisticQuotationFormShow: false,
+			}
 		},
 		created() {
 			//是展示产品询价单数据还是物流询价单数据
@@ -849,13 +912,13 @@
 			//单选
 			checkboxOneChange(item) {
 				this.resetInquiryForm()
-				if(this.isRole){
+				if (this.isRole) {
 					this.checkedList = this.Inquiry.filter((val) => val.checked)
 					this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 					this.allChecked =
 						this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
 					this.$forceUpdate()
-				}else{
+				} else {
 					this.checkedList = this.list.filter((val) => val.checked)
 					this.checkedNum = this.list.filter((val) => val.checked).length
 					this.allChecked =
@@ -1148,6 +1211,16 @@
 						position: 'top'
 					})
 				}
+			},
+
+
+			//物流
+			//物流展示报价模态框
+			toLogisticQuotation() {
+				this.logisticQuotationFormShow = true
+			},
+			giveuptoLogisticQuotation() {
+				this.logisticQuotationFormShow = false
 			}
 		},
 
