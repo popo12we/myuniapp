@@ -127,11 +127,11 @@
 			</view>
 			<!-- 具体的报价记录 -->
 			<view class="binding-record">
-				<view class="binding-record_item" v-for="(item,index) in bindingData.history" :key="index">
+				<view class="binding-record_item" v-for="(item,index) in bindingData.rank" :key="index">
 					<u-row gutter="16">
 						<u-col span="2">
 							<view class="binding-record_item_sort">
-								{{index+1}}
+								{{item.owner?"我":index+1}}
 							</view>
 						</u-col>
 						<u-col span="3">
@@ -143,7 +143,7 @@
 						<u-col span="6">
 							<view class="binding-record_item_info">
 								<view>{{item.price}}</view>
-								<view class="mg-t24">2020-08-16 12:00:00</view>
+								<view class="mg-t24">{{item.offeredDate|dateFilter }}</view>
 							</view>
 						</u-col>
 					</u-row>
@@ -158,16 +158,16 @@
 			</view>
 			<!-- 我的具体报价记录 -->
 			<view class="mybinding-recode">
-				<view class="mybinding-recode_item" v-for="(item,index) in bindingData.rank" :key="index">
+				<view class="mybinding-recode_item" v-for="(item,index) in bindingData.history" :key="index">
 					<view class="mybinding-recode_item_count">
 						<text>第{{index+1}}次报价</text>
-						<text class="colorred">(剩余报价次数{{item.sortNumber}}次)</text>
+						<text class="colorred" v-if="item.sortNumber">(剩余报价次数{{item.sortNumber}}次)</text>
 					</view>
 					<view class="mybinding-recode_item_price">
 						<text>价格{{item.cur}}:{{item.price}}</text>
 					</view>
 					<view class="mybinding-recode_item_remark">
-						<text>最近工厂进度趋于稳定,价格稳定</text>
+						<text>备注:{{item.backinfo?item.backinfo:''}}</text>
 					</view>
 					<view class="mybinding-recode_item_ball"></view>
 				</view>
@@ -226,6 +226,8 @@
 
 <script>
 	import fetch from '../../utils/fetch.js'
+	import '../../utils/filter.js'
+	
 	export default {
 		data() {
 			return {
