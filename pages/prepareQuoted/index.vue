@@ -534,9 +534,9 @@
 		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
 
 		<!-- 物流报价模态框 -->
-		<u-modal v-model="logisticQuotationFormShow" :show-title="false" :show-confirm-button="false">
+		<u-modal v-model="logisticQuotationFormShow" :show-title="false" :show-confirm-button="false" z-index="10000">
 			<view class="inquiryModal_content">
-				<u-form :model="logisticQuotationForm" ref="iForm1" :label-width="145">
+				<u-form :model="logisticQuotationForm" ref="iForm3" :label-width="145">
 					<u-form-item label="价格" prop="price">
 						<u-input v-model="logisticQuotationForm.price" placeholder="请输入价格" />
 					</u-form-item>
@@ -549,7 +549,7 @@
 					<u-form-item label="船期">
 						<u-input v-model="logisticQuotationForm.schedule"  placeholder="请输入船期" />
 					</u-form-item>
-					<u-form-item label="转运方式" placeholder="请输入趋势说明">
+					<u-form-item label="转运方式" placeholder="请输入转运方式">
 						<u-input v-model="logisticQuotationForm.transferMethod" />
 					</u-form-item>
 					<u-form-item label="航程" placeholder="请输入航程">
@@ -570,7 +570,7 @@
 								<u-button type="error" plain @click="giveuptoLogisticQuotation">取消</u-button>
 							</u-col>
 							<u-col span="6">
-								<u-button type="error" @click="submitBidding">提交报价</u-button>
+								<u-button type="error" @click="logisticSubmitBidding">提交报价</u-button>
 							</u-col>
 						</u-row>
 					</view>
@@ -786,6 +786,26 @@
 					// 备注
 					remark:""
 				},
+				rules3: {
+					price: [{
+						trigger: ['blur', 'change'],
+						required: true,
+						validator: (rule, value, callback) => {
+							let reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/
+							if (!reg.test(value)) {
+								callback(new Error('请输入准确的价格'))
+							} else {
+								callback()
+							}
+							return
+						}
+					}],
+					expiredDate: [{
+						required: true,
+						message: '请选择有效期',
+						trigger: ['change']
+					}]
+				},
 				//是否展示物流报价模态框
 				logisticQuotationFormShow: false,
 			}
@@ -800,8 +820,13 @@
 
 		},
 		onReady() {
-			this.$refs.iForm1.setRules(this.rules1);
-			this.$refs.iForm2.setRules(this.rules2);
+			
+			if (this.isRole) {
+				this.$refs.iForm1.setRules(this.rules1);
+				this.$refs.iForm2.setRules(this.rules2);
+			} else {
+				this.$refs.iForm3.setRules(this.rules3);
+			}
 		},
 		methods: {
 			//询价单列表
@@ -1102,7 +1127,12 @@
 
 			//询盘确认时间
 			confirmTime(e) {
-				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
+				if(this.isRole){
+					this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
+				}else{
+					this.logisticQuotationForm.expiredDate= `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
+				}
+				
 			},
 
 			//确认放弃报价
@@ -1225,6 +1255,14 @@
 			},
 			giveuptoLogisticQuotation() {
 				this.logisticQuotationFormShow = false
+			},
+			//物流模态框提价报价
+			logisticSubmitBidding(){
+				this.$refs.iForm3.validate(async valid => {
+					if (valid) {
+						console.log("验证成功")
+					}
+				})
 			}
 		},
 
