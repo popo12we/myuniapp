@@ -15,7 +15,6 @@
 				"navigationBarTitleText": "登录页"
 			}
 		},
-		
 		{
 			"path": "pages/bidding/index",
 			"style": {

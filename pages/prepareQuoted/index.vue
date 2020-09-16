@@ -130,7 +130,7 @@
 										<u-col span="12">
 											<view>
 												<text class="red">{{item.inquirydeadline}}</text>
-												<text class="mg15"></text>
+												<text class="mg15" v-if="item.inquirydeadline"></text>
 												<text class="red">截至报价</text>
 											</view>
 										</u-col>
@@ -210,7 +210,7 @@
 										<text v-if="item.currency==='USD'">USD</text>
 										<text v-if="item.currency==='CNY'">CNY</text>
 										<text class="mg15"></text>
-										<text class="change" @click.stop="showCurrencySelect">切换</text>
+										<text class="change" @click.stop="changeCurrency(item)">切换</text>
 									</view>
 
 									<view class="checkbox_view_oneline mt15" v-if="!item.checked">
@@ -350,14 +350,23 @@
 										</u-col>
 									</u-row>
 								</view>
+								<view class="checkbox_view_oneline" v-if="(!item.checked)&&(!item.down)">
+									<u-row gutter="16">
+										<u-col span="12">
+											<u-button type="info" size="mini" plain class="giveupbindding">放弃报价</u-button>
+											<u-button type="error" size="mini" plain @click="toLogisticQuotation">我要报价</u-button>
+										</u-col>
+									</u-row>
+								</view>
 								<view class="price_change" v-if="item.checked&&(!item.down)">
 									<text class="gray pricetext">价格</text>
 									<text class="mg15"></text>
-									<u-field class="ufield" :label-width="0"></u-field>
+									<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 									<text class="mg15"></text>
-									<text>USD</text>
+									<text v-if="item.currency==='USD'">USD</text>
+									<text v-if="item.currency==='CNY'">CNY</text>
 									<text class="mg15"></text>
-									<text class="change">切换</text>
+									<text class="change" @click.stop="changeCurrency(item)">切换</text>
 								</view>
 								<u-collapse-item :index="index" @change="changeCollapseItem">
 									<view class="checkbox_view_oneline">
@@ -400,11 +409,12 @@
 									<view class="price_change" v-if="list[index].checked&&item.down">
 										<text class="gray pricetext">价格</text>
 										<text class="mg15"></text>
-										<u-field class="ufield" :label-width="0"></u-field>
+										<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 										<text class="mg15"></text>
-										<text>USD</text>
+										<text v-if="item.currency==='USD'">USD</text>
+										<text v-if="item.currency==='CNY'">CNY</text>
 										<text class="mg15"></text>
-										<text class="change">切换</text>
+										<text class="change" @click.stop="changeCurrency(item)">切换</text>
 									</view>
 									<view class="checkbox_view_oneline mt15">
 										<u-row gutter="16">
@@ -1002,7 +1012,6 @@
 
 			//点的折叠面板是开启还是关闭的 方便后续操作
 			changeCollapseItem(e) {
-				console.log(e)
 				if (e.show === true) {
 					if (this.collapseItemIsChecked.length === 0) {
 						this.collapseItemIsChecked.push(e.index);
@@ -1790,25 +1799,30 @@
 					margin-left: 20rpx;
 				}
 
-				.price_change {
-					display: flex;
-
-					.pricetext {
-						margin-left: 6rpx;
-					}
-
-					.ufield {
-						flex: 1;
-					}
-
-					text {
-						align-self: center;
-					}
-
-					.change {
-						color: #00a6db;
-					}
+			.price_change {
+				display: flex;
+			
+				/deep/ .u-input__input {
+					min-height: 30px !important;
 				}
+			
+				.pricetext {
+					margin-left: 6rpx;
+				}
+			
+				.ufield {
+					flex: 1;
+					border-bottom: 2rpx solid #ccc;
+				}
+			
+				text {
+					align-self: center;
+				}
+			
+				.change {
+					color: #00a6db;
+				}
+			}
 			}
 		}
 
