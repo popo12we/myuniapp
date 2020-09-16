@@ -332,7 +332,7 @@
 											<view>——</view>
 										</view>
 										<view class="fourthtext">{{item.destinationPort}}</view>
-										<text class="checkbox_view_tab" @click.stop="showInquiryModal">常规</text>
+										<text class="checkbox_view_tab">常规</text>
 									</view>
 								</view>
 
@@ -537,30 +537,32 @@
 		<u-modal v-model="logisticQuotationFormShow" :show-title="false" :show-confirm-button="false">
 			<view class="inquiryModal_content">
 				<u-form :model="logisticQuotationForm" ref="iForm1" :label-width="145">
-					<u-form-item label="币种" prop="currency">
-						<u-input v-model="inquiryForm.currency" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
+					<u-form-item label="价格" prop="price">
+						<u-input v-model="logisticQuotationForm.price" placeholder="请输入价格" />
 					</u-form-item>
-					<u-form-item label="价格" prop="price" v-if="inquiryForm.currency!=='USD'">
-						<u-input v-model="inquiryForm.price" placeholder="请输入价格" />
+					<u-form-item label="有效期" prop="expiredDate">
+						<u-input v-model="logisticQuotationForm.expiredDate" type="select" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
-					<view class="red" v-if="inquiryForm.currency==='CNY'&&inquiryForm.price===''">请填写含税含运费价格</view>
-					<u-form-item label="美元价格" prop="price" v-if="inquiryForm.currency==='USD'">
-						<u-input v-model="inquiryForm.price" placeholder="请输入美元价格" />
+					<u-form-item label="船公司">
+						<u-input v-model="logisticQuotationForm.shippingName" placeholder="请输入船公司" />
 					</u-form-item>
-					<u-form-item label="有效期" prop="validity">
-						<u-input v-model="inquiryForm.validity" type="select" @click="showValidity" placeholder="请输入有效期" />
+					<u-form-item label="船期">
+						<u-input v-model="logisticQuotationForm.schedule"  placeholder="请输入船期" />
 					</u-form-item>
-					<u-form-item label="交货天数" prop="day">
-						<u-input v-model="inquiryForm.day" placeholder="请输入交货天数" />
+					<u-form-item label="转运方式" placeholder="请输入趋势说明">
+						<u-input v-model="logisticQuotationForm.transferMethod" />
 					</u-form-item>
-					<u-form-item label="价格趋势">
-						<u-input v-model="inquiryForm.trend" type="select" @click="showTrendSelect" placeholder="请选择价格趋势" />
+					<u-form-item label="航程" placeholder="请输入航程">
+						<u-input v-model="logisticQuotationForm.voyage" />
+					</u-form-item>
+					<u-form-item label="鉴定书" placeholder="是否有鉴定书">
+						<u-input v-model="logisticQuotationForm.appraisalCertificate" type="select" @click="showCurrencySelect" placeholder="请选择币种" />
 					</u-form-item>
 					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
-						<u-input v-model="inquiryForm.explain" />
+						<u-input v-model="logisticQuotationForm.explain" />
 					</u-form-item>
 					<u-form-item label="备注" placeholder="请输入备注">
-						<u-input v-model="inquiryForm.remark" />
+						<u-input v-model="logisticQuotationForm.remark" />
 					</u-form-item>
 					<view class="btn-area">
 						<u-row gutter="16">
@@ -765,21 +767,24 @@
 				list: [],
 				//物流报价模态框
 				logisticQuotationForm: {
-					//币种
-					currency: "",
-					//价格
-					price: "",
-					//有效期
-					validity: "",
-					//交货天数
-					day: "",
-					//价格趋势
-					trend: "",
-					pricetrendValue: "",
-					//趋势说明
-					explain: "",
-					//备注
-					remark: "",
+					// 价格
+					price:"",
+					// 有效期
+					expiredDate:"",
+					// 船公司
+					shippingName:"",
+					// 船期
+					schedule:"",
+					// 转运方式
+					transferMethod:"",
+					// 航程
+					voyage:"",
+					// 鉴定书
+					appraisalCertificate:"",
+					// 趋势说明
+					explain:"",
+					// 备注
+					remark:""
 				},
 				//是否展示物流报价模态框
 				logisticQuotationFormShow: false,
@@ -829,7 +834,6 @@
 									//询盘数组
 									this.Inquiry.push(item)
 								}
-
 								if (item.inquiryType === "实单询价") {
 									//实单数组
 									this.realOrderList.push(item)
