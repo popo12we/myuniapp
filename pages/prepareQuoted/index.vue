@@ -269,7 +269,7 @@
 				<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false"></u-field>
 				<u-button @click="checkedAll" type="error" size="mini" class="search_btn">搜索</u-button>
 			</view>
-			<view class="commodity_list_tips">您现在有 2 条实盘询价</view>
+			<view class="commodity_list_tips">您现在有 {{logicSwiperList.length}} 条实盘询价</view>
 
 			<!-- 轮播图区域 -->
 			<view class="swiper_box" v-if="logisticRealOrderList.length>0">
