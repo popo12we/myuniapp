@@ -321,8 +321,8 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color="activeColor">
 					<u-collapse :accordion="false">
-						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in logisticRoutineList" :key="item.id"
-						 :name="item.name">
+						<u-checkbox @change="checkboxOneChange(item)" v-model="item.checked" v-for="(item, index) in logisticRoutineList"
+						 :key="item.id" :name="item.name">
 							<view class="checkbox_view">
 								<view class="checkbox_view_oneline">
 									<view class="checkbox_view_oneline_title clearfix">
@@ -561,17 +561,26 @@
 						<u-input v-model="logisticQuotationForm.shippingName" placeholder="请输入船公司" />
 					</u-form-item>
 					<u-form-item label="船期">
-						<u-input v-model="logisticQuotationForm.schedule" placeholder="请输入船期" />
+						<!-- <u-input v-model="logisticQuotationForm.schedule" placeholder="请输入船期" /> -->
+						<u-checkbox-group @change="checkboxGroupChange">
+							<u-checkbox v-model="item.checked" v-for="(item, index) in checkscheduleList" :key="index" :name="item.name">
+								{{ item.name }}
+							</u-checkbox>
+						</u-checkbox-group>
+
 					</u-form-item>
 					<u-form-item label="转运方式">
-						<u-input v-model="logisticQuotationForm.transferMethod" type="select" @click="showTransferMethod" placeholder="请输入转运方式"/>
+						<u-input v-model="logisticQuotationForm.transferMethodValue" type="select" @click="showTransferMethod" placeholder="请输入转运方式" />
 					</u-form-item>
-					<u-form-item label="航程" >
-						<u-input v-model="logisticQuotationForm.voyage" placeholder="请输入航程"/>
+					<u-form-item label="航程">
+						<u-input v-model="logisticQuotationForm.voyage" placeholder="请输入航程" />
 					</u-form-item>
 					<u-form-item label="鉴定书" placeholder="是否有鉴定书">
-						<u-input v-model="logisticQuotationForm.appraisalCertificate" type="select" @click="showAppraisalCertificate"
+						<u-input v-model="logisticQuotationForm.appraisalCertificateValue" type="select" @click="showAppraisalCertificate"
 						 placeholder="请选择币种" />
+					</u-form-item>
+					<u-form-item label="价格趋势">
+						<u-input v-model="logisticQuotationForm.trendValue" type="select" @click="showTrendSelect" placeholder="请选择价格趋势" />
 					</u-form-item>
 					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
 						<u-input v-model="logisticQuotationForm.explain" />
@@ -628,7 +637,7 @@
 						label: "USD",
 					},
 				],
-				
+
 				selectPriceTrendShow: false,
 				selectPriceTrendList: [{
 						value: "1",
@@ -795,12 +804,17 @@
 					transferMethod: "",
 					// 航程
 					voyage: "",
+					//价格趋势
+					trend:"",
 					// 鉴定书
 					appraisalCertificate: "",
 					// 趋势说明
 					explain: "",
 					// 备注
-					remark: ""
+					remark: "",
+					appraisalCertificateValue:"",
+					trendValue:"",
+					appraisalCertificateValue:""
 				},
 				rules3: {
 					price: [{
@@ -845,14 +859,45 @@
 				// 物流报价鉴定书
 				selectAppraisalCertificateShow: false,
 				selectAppraisalCertificateList: [{
-						value: "1",
-						label: "有",
+						value: "0",
+						label: "否",
 					},
 					{
-						value: "2",
-						label: "无",
+						value: "1",
+						label: "是",
 					},
 				],
+				checkscheduleList:[
+				{
+					name: '周一',
+					checked: false,
+				},
+				{
+					name: '周二',
+					checked: false,
+				},
+				{
+					name: '周三',
+					checked: false,
+				},
+				{
+					name: '周四',
+					checked: false,
+				},
+				{
+					name: '周五',
+					checked: false,
+				},
+				{
+					name: '周六',
+					checked: false,
+				},
+				{
+					name: '周日',
+					checked: false,
+				},
+				
+			],
 			}
 		},
 		created() {
@@ -1076,17 +1121,24 @@
 				this.inquiryForm.currency = e[0].label
 			},
 			//确认中转方式
-			confirmTransferMethod(e){
-				this.logisticQuotationForm.transferMethod=e[0].label
+			confirmTransferMethod(e) {
+				this.logisticQuotationForm.transferMethodValue=e[0].label
+				this.logisticQuotationForm.transferMethod = e[0].value
 			},
 			//确认有无鉴定书
-			confirmAppraisalCertificate(e){
-				this.logisticQuotationForm.appraisalCertificate=e[0].label
+			confirmAppraisalCertificate(e) {
+				this.logisticQuotationForm.appraisalCertificate = e[0].value
+				this.logisticQuotationForm.appraisalCertificateValue=e[0].label
 			},
 			//确认价格趋势
 			confirmPriceTrend(e) {
-				this.inquiryForm.trend = e[0].label
-				this.inquiryForm.pricetrendValue = e[0].value
+				if(this.isRole){
+					this.inquiryForm.trend = e[0].label
+					this.inquiryForm.pricetrendValue = e[0].value
+				}else{
+					this.logisticQuotationForm.trend =e[0].value 
+					this.logisticQuotationForm.trendValue = e[0].label
+				}
 			},
 
 			//取消报价
@@ -1325,13 +1377,27 @@
 								accessToken: uni.getStorageSync('accessToken'),
 								list: [{
 									bidId: this.bidId,
-									custId: this.custId,
-									price:this.logisticQuotationForm.price,
-									expiredDate:this.logisticQuotationForm.expiredDate+":00",
-									shippingName:this.logisticQuotationForm.shippingName,
-									schedule:this.logisticQuotationForm.schedule,
-									transferMethod:this.logisticQuotationForm.transferMethod,
-									remark:this.logisticQuotationForm.remark,
+									custId: this.custId&&Number(this.custId),
+									//价格
+									price: this.logisticQuotationForm.price&&Number(this.logisticQuotationForm.price),
+									//有效期
+									expiredDate: this.logisticQuotationForm.expiredDate + ":00",
+									//船公司
+									shippingName: this.logisticQuotationForm.shippingName,
+									//船期
+									schedule: this.logisticQuotationForm.schedule,
+									//转运方式
+									transferMethod: this.logisticQuotationForm.transferMethod&&Number(this.logisticQuotationForm.transferMethod),
+									//航程
+									voyage:this.logisticQuotationForm.voyage&&Number(this.logisticQuotationForm.voyage),
+									//鉴定书
+									isCertificate:this.logisticQuotationForm.appraisalCertificate&Number(this.logisticQuotationForm.appraisalCertificate),
+									//价格趋势
+									priceTrendType:this.logisticQuotationForm.trend&Number(this.logisticQuotationForm.trend),
+									//趋势说明
+									priceTrendRemark:this.logisticQuotationForm.explain,
+									// 备注
+									remark: this.logisticQuotationForm.remark,
 								}]
 							}
 						})
@@ -1345,7 +1411,21 @@
 
 					}
 				})
-			}
+			},
+			checkboxGroupChange(e){
+				let tempArr=[]
+				if(e.length>0){
+					if(e.includes('周一'))tempArr.push(1)
+					if(e.includes('周二'))tempArr.push(2)
+					if(e.includes('周三'))tempArr.push(3)
+					if(e.includes('周四'))tempArr.push(4)
+					if(e.includes('周五'))tempArr.push(5)
+					if(e.includes('周六'))tempArr.push(6)
+					if(e.includes('周日'))tempArr.push(7)
+				}
+				let tempStr=tempArr.join(',')
+				this.logisticQuotationForm.schedule=tempStr
+			},
 		},
 
 		computed: {
