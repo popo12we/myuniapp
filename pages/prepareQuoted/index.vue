@@ -306,7 +306,7 @@
 												<view class="settimeout">{{item.daysRemaining}}</view>
 											</view>
 											<view class="swiper_center_oneline center_btn_area">
-												<u-button type="error" size="mini" plain class="btn_end" @click="toBindding">我要竞价</u-button>
+												<u-button type="error" size="mini" plain class="btn_end" @click="toLogisticQuotation(item)">我要竞价</u-button>
 											</view>
 										</view>
 									</view>
@@ -328,7 +328,7 @@
 									<view class="checkbox_view_oneline_title clearfix">
 										<view class="secondtext">{{item.startPort}}</view>
 										<view class="thirdtext">
-											<view class="unlinetext">{{item.transfer==="1"?"直达":item.transfer=="2"?"中转":""}}</view>
+											<view class="unlinetext">{{item.transferMethod}}</view>
 											<view>——</view>
 										</view>
 										<view class="fourthtext">{{item.arrivePort}}</view>
@@ -540,6 +540,10 @@
 		<u-select v-model="selectPriceTrendShow" :list="selectPriceTrendList" @confirm="confirmPriceTrend"></u-select>
 		<!-- 报价币种下拉框 -->
 		<u-select v-model="selectTypesCurrencyShow" :list="selectTypesCurrencyList" @confirm="confirmCurrency"></u-select>
+		<!-- 报价中转下拉框 -->
+		<u-select v-model="selectTransferMethodShow" :list="selectTransferMethodList" @confirm="confirmTransferMethod"></u-select>
+		<!-- 报价鉴定书下拉框 -->
+		<u-select v-model="selectAppraisalCertificateShow" :list="selectAppraisalCertificateList" @confirm="confirmAppraisalCertificate"></u-select>
 		<!-- 时间选择 -->
 		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
 
@@ -559,14 +563,14 @@
 					<u-form-item label="船期">
 						<u-input v-model="logisticQuotationForm.schedule" placeholder="请输入船期" />
 					</u-form-item>
-					<u-form-item label="转运方式" placeholder="请输入转运方式">
-						<u-input v-model="logisticQuotationForm.transferMethod" />
+					<u-form-item label="转运方式">
+						<u-input v-model="logisticQuotationForm.transferMethod" type="select" @click="showTransferMethod" placeholder="请输入转运方式"/>
 					</u-form-item>
-					<u-form-item label="航程" placeholder="请输入航程">
-						<u-input v-model="logisticQuotationForm.voyage" />
+					<u-form-item label="航程" >
+						<u-input v-model="logisticQuotationForm.voyage" placeholder="请输入航程"/>
 					</u-form-item>
 					<u-form-item label="鉴定书" placeholder="是否有鉴定书">
-						<u-input v-model="logisticQuotationForm.appraisalCertificate" type="select" @click="showCurrencySelect"
+						<u-input v-model="logisticQuotationForm.appraisalCertificate" type="select" @click="showAppraisalCertificate"
 						 placeholder="请选择币种" />
 					</u-form-item>
 					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
@@ -624,6 +628,7 @@
 						label: "USD",
 					},
 				],
+				
 				selectPriceTrendShow: false,
 				selectPriceTrendList: [{
 						value: "1",
@@ -825,7 +830,29 @@
 				//物流实单数组
 				logisticRealOrderList: [],
 				//物流常规数组
-				logisticRoutineList: []
+				logisticRoutineList: [],
+				// 物流报价中转
+				selectTransferMethodShow: false,
+				selectTransferMethodList: [{
+						value: "1",
+						label: "中转",
+					},
+					{
+						value: "2",
+						label: "直达",
+					},
+				],
+				// 物流报价鉴定书
+				selectAppraisalCertificateShow: false,
+				selectAppraisalCertificateList: [{
+						value: "1",
+						label: "有",
+					},
+					{
+						value: "2",
+						label: "无",
+					},
+				],
 			}
 		},
 		created() {
@@ -913,7 +940,6 @@
 								// 实单数组
 								this.logisticRealOrderList.push(item)
 							}
-							console.log(this.logisticRealOrderList)
 							if (item.moduleCode === 'PC006') {
 								// 常规数组
 								this.logisticRoutineList.push(item)
@@ -974,9 +1000,17 @@
 				this.selectPriceTrendShow = true;
 			},
 
-			//点击打开币种拉框
+			//点击打开币种下拉框
 			showCurrencySelect() {
 				this.selectTypesCurrencyShow = true;
+			},
+			//点击打开鉴定书下拉框
+			showAppraisalCertificate() {
+				this.selectAppraisalCertificateShow = true;
+			},
+			//点击打开直达中转拉框
+			showTransferMethod() {
+				this.selectTransferMethodShow = true;
 			},
 
 			//点击询盘/我要报价打开询盘模态框
@@ -1040,6 +1074,14 @@
 			//确认币种
 			confirmCurrency(e) {
 				this.inquiryForm.currency = e[0].label
+			},
+			//确认中转方式
+			confirmTransferMethod(e){
+				this.logisticQuotationForm.transferMethod=e[0].label
+			},
+			//确认有无鉴定书
+			confirmAppraisalCertificate(e){
+				this.logisticQuotationForm.appraisalCertificate=e[0].label
 			},
 			//确认价格趋势
 			confirmPriceTrend(e) {
@@ -1144,7 +1186,6 @@
 				} else {
 					this.logisticQuotationForm.expiredDate = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
 				}
-
 			},
 
 			//确认放弃报价
@@ -1267,7 +1308,6 @@
 			//物流
 			//物流展示报价模态框
 			toLogisticQuotation(item) {
-				console.log(item)
 				this.bidId = item.bidId
 				this.custId = item.custId
 				this.logisticQuotationFormShow = true
@@ -1285,7 +1325,13 @@
 								accessToken: uni.getStorageSync('accessToken'),
 								list: [{
 									bidId: this.bidId,
-									custId: this.custId
+									custId: this.custId,
+									price:this.logisticQuotationForm.price,
+									expiredDate:this.logisticQuotationForm.expiredDate+":00",
+									shippingName:this.logisticQuotationForm.shippingName,
+									schedule:this.logisticQuotationForm.schedule,
+									transferMethod:this.logisticQuotationForm.transferMethod,
+									remark:this.logisticQuotationForm.remark,
 								}]
 							}
 						})
@@ -1320,8 +1366,6 @@
 			// },
 			logicSwiperList() {
 				return this.logisticRealOrderList.filter(item => {
-					console.log(new Date(item.biddeadLine))
-					console.log(new Date())
 					return new Date(item.biddeadLine) > new Date()
 				})
 			}
