@@ -1464,14 +1464,21 @@
 								}]
 							}
 						})
-
-
-
-
-
-
-
-
+                        if (res.data.code === '0') {
+                        	this.$refs.toast.show({
+                        		title: '提交报价成功',
+                        		type: 'success',
+                        		position: 'top'
+                        	})
+                        } else {
+                        	this.$refs.toast.show({
+                        		title: '提交报价失败',
+                        		type: 'error',
+                        		position: 'top'
+                        	})
+                        }
+						this.resetLogisticQuotationForm()
+						this.logisticQuotationFormShow = false
 					}
 				})
 			},
