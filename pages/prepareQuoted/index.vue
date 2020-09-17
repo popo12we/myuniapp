@@ -266,7 +266,7 @@
 						<text class="allChoose_text">全选</text>
 					</u-checkbox>
 				</view>
-				<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false"></u-field>
+				<u-field v-model="name" placeholder="请输入目的港查询" label-width="0" class="ufield" :border-bottom="false"></u-field>
 				<u-button @click="checkedAll" type="error" size="mini" class="search_btn">搜索</u-button>
 			</view>
 			<view class="commodity_list_tips">您现在有 {{logicSwiperList.length}} 条实盘询价</view>

@@ -1,1 +1,1 @@
-<u-tabbar bind:input="__e" vue-id="6eceb8a4-1" list="{{tabbarList}}" active-color="#D0021B" value="{{current}}" data-event-opts="{{[['^input',[['__set_model',['','current','$event',[]]]]]]}}" class="data-v-7b71606f" bind:__l="__l"></u-tabbar>
+<u-tabbar bind:input="__e" vue-id="6eceb8a4-1" list="{{isRole?tabbarFourList:tabbarThreeList}}" active-color="#D0021B" value="{{current}}" data-event-opts="{{[['^input',[['__set_model',['','current','$event',[]]]]]]}}" class="data-v-181eaaa0" bind:__l="__l"></u-tabbar>
