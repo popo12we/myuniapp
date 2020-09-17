@@ -557,29 +557,28 @@
 					<u-form-item label="有效期" prop="expiredDate">
 						<u-input v-model="logisticQuotationForm.expiredDate" type="select" @click="showValidity" placeholder="请输入有效期" />
 					</u-form-item>
-					<u-form-item label="船公司">
+					<u-form-item label="船公司" prop="shippingName">
 						<u-input v-model="logisticQuotationForm.shippingName" placeholder="请输入船公司" />
 					</u-form-item>
-					<u-form-item label="船期">
+					<u-form-item label="船期" prop="schedule">
 						<!-- <u-input v-model="logisticQuotationForm.schedule" placeholder="请输入船期" /> -->
 						<u-checkbox-group @change="checkboxGroupChange">
 							<u-checkbox v-model="item.checked" v-for="(item, index) in checkscheduleList" :key="index" :name="item.name">
 								{{ item.name }}
 							</u-checkbox>
 						</u-checkbox-group>
-
 					</u-form-item>
-					<u-form-item label="转运方式">
+					<u-form-item label="转运方式" prop="transferMethod">
 						<u-input v-model="logisticQuotationForm.transferMethodValue" type="select" @click="showTransferMethod" placeholder="请输入转运方式" />
 					</u-form-item>
-					<u-form-item label="航程">
+					<u-form-item label="航程" prop="voyage">
 						<u-input v-model="logisticQuotationForm.voyage" placeholder="请输入航程" />
 					</u-form-item>
-					<u-form-item label="鉴定书" placeholder="是否有鉴定书">
+					<u-form-item label="鉴定书" prop="appraisalCertificate">
 						<u-input v-model="logisticQuotationForm.appraisalCertificateValue" type="select" @click="showAppraisalCertificate"
-						 placeholder="请选择币种" />
+						 placeholder="是否有鉴定书" />
 					</u-form-item>
-					<u-form-item label="价格趋势">
+					<u-form-item label="价格趋势" prop="trend">
 						<u-input v-model="logisticQuotationForm.trendValue" type="select" @click="showTrendSelect" placeholder="请选择价格趋势" />
 					</u-form-item>
 					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
@@ -834,7 +833,37 @@
 						required: true,
 						message: '请选择有效期',
 						trigger: ['change']
-					}]
+					}],
+					shippingName: [{
+						required: true,
+						message: '请填写船公司',
+						trigger: ['change','blur'],
+					}],
+					schedule: [{
+						required: true,
+						message: '请选择船期',
+						schedule: ['change'],
+					}],
+					transferMethod: [{
+						required: true,
+						message: '请选择转运方式',
+						trigger: ['change']
+					}],
+					appraisalCertificate: [{
+						required: true,
+						message: '请选择是否有鉴定书',
+						trigger: ['change']
+					}],
+					voyage: [{
+						required: true,
+						message: '请填写航程',
+						trigger:  ['change','blur'],
+					}],
+					trend: [{
+						required: true,
+						message: '请选择价格趋势',
+						schedule: ['change'],
+					}],
 				},
 				//是否展示物流报价模态框
 				logisticQuotationFormShow: false,
@@ -996,6 +1025,7 @@
 			// 全选
 			checkboxAllChange() {
 				this.resetInquiryForm()
+				this.resetLogisticQuotationForm()
 				if (this.isRole) {
 					this.allChecked ?
 						this.Inquiry.map((val) => {
@@ -1025,6 +1055,7 @@
 			//单选
 			checkboxOneChange(item) {
 				this.resetInquiryForm()
+				this.resetLogisticQuotationForm()
 				if (this.isRole) {
 					this.checkedList = this.Inquiry.filter((val) => val.checked)
 					this.checkedNum = this.Inquiry.filter((val) => val.checked).length
@@ -1303,6 +1334,36 @@
 				}
 				this.$refs['iForm1'].resetFields();
 			},
+			
+			//重置报价模态框
+			resetLogisticQuotationForm() {
+				this.logisticQuotationForm={
+					// 价格
+					price: "",
+					// 有效期
+					expiredDate: "",
+					// 船公司
+					shippingName: "",
+					// 船期
+					schedule: "",
+					// 转运方式
+					transferMethod: "",
+					// 航程
+					voyage: "",
+					//价格趋势
+					trend:"",
+					// 鉴定书
+					appraisalCertificate: "",
+					// 趋势说明
+					explain: "",
+					// 备注
+					remark: "",
+					appraisalCertificateValue:"",
+					trendValue:"",
+					appraisalCertificateValue:""
+				}
+				this.$refs['iForm3'].resetFields();
+			},
 
 			//切换币种
 			changeCurrency(item) {
@@ -1363,8 +1424,10 @@
 				this.bidId = item.bidId
 				this.custId = item.custId
 				this.logisticQuotationFormShow = true
+				this.resetLogisticQuotationForm()
 			},
 			giveuptoLogisticQuotation() {
+				this.resetLogisticQuotationForm()
 				this.logisticQuotationFormShow = false
 			},
 			//物流模态框提价报价
