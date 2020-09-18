@@ -271,9 +271,15 @@
 <script>
 	import Tabbar from '../../my_common_components/Tabbar.vue'
 	import '../../common/font/iconfont.css';
+	import fetch from '../../utils/fetch.js'
 	export default {
 		components: {
 			Tabbar
+		},
+		created(){
+			if(this.isRole){
+				this.getInquiryList()
+			}
 		},
 		data() {
 			return {
@@ -320,6 +326,46 @@
 				uni.navigateTo({
 					url: '../bidding/index'
 				})
+			},
+			//询价单列表
+			async getInquiryList() {
+				let res = await fetch(this.api.v2.inquiryList, {
+					method: "get",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						keywords: this.keywords
+					}
+				})
+				console.log(res)
+				// this.biddingList = []
+				// this.inquiryList = []
+				// this.Inquiry = []
+				// this.realOrderList = []
+				// if (res.data.code === '0') {
+				// 	this.inquiryList = res.data.data.list
+				// 	if (this.inquiryList&&this.inquiryList.length > 0) {
+				// 		this.inquiryList.forEach((item, index) => {
+				// 			item.checked = false
+				// 			item.down = false
+				// 			item.name = index
+				// 			item.id = index
+				// 			item.currency = 'CNY'
+				// 			if (item.biddingMode === '是') {
+				// 				// 竞价数组
+				// 				this.biddingList.push(item)
+				// 			} else {
+				// 				if (item.inquiryType === "询盘询价") {
+				// 					//询盘数组
+				// 					this.Inquiry.push(item)
+				// 				}
+				// 				if (item.inquiryType === "实单询价") {
+				// 					//实单数组
+				// 					this.realOrderList.push(item)
+				// 				}
+				// 			}
+				// 		})
+				// 	}
+				// }
 			}
 		},
 		

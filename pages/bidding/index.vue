@@ -40,8 +40,7 @@
 					<u-col span="5">
 						<text class="colorgary">数量</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">{{bindingData.detail.saleQty}}</text>
-
+						<text class="colorgary">{{bindingData.detail.saleQty}}{{bindingData.detail.unit}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -300,8 +299,7 @@
 					method: "get",
 					data: {
 						accessToken: uni.getStorageSync('accessToken'),
-						inquiryCode: inquiryCode,
-
+						inquiryCode: inquiryCode
 					}
 				})
 				console.log(res)

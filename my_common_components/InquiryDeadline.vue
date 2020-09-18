@@ -36,7 +36,6 @@
 				let h = this.formate(parseInt(leftTime / (60 * 60) % 24))
 				let m = this.formate(parseInt(leftTime / 60 % 60))
 				let s = this.formate(parseInt(leftTime % 60))
-				console.log(leftTime)
 				//如期望时间<现在时间 就停掉
 				if (leftTime <= 0) {
 					this.isRun = false
