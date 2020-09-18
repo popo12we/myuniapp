@@ -4,12 +4,6 @@
 		<view class="quotedPrice" v-if="isRole">
 			<!-- 输入框 -->
 			<view class="inp_area">
-				<!-- 全选 -->
-				<view class="allChoose">
-					<u-checkbox v-model="allChecked" :active-color='activeColor' @change="checkboxAllChange">
-						<text class="allChoose_text">全选</text>
-					</u-checkbox>
-				</view>
 				<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
 				</u-field>
 				<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
@@ -19,10 +13,10 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color='activeColor'>
 					<u-collapse>
-						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
-							<view class="checkbox_view">
+						
+							<view class="checkbox_view" v-for="(item, index) in list" :key="index" :name="item.name">
 								<view class="checkbox_view_oneline">
-									<text class="checkbox_view_name gray">大豆分离蛋白</text>
+									<text class="checkbox_view_name">{{item.spuName}}</text>
 									<text class="mg15"></text>
 									<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
 									<view class="isWinBidding">已中标</view>
@@ -33,12 +27,12 @@
 										<u-col span="7">
 											<text class="gray">规格</text>
 											<text class="mg15">:</text>
-											<text class="gray">Emulsion</text>
+											<text class="gray">{{item.spuSpec}}</text>
 										</u-col>
 										<u-col span="5">
 											<text class="gray">品牌</text>
 											<text class="mg15">:</text>
-											<text class="gray">菊兰</text>
+											<text class="gray">{{item.brand}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -48,12 +42,12 @@
 										<u-col span="7">
 											<text class="gray">包装</text>
 											<text class="mg15">:</text>
-											<text class="gray">20 KG STEEL DRUM</text>
+											<text class="gray">{{item.packageInfo}}</text>
 										</u-col>
 										<u-col span="5">
 											<text class="gray">数量</text>
 											<text class="mg15">:</text>
-											<text class="gray">100KG</text>
+											<text class="gray">{{item.saleQty}}{{item.unit}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -61,9 +55,8 @@
 									<u-row gutter="16">
 										<u-col span="12">
 											<view>
-												<text class="red">2020-07-30</text>
-												<text class="mg15"></text>
-												<text class="red">18：00截至报价</text>
+												<text class="red">{{item.inquiryDeadline}}</text>
+												<text class="red" v-if="item.inquiryDeadline">18：00截止报价</text>
 
 											</view>
 										</u-col>
@@ -80,12 +73,12 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text class="gray">上海</text>
+												<text class="gray">{{item.shipPort}}</text>
 												<text class="mg15">---</text>
-												<text class="gray">拉各斯</text>
+												<text class="gray">{{item.destinationPort}}</text>
 											</u-col>
 											<u-col span="5">
-												<text class="gray">20GP</text>
+												<text class="gray">{{item.cargoWeight}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -93,19 +86,19 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text class="gray">期望五天交货</text>
+												<text class="gray">期望{{item.expeDeliDay}}天交货</text>
 											</u-col>
 											<u-col span="5">
 												<text class="gray">打托</text>
 												<text class="mg15">:</text>
-												<text class="gray">是</text>
+												<text class="gray">{{item.ifPlay}}</text>
 											</u-col>
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
-												<text class="gray">询价单编号：IN2087973</text>
+												<text class="gray">询价单编号：{{item.inquiryCode}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -120,13 +113,13 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
-												<text class="gray">一种食品添加剂</text>
+												<text class="gray">{{item.remarks}}</text>
 											</u-col>
 										</u-row>
 									</view>
 								</u-collapse-item>
 							</view>
-						</u-checkbox>
+						
 					</u-collapse>
 				</u-checkbox-group>
 			</view>
@@ -288,22 +281,7 @@
 				activeColor: "#D0021B",
 				//全选
 				allChecked: false,
-				list: [{
-						name: 'apple',
-						checked: false,
-						disabled: false
-					},
-					{
-						name: 'banner',
-						checked: false,
-						disabled: false
-					},
-					{
-						name: 'orange',
-						checked: false,
-						disabled: false
-					}
-				],
+				list: [],
 			}
 		},
 		methods: {
@@ -337,35 +315,18 @@
 					}
 				})
 				console.log(res)
-				// this.biddingList = []
-				// this.inquiryList = []
-				// this.Inquiry = []
-				// this.realOrderList = []
-				// if (res.data.code === '0') {
-				// 	this.inquiryList = res.data.data.list
-				// 	if (this.inquiryList&&this.inquiryList.length > 0) {
-				// 		this.inquiryList.forEach((item, index) => {
-				// 			item.checked = false
-				// 			item.down = false
-				// 			item.name = index
-				// 			item.id = index
-				// 			item.currency = 'CNY'
-				// 			if (item.biddingMode === '是') {
-				// 				// 竞价数组
-				// 				this.biddingList.push(item)
-				// 			} else {
-				// 				if (item.inquiryType === "询盘询价") {
-				// 					//询盘数组
-				// 					this.Inquiry.push(item)
-				// 				}
-				// 				if (item.inquiryType === "实单询价") {
-				// 					//实单数组
-				// 					this.realOrderList.push(item)
-				// 				}
-				// 			}
-				// 		})
-				// 	}
-				// }
+				if (res.data.code === '0') {
+					this.list = res.data.data.list
+					if (this.list&&this.list.length > 0) {
+						this.list.forEach((item, index) => {
+							item.checked = false
+							item.down = false
+							item.name = index
+							item.id = index
+							item.currency = 'CNY'
+						})
+					}
+				}
 			}
 		},
 		
@@ -381,7 +342,7 @@
 <style lang="scss" scoped>
 	//公共样式
 	.gray {
-		color: #c9c9c9 !important;
+		color: #868686 !important;
 	}
 
 	.red {
@@ -393,12 +354,15 @@
 	}
 // 产品供应商已报价（非竞价模式）
 	.quotedPrice {
+		/deep/ .u-field{
+			padding:20rpx 44rpx;
+		}
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
 
 			.allChoose {
-				padding-left: 30rpx;
+				padding-left: 20rpx;
 				align-self: center;
 				padding-top: 2rpx;
 			}
@@ -427,11 +391,15 @@
 
 			/deep/ .u-checkbox {
 				border-bottom: 2rpx solid #f6f6f6;
-				align-items: flex-start;
+				// align-items: flex-start;
+				display: block;
 			}
 
 			/deep/ .u-checkbox__icon-wrap {
 				margin-top: 38rpx;
+				position: absolute;
+				left: 27rpx;
+
 			}
 
 			/deep/ .u-collapse-head {
@@ -445,7 +413,7 @@
 				width: 100%;
 				color: #868686;
 				position: relative;
-
+                margin-left: 20rpx;
 				.isWinBidding {
 					position: absolute;
 					top: 0;
@@ -462,10 +430,13 @@
 				}
 
 				.checkbox_view_oneline {
+					margin:10rpx 0;
+					font-size: 24rpx;
+
 					.checkbox_view_name {
 						font-weight: 700;
 						font-size: 32rpx;
-						color: #666;
+						color: #333;
 					}
 
 					.checkbox_view_tab {
@@ -518,7 +489,7 @@
 			display: flex;
 	
 			.allChoose {
-				padding-left: 30rpx;
+				padding-left: 20rpx;
 				align-self: center;
 				padding-top: 2rpx;
 			}
@@ -547,7 +518,9 @@
 	
 			/deep/ .u-checkbox {
 				border-bottom: 2rpx solid #f6f6f6;
-				align-items: flex-start;
+				// align-items: flex-start;
+			    display: block;
+				
 			}
 	
 			/deep/ .u-checkbox__icon-wrap {

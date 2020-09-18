@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/login/index",
+    "pages/quotedPrice/index",
     "pages/prepareQuoted/index",
     "pages/bidding/index",
     "pages/profile/index",
     "pages/editPassword/index",
     "pages/commodity/index",
     "pages/soonExpire/index",
-    "pages/quotedPrice/index",
     "pages/firmOfferInquiry/index",
     "pages/batchQuotation/index"
   ],
