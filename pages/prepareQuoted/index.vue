@@ -121,7 +121,7 @@
 										<u-col span="5">
 											<text class="gray">数量</text>
 											<text class="mg15">:</text>
-											<text class="gray">{{item.saleQty}}</text>
+											<text class="gray">{{item.saleQty}}{{item.unit}}</text>
 										</u-col>
 									</u-row>
 								</view>
