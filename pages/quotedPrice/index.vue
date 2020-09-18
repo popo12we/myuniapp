@@ -13,118 +13,118 @@
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color='activeColor'>
 					<u-collapse>
-						
-							<view class="checkbox_view" v-for="(item, index) in list" :key="index" :name="item.name">
-								<view class="checkbox_view_oneline">
-									<text class="checkbox_view_name">{{item.spuName}}</text>
-									<text class="mg15"></text>
-									<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
-									<view class="isWinBidding">{{item.statusDesc}}</view>
-								</view>
 
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="7">
-											<text class="gray">规格</text>
-											<text class="mg15">:</text>
-											<text class="gray">{{item.spuSpec}}</text>
-										</u-col>
-										<u-col span="5">
-											<text class="gray">品牌</text>
-											<text class="mg15">:</text>
-											<text class="gray">{{item.brand}}</text>
-										</u-col>
-									</u-row>
-								</view>
-
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="7">
-											<text class="gray">包装</text>
-											<text class="mg15">:</text>
-											<text class="gray">{{item.packageInfo}}</text>
-										</u-col>
-										<u-col span="5">
-											<text class="gray">数量</text>
-											<text class="mg15">:</text>
-											<text class="gray">{{item.saleQty}}{{item.unit}}</text>
-										</u-col>
-									</u-row>
-								</view>
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="12">
-											<view>
-												<text class="red">{{item.inquiryDeadline}}</text>
-												<text class="red" v-if="item.inquiryDeadline">18：00截止报价</text>
-
-											</view>
-										</u-col>
-									</u-row>
-								</view>
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="12">
-											<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding">详情</u-button>
-										</u-col>
-									</u-row>
-								</view>
-								<u-collapse-item>
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="7">
-												<text class="gray">{{item.shipPort}}</text>
-												<text class="mg15">---</text>
-												<text class="gray">{{item.destinationPort}}</text>
-											</u-col>
-											<u-col span="5">
-												<text class="gray">{{item.cargoWeight}}</text>
-											</u-col>
-										</u-row>
-									</view>
-
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="7">
-												<text class="gray">期望{{item.expeDeliDay}}天交货</text>
-											</u-col>
-											<u-col span="5">
-												<text class="gray">打托</text>
-												<text class="mg15">:</text>
-												<text class="gray">{{item.ifPlay}}</text>
-											</u-col>
-										</u-row>
-									</view>
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="12">
-												<text class="gray">询价单编号：{{item.inquiryCode}}</text>
-											</u-col>
-										</u-row>
-									</view>
-
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="12">
-												<text class="gray">备注:</text>
-											</u-col>
-										</u-row>
-									</view>
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="12">
-												<text class="gray">{{item.remarks}}</text>
-											</u-col>
-										</u-row>
-									</view>
-								</u-collapse-item>
+						<view class="checkbox_view" v-for="(item, index) in list" :key="index" :name="item.name">
+							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'}">
+								<text :class="checkbox_view_name">{{item.spuName}}</text>
+								<text class="mg15"></text>
+								<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
+								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃',orangebg:item.statusDesc==='已报价',redbg:item.statusDesc==='已中标'}">{{item.statusDesc}}</view>
 							</view>
-						
+
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="7">
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">规格</text>
+										<text class="mg15">:</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.spuSpec}}</text>
+									</u-col>
+									<u-col span="5">
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">品牌</text>
+										<text class="mg15">:</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.brand}}</text>
+									</u-col>
+								</u-row>
+							</view>
+
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="7">
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">包装</text>
+										<text class="mg15">:</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.packageInfo}}</text>
+									</u-col>
+									<u-col span="5">
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">数量</text>
+										<text class="mg15">:</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.saleQty}}{{item.unit}}</text>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="12">
+										<view>
+											<text class="red">{{item.inquiryDeadline}}</text>
+											<text class="red" v-if="item.inquiryDeadline">18：00截止报价</text>
+
+										</view>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="checkbox_view_oneline">
+								<u-row gutter="16">
+									<u-col span="12">
+										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding">详情</u-button>
+									</u-col>
+								</u-row>
+							</view>
+							<u-collapse-item>
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="7">
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.shipPort}}</text>
+											<text class="mg15">---</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.destinationPort}}</text>
+										</u-col>
+										<u-col span="5">
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.cargoWeight}}</text>
+										</u-col>
+									</u-row>
+								</view>
+
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="7">
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">期望{{item.expeDeliDay}}天交货</text>
+										</u-col>
+										<u-col span="5">
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">打托</text>
+											<text class="mg15">:</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.ifPlay}}</text>
+										</u-col>
+									</u-row>
+								</view>
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="12">
+											<text class="gray">询价单编号：{{item.inquiryCode}}</text>
+										</u-col>
+									</u-row>
+								</view>
+
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="12">
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">备注:</text>
+										</u-col>
+									</u-row>
+								</view>
+								<view class="checkbox_view_oneline">
+									<u-row gutter="16">
+										<u-col span="12">
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.remarks}}</text>
+										</u-col>
+									</u-row>
+								</view>
+							</u-collapse-item>
+						</view>
+
 					</u-collapse>
 				</u-checkbox-group>
 			</view>
 		</view>
-		
+
 		<!-- 物流供应商已报价（物流） -->
 		<view class="logisticsQuotedPrice" v-if="!isRole">
 			<!-- 输入框 -->
@@ -139,7 +139,7 @@
 				</u-field>
 				<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
 			</view>
-		
+
 			<!-- 商品列表 -->
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color='activeColor'>
@@ -158,7 +158,7 @@
 									<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
 									<view class="isWinBidding">已中标</view>
 								</view>
-		
+
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="7">
@@ -173,7 +173,7 @@
 										</u-col>
 									</u-row>
 								</view>
-		
+
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="7">
@@ -200,7 +200,7 @@
 										</u-col>
 									</u-row>
 								</view>
-		
+
 								<u-collapse-item>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
@@ -214,7 +214,7 @@
 											</u-col>
 										</u-row>
 									</view>
-		
+
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
@@ -234,7 +234,7 @@
 											</u-col>
 										</u-row>
 									</view>
-		
+
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
@@ -269,8 +269,8 @@
 		components: {
 			Tabbar
 		},
-		created(){
-			if(this.isRole){
+		created() {
+			if (this.isRole) {
 				this.getInquiryList()
 			}
 		},
@@ -317,7 +317,7 @@
 				console.log(res)
 				if (res.data.code === '0') {
 					this.list = res.data.data.list
-					if (this.list&&this.list.length > 0) {
+					if (this.list && this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
 							item.down = false
@@ -329,11 +329,11 @@
 				}
 			}
 		},
-		
-		computed:{
+
+		computed: {
 			//判断哪个角色权限
-			isRole(){
-				return uni.getStorageSync('roleId')===1?true:false
+			isRole() {
+				return uni.getStorageSync('roleId') === 1 ? true : false
 			}
 		}
 	};
@@ -341,22 +341,45 @@
 
 <style lang="scss" scoped>
 	//公共样式
+	.shallowgray{
+		color:#c9c9cc !important;
+	}
 	.gray {
 		color: #868686 !important;
+	}
+
+	.graybg {
+		color:#868686 !important;;
+		background-color: #f2f2f2 !important
 	}
 
 	.red {
 		color: #D0021B !important
 	}
 
+	.redbg {
+		color:#fff;
+		background-color: #D0021B !important
+	}
+
+	.orange {
+		color: #FF9900 !important
+	}
+	.orangbg {
+		color:#fff;
+		background-color: #FF9900 !important
+	}
+
 	.mt15 {
 		margin-top: 15rpx;
 	}
-// 产品供应商已报价（非竞价模式）
+
+	// 产品供应商已报价（非竞价模式）
 	.quotedPrice {
-		/deep/ .u-field{
-			padding:20rpx 44rpx;
+		/deep/ .u-field {
+			padding: 20rpx 44rpx;
 		}
+
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
@@ -413,7 +436,8 @@
 				width: 100%;
 				color: #868686;
 				position: relative;
-                margin-left: 20rpx;
+				margin-left: 20rpx;
+
 				.isWinBidding {
 					position: absolute;
 					top: 0;
@@ -430,7 +454,7 @@
 				}
 
 				.checkbox_view_oneline {
-					margin:10rpx 0;
+					margin: 10rpx 0;
 					font-size: 24rpx;
 
 					.checkbox_view_name {
@@ -482,28 +506,29 @@
 			}
 		}
 	}
+
 	// 物流供应商已报价（物流）
 	.logisticsQuotedPrice {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
-	
+
 			.allChoose {
 				padding-left: 20rpx;
 				align-self: center;
 				padding-top: 2rpx;
 			}
-	
+
 			.search_btn {
 				// float: right;
 				align-self: center;
 			}
-	
+
 			.ufield {
 				flex: 1
 			}
 		}
-	
+
 		.commodity_list_tips {
 			background-color: #f2f2f2;
 			height: 70rpx;
@@ -511,26 +536,26 @@
 			text-align: center;
 			line-height: 70rpx;
 		}
-	
+
 		//商品列表
 		.commodity_list {
 			padding: 0 40rpx;
-	
+
 			/deep/ .u-checkbox {
 				border-bottom: 2rpx solid #f6f6f6;
 				// align-items: flex-start;
-			    display: block;
-				
+				display: block;
+
 			}
-	
+
 			/deep/ .u-checkbox__icon-wrap {
 				margin-top: 38rpx;
 			}
-	
+
 			/deep/ .u-collapse-head {
 				padding: 0;
 			}
-	
+
 			.checkbox_view {
 				float: none;
 				display: block;
@@ -538,7 +563,7 @@
 				width: 100%;
 				color: #868686;
 				position: relative;
-	
+
 				.isWinBidding {
 					position: absolute;
 					top: 0;
@@ -553,51 +578,51 @@
 					background-color: #D0021B;
 					font-size: 24rpx;
 				}
-	
+
 				.checkbox_view_oneline_title {
 					// margin-top: 40rpx;
 					text-align: center;
 					display: flex;
-	
+
 				}
-	
+
 				.checkbox_view_oneline {
 					.firsttext {
 						font-size: 24rpx;
 						line-height: 50rpx;
 					}
-	
+
 					.secondtext {
 						font-weight: 700;
 						font-size: 32rpx;
 						margin: 0 10rpx;
 					}
-	
+
 					.thirdtext {
 						line-height: 20rpx;
-	
+
 						view {
 							font-size: 24rpx;
 						}
 					}
-	
+
 					.fourthtext {
 						font-weight: 700;
 						font-size: 32rpx;
 						margin: 0 10rpx;
 					}
-	
+
 					.fifthtext {
 						font-size: 24rpx;
 						line-height: 50rpx;
 					}
-	
+
 					.checkbox_view_name {
 						font-weight: 700;
 						font-size: 32rpx;
 						color: #666;
 					}
-	
+
 					.checkbox_view_tab {
 						background-color: #ffaa00;
 						color: #fff;
@@ -605,35 +630,35 @@
 						font-size: 24rpx;
 						border-radius: 20rpx;
 					}
-	
+
 					.giveupbindding {
 						margin-right: 30rpx;
 					}
 				}
-	
+
 				.utag {
 					margin-left: 20rpx;
 				}
-	
+
 				.checkbox_view_oneline_btn {
 					margin-left: 20rpx;
 				}
-	
+
 				.price_change {
 					display: flex;
-	
+
 					.pricetext {
 						margin-left: 6rpx;
 					}
-	
+
 					.ufield {
 						flex: 1;
 					}
-	
+
 					text {
 						align-self: center;
 					}
-	
+
 					.change {
 						color: #00a6db;
 					}

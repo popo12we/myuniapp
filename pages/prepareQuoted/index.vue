@@ -757,35 +757,6 @@
 					hour: true,
 					minute: true
 				},
-
-				//物流部分
-				// {
-				// 	cargoWeight: "",
-				// 	destinationPort: "天津",
-				// 	expectedshipdate: "2020-09-24 00:00:00.0",
-				// 	gw: "0.000000",
-				// 	remarks: "",
-				// 	startPort: "宁波",
-				// 	inquirydeadline: "2020-09-01 00:00:00.0",
-				// },
-				// {
-				// 	cargoWeight: "",
-				// 	destinationPort: "天津",
-				// 	expectedshipdate: "2020-09-24 00:00:00.0",
-				// 	gw: "0.000000",
-				// 	remarks: "",
-				// 	startPort: "宁波",
-				// 	inquirydeadline: "2020-09-14 15:21:00.0",
-				// },
-				// {
-				// 	cargoWeight: "",
-				// 	destinationPort: "天津",
-				// 	expectedshipdate: "2020-09-24 00:00:00.0",
-				// 	gw: "0.000000",
-				// 	remarks: "",
-				// 	startPort: "宁波",
-				// 	inquirydeadline: "2020-09-21 00:00:00.0",
-				// }
 				//物流供应商数据
 				list: [],
 				//物流报价模态框
