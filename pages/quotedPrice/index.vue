@@ -19,7 +19,7 @@
 									<text class="checkbox_view_name">{{item.spuName}}</text>
 									<text class="mg15"></text>
 									<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
-									<view class="isWinBidding">已中标</view>
+									<view class="isWinBidding">{{item.statusDesc}}</view>
 								</view>
 
 								<view class="checkbox_view_oneline">
