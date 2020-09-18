@@ -129,9 +129,8 @@
 									<u-row gutter="16">
 										<u-col span="12">
 											<view>
-												<text class="red">{{item.inquirydeadline}}</text>
-												<text class="mg15" v-if="item.inquirydeadline"></text>
-												<text class="red">截至报价</text>
+												<text class="red">{{item.inquiryDeadline}}</text>
+												<text class="red" v-if="item.inquiryDeadline">截止报价</text>
 											</view>
 										</u-col>
 									</u-row>
@@ -954,6 +953,7 @@
 					method: "get",
 					data: {
 						accessToken: uni.getStorageSync('accessToken'),
+						status:0,
 						keywords: this.keywords
 					}
 				})
@@ -963,7 +963,7 @@
 				this.realOrderList = []
 				if (res.data.code === '0') {
 					this.inquiryList = res.data.data.list
-					if (this.inquiryList.length > 0) {
+					if (this.inquiryList&&this.inquiryList.length > 0) {
 						this.inquiryList.forEach((item, index) => {
 							item.checked = false
 							item.down = false
@@ -1003,7 +1003,7 @@
 				this.logisticRealOrderList = []
 				if (res.data.code === '0') {
 					this.list = res.data.data
-					if (this.list.length > 0) {
+					if (this.list&&this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
 							item.down = false
@@ -1505,7 +1505,11 @@
 			},
 
 			swiperList() {
-				return [...this.biddingList, ...this.realOrderList]
+				let arr=[...this.biddingList, ...this.realOrderList]
+				arr=arr.filter(item=>{
+					return new Date(item.inquiryDeadline).getTime() > new Date().getTime()
+				})
+				return arr
 			},
 
 			//是否还没有结束(询价截止日期>当前时间)

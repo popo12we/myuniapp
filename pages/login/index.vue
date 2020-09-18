@@ -182,7 +182,6 @@
 							//wx.login就是要拿这个res.code
 							wx.getUserInfo({
 								success: res => {
-									console.log(res)
 									let encryptedData = res.encryptedData
 									let iv = res.iv
 
