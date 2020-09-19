@@ -1178,6 +1178,7 @@
 								type: 'success',
 								position: 'top'
 							})
+							this.getInquiryList()
 						} else {
 							this.$refs.toast.show({
 								title: '提交报价失败',
@@ -1218,6 +1219,7 @@
 								type: 'success',
 								position: 'top'
 							})
+							this.getInquiryList()
 						} else {
 							this.$refs.toast.show({
 								title: '提交报价失败',
@@ -1259,6 +1261,7 @@
 							type: 'success',
 							position: 'top'
 						})
+						this.getInquiryList()
 					} else {
 						this.$refs.toast.show({
 							title: '放弃报价失败',
@@ -1380,6 +1383,7 @@
 						type: 'success',
 						position: 'top'
 					})
+					this.getInquiryList()
 				} else {
 					this.$refs.toast.show({
 						title: '提交报价失败',
