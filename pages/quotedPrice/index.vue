@@ -18,7 +18,8 @@
 							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">
 								<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
 								<text class="mg15"></text>
-								<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
+								<!-- {{item.biddingMode === '是'?'竞价':item.inquiryType === "询盘询价"?"询盘":"实单"}} -->
+								<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单',graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}" @click="showInquiryModal">{{showTag(item)}}</text>
 								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:item.statusDesc==='已报价',redbg:item.statusDesc==='已中标'}">{{item.statusDesc}}</view>
 							</view>
 
@@ -56,7 +57,8 @@
 									<u-col span="12">
 										<view>
 											<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.inquiryDeadline}}</text>
-											<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}" v-if="item.inquiryDeadline">截止报价</text>
+											<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}"
+											 v-if="item.inquiryDeadline">截止报价</text>
 
 										</view>
 									</u-col>
@@ -65,7 +67,7 @@
 							<view class="checkbox_view_oneline">
 								<u-row gutter="16">
 									<u-col span="12">
-										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding">详情</u-button>
+										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding(item)">详情</u-button>
 									</u-col>
 								</u-row>
 							</view>
@@ -282,7 +284,15 @@
 				activeColor: "#D0021B",
 				//全选
 				allChecked: false,
+				//总的数据
 				list: [],
+				//竞价数组
+				biddingList: [],
+				//询盘数组
+				Inquiry: [],
+				//实单数组
+				realOrderList: []
+
 			}
 		},
 		methods: {
@@ -301,7 +311,8 @@
 			},
 
 			//点击详情跳转
-			toBidding() {
+			toBidding(obj) {
+				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
 					url: '../bidding/index'
 				})
@@ -317,6 +328,10 @@
 				})
 				console.log(res)
 				if (res.data.code === '0') {
+					this.list = []
+					this.biddingList = []
+					this.Inquiry = []
+					this.realOrderList = []
 					this.list = res.data.data.list
 					if (this.list && this.list.length > 0) {
 						this.list.forEach((item, index) => {
@@ -329,9 +344,9 @@
 					}
 				}
 			},
-			
+
 			//点击搜索按钮
-			checkedAll(){
+			checkedAll() {
 				this.getInquiryList()
 			}
 		},
@@ -340,6 +355,13 @@
 			//判断哪个角色权限
 			isRole() {
 				return uni.getStorageSync('roleId') === 1 ? true : false
+			},
+			showTag() {
+				return function(item) {
+					
+					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
+				}
+
 			}
 		}
 	};
@@ -347,33 +369,41 @@
 
 <style lang="scss" scoped>
 	//公共样式
-	.shallowgray{
-		color:#c9c9cc !important;
-	}
-	.gray {
-		color: #868686 !important;
-	}
-
-	.graybg {
-		color:#868686 !important;;
-		background-color: #f2f2f2 !important
-	}
+	
 
 	.red {
 		color: #D0021B !important
 	}
 
 	.redbg {
-		color:#fff;
+		color: #fff;
 		background-color: #D0021B !important
 	}
 
 	.orange {
 		color: #FF9900 !important
 	}
-	.orangbg {
-		color:#fff;
+
+	.orangebg {
+		color: #fff;
 		background-color: #FF9900 !important
+	}
+	.bluebg {
+		color: #fff;
+		background-color: #0099cc !important
+	}
+	.shallowgray {
+		color: #c9c9cc !important;
+	}
+	
+	.gray {
+		color: #868686 !important;
+	}
+	
+	.graybg {
+		color: #868686 !important;
+		;
+		background-color: #f2f2f2 !important
 	}
 
 	.mt15 {
@@ -471,8 +501,6 @@
 					}
 
 					.checkbox_view_tab {
-						background-color: #ffaa00;
-						color: #fff;
 						padding: 4rpx 16rpx;
 						font-size: 24rpx;
 						border-radius: 20rpx;
@@ -631,8 +659,6 @@
 					}
 
 					.checkbox_view_tab {
-						background-color: #ffaa00;
-						color: #fff;
 						padding: 4rpx 16rpx;
 						font-size: 24rpx;
 						border-radius: 20rpx;

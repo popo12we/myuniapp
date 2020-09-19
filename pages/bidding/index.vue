@@ -5,14 +5,10 @@
 		<view class="binding-info">
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
-					<u-col span="7">
-						<text class="bidding_name">{{bindingData.detail.spuName}}</text>
-						<text class="mg15"></text>
-						<text class="bidding_sign">竞价</text>
-					</u-col>
-					<u-col span="5">
-						<view class="isWinBidding">已中标</view>
-					</u-col>
+					<text class="bidding_name">{{bindingData.detail.spuName}}</text>
+					<text class="mg15"></text>
+					<text class="bidding_sign">竞价</text>
+					<view class="isWinBidding">已中标</view>
 				</u-row>
 			</view>
 			<view class="binding-info_oneline">
@@ -436,7 +432,7 @@
 			.isWinBidding {
 				position: absolute;
 				top: 0;
-				left: 60%;
+				left: 75%;
 				width: 120rpx;
 				height: 50rpx;
 				color: #fff;
