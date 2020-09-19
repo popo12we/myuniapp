@@ -4,11 +4,11 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		//轮播图点击选中的数据
-		checkedData: {}
+		checkedData: {},
 	},
 	mutations: {
 	    // 点击字体图标更新一整项的逻辑
-	    check (state, payload) {
+	    check (state, payload,status) {
 	      state.checkedData=payload
 	    }
 	  },

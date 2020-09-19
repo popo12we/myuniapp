@@ -7,8 +7,8 @@
 				<u-row gutter="16">
 					<text class="bidding_name">{{bindingData.detail.spuName}}</text>
 					<text class="mg15"></text>
-					<text class="bidding_sign">竞价</text>
-					<view class="isWinBidding">已中标</view>
+					<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘',orangebg:showTag(bindingVuexCheckeddata)==='实单',graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">{{showTag(bindingVuexCheckeddata)}}</text>
+					<view :class="{isWinBidding:true,graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束',orangebg:bindingVuexCheckeddata.statusDesc==='已报价',redbg:bindingVuexCheckeddata.statusDesc==='已中标'}" v-if="bindingVuexCheckeddata.status==='quotedPrice'">{{bindingVuexCheckeddata.statusDesc}}</view>
 				</u-row>
 			</view>
 			<view class="binding-info_oneline">
@@ -222,7 +222,6 @@
 <script>
 	import fetch from '../../utils/fetch.js'
 	import '../../utils/filter.js'
-	
 	export default {
 		data() {
 			return {
@@ -278,7 +277,9 @@
 					minute: true
 				},
 				//放弃模态框是否显示
-				giveupbiddingShow: false
+				giveupbiddingShow: false,
+				//从上一个页面拿到的数据
+				bindingVuexCheckeddata:this.$store.state.checkedData
 			}
 		},
 		onReady() {
@@ -290,6 +291,7 @@
 		methods: {
 			//拿到详细的数据
 			async getBiddingData() {
+				
 				let inquiryCode = this.$store.state.checkedData.inquiryCode
 				let res = await fetch(this.api.v2.inquiryDetail, {
 					method: "get",
@@ -298,7 +300,6 @@
 						inquiryCode: inquiryCode
 					}
 				})
-				console.log(res)
 				if (res.data.code === '0') {
 					this.bindingData = res.data.data
 				}
@@ -324,7 +325,6 @@
 			
 			//点击放弃竞价出的弹框
 			giveupbidding() {
-				console.log(this.bindingData.detail)
 				this.giveupbiddingShow = true;
 			},
 			
@@ -400,8 +400,15 @@
 						position: 'top'
 					})
 				}
+			}	
+		},
+		computed: {
+			showTag() {
+				return function(item) {
+					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
+				}
+		
 			}
-				
 		}
 	}
 </script>
@@ -417,6 +424,40 @@
 
 	.colorgary {
 		color: #868686;
+	}
+	.red {
+		color: #D0021B !important
+	}
+	
+	.redbg {
+		color: #fff;
+		background-color: #D0021B !important
+	}
+	
+	.orange {
+		color: #FF9900 !important
+	}
+	
+	.orangebg {
+		color: #fff;
+		background-color: #FF9900 !important
+	}
+	.bluebg {
+		color: #fff;
+		background-color: #0099cc !important
+	}
+	.shallowgray {
+		color: #c9c9cc !important;
+	}
+	
+	.gray {
+		color: #868686 !important;
+	}
+	
+	.graybg {
+		color: #868686 !important;
+		;
+		background-color: #f2f2f2 !important
 	}
 
 	.binding {
@@ -435,12 +476,10 @@
 				left: 75%;
 				width: 120rpx;
 				height: 50rpx;
-				color: #fff;
 				text-align: center;
 				line-height: 48rpx;
 				border-bottom-left-radius: 20rpx;
 				border-bottom-right-radius: 20rpx;
-				background-color: #D0021B;
 				font-size: 24rpx;
 			}
 
@@ -453,9 +492,7 @@
 
 				.bidding_sign {
 					padding: 4rpx 14rpx;
-					background-color: #D0021B;
 					border-radius: 14rpx;
-					color: #fff;
 					font-size: 20rpx;
 				}
 			}

@@ -1273,6 +1273,7 @@
 
 			//点轮播图跳转到待报价竞价模式
 			navigateTobidding(obj) {
+				obj.status='prepareQuoted'
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
 					url: '../bidding/index'

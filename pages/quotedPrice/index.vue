@@ -19,7 +19,7 @@
 								<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
 								<text class="mg15"></text>
 								<!-- {{item.biddingMode === '是'?'竞价':item.inquiryType === "询盘询价"?"询盘":"实单"}} -->
-								<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单',graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}" @click="showInquiryModal">{{showTag(item)}}</text>
+								<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单',graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{showTag(item)}}</text>
 								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:item.statusDesc==='已报价',redbg:item.statusDesc==='已中标'}">{{item.statusDesc}}</view>
 							</view>
 
@@ -157,7 +157,7 @@
 									</view>
 									<view class="fourthtext">奥德赛</view>
 									<text class="mg15"></text>
-									<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
+									<text class="checkbox_view_tab">实单</text>
 									<view class="isWinBidding">已中标</view>
 								</view>
 
@@ -312,6 +312,7 @@
 
 			//点击详情跳转
 			toBidding(obj) {
+				obj.status='quotedPrice'
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
 					url: '../bidding/index'
@@ -326,7 +327,6 @@
 						keywords: this.keywords
 					}
 				})
-				console.log(res)
 				if (res.data.code === '0') {
 					this.list = []
 					this.biddingList = []
@@ -358,19 +358,16 @@
 			},
 			showTag() {
 				return function(item) {
-					
 					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
 				}
 
 			}
 		}
-	};
+	}
 </script>
 
 <style lang="scss" scoped>
 	//公共样式
-	
-
 	.red {
 		color: #D0021B !important
 	}
