@@ -4,7 +4,7 @@
 		<view class="quotedPrice" v-if="isRole">
 			<!-- 输入框 -->
 			<view class="inp_area">
-				<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
+				<u-field v-model="keywords" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
 				</u-field>
 				<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
 			</view>
@@ -15,24 +15,24 @@
 					<u-collapse>
 
 						<view class="checkbox_view" v-for="(item, index) in list" :key="index" :name="item.name">
-							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'}">
-								<text :class="checkbox_view_name">{{item.spuName}}</text>
+							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">
+								<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
 								<text class="mg15"></text>
 								<text class="checkbox_view_tab" @click="showInquiryModal">实单</text>
-								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃',orangebg:item.statusDesc==='已报价',redbg:item.statusDesc==='已中标'}">{{item.statusDesc}}</view>
+								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:item.statusDesc==='已报价',redbg:item.statusDesc==='已中标'}">{{item.statusDesc}}</view>
 							</view>
 
 							<view class="checkbox_view_oneline">
 								<u-row gutter="16">
 									<u-col span="7">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">规格</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">规格</text>
 										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.spuSpec}}</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuSpec}}</text>
 									</u-col>
 									<u-col span="5">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">品牌</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">品牌</text>
 										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.brand}}</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.brand}}</text>
 									</u-col>
 								</u-row>
 							</view>
@@ -40,14 +40,14 @@
 							<view class="checkbox_view_oneline">
 								<u-row gutter="16">
 									<u-col span="7">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">包装</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">包装</text>
 										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.packageInfo}}</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.packageInfo}}</text>
 									</u-col>
 									<u-col span="5">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">数量</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">数量</text>
 										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.saleQty}}{{item.unit}}</text>
+										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.saleQty}}{{item.unit}}</text>
 									</u-col>
 								</u-row>
 							</view>
@@ -55,8 +55,8 @@
 								<u-row gutter="16">
 									<u-col span="12">
 										<view>
-											<text class="red">{{item.inquiryDeadline}}</text>
-											<text class="red" v-if="item.inquiryDeadline">18：00截止报价</text>
+											<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.inquiryDeadline}}</text>
+											<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}" v-if="item.inquiryDeadline">截止报价</text>
 
 										</view>
 									</u-col>
@@ -73,12 +73,12 @@
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="7">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.shipPort}}</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.shipPort}}</text>
 											<text class="mg15">---</text>
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.destinationPort}}</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.destinationPort}}</text>
 										</u-col>
 										<u-col span="5">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.cargoWeight}}</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.cargoWeight}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -86,19 +86,19 @@
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="7">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">期望{{item.expeDeliDay}}天交货</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">期望{{item.expeDeliDay}}天交货</text>
 										</u-col>
 										<u-col span="5">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">打托</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">打托</text>
 											<text class="mg15">:</text>
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.ifPlay}}</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.ifPlay}}</text>
 										</u-col>
 									</u-row>
 								</view>
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="12">
-											<text class="gray">询价单编号：{{item.inquiryCode}}</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">询价单编号：{{item.inquiryCode}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -106,14 +106,14 @@
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="12">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">备注:</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">备注:</text>
 										</u-col>
 									</u-row>
 								</view>
 								<view class="checkbox_view_oneline">
 									<u-row gutter="16">
 										<u-col span="12">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'}">{{item.remarks}}</text>
+											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.remarks}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -276,7 +276,8 @@
 		},
 		data() {
 			return {
-				name: "",
+				//上方全局搜索
+				keywords: "",
 				//默认checkbox选中颜色
 				activeColor: "#D0021B",
 				//全选
@@ -327,6 +328,11 @@
 						})
 					}
 				}
+			},
+			
+			//点击搜索按钮
+			checkedAll(){
+				this.getInquiryList()
 			}
 		},
 
@@ -441,7 +447,7 @@
 				.isWinBidding {
 					position: absolute;
 					top: 0;
-					left: 60%;
+					left: 75%;
 					width: 120rpx;
 					height: 50rpx;
 					color: #fff;
@@ -461,6 +467,7 @@
 						font-weight: 700;
 						font-size: 32rpx;
 						color: #333;
+						margin-left: 10rpx;
 					}
 
 					.checkbox_view_tab {
