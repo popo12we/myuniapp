@@ -116,12 +116,12 @@
 		</view>
 
 		<!-- 竞价排名 -->
-		<view class="binding-ranking">
+		<view class="binding-ranking" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
 			<view class="binding-ranking-title">
 				全部供应商报价排名(价格从低到高)
 			</view>
 			<!-- 具体的报价记录 -->
-			<view class="binding-record">
+			<view class="binding-record" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
 				<view class="binding-record_item" v-for="(item,index) in bindingData.rank" :key="index">
 					<u-row gutter="16">
 						<u-col span="2">
@@ -147,7 +147,7 @@
 		</view>
 
 		<!-- 我的报价记录 -->
-		<view class="mybinding">
+		<view class="mybinding" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
 			<view class="mybinding-title">
 				我的报价记录
 			</view>

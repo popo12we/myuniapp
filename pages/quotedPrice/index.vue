@@ -18,7 +18,6 @@
 							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">
 								<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
 								<text class="mg15"></text>
-								<!-- {{item.biddingMode === '是'?'竞价':item.inquiryType === "询盘询价"?"询盘":"实单"}} -->
 								<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单',graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{showTag(item)}}</text>
 								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:item.statusDesc==='已报价',redbg:item.statusDesc==='已中标'}">{{item.statusDesc}}</view>
 							</view>
@@ -67,7 +66,7 @@
 							<view class="checkbox_view_oneline">
 								<u-row gutter="16">
 									<u-col span="12">
-										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding(item)">详情</u-button>
+										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding(item)" v-if="showTag(item)==='竞价'">详情</u-button>
 									</u-col>
 								</u-row>
 							</view>
@@ -197,7 +196,7 @@
 												<text class="red">2020-07-30</text>
 												<text class="mg15"></text>
 												<text class="red">18：00截至报价</text>
-												<u-button type="error" shape="circle" plain size="medium" class='fr' @click="toBidding">详情</u-button>
+												<u-button type="error" shape="circle" plain size="medium" class='fr' @click="toBidding" v-if="showTag(item)==='竞价'">详情</u-button>
 											</view>
 										</u-col>
 									</u-row>
