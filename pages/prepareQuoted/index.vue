@@ -287,7 +287,7 @@
 											</view>
 										</view>
 										<view class="swiper-item_right">
-											<span class="iconfont icon_close">&#xe607;</span>
+											<span class="iconfont icon_close" @click="giveupbidding(item)">&#xe607;</span>
 										</view>
 										<view class="swiper-item_center">
 											<view class="swiper_center_oneline_title clearfix">
@@ -822,7 +822,7 @@
 						{
 							// 结束时间大于开始时间
 							validator: (rule, value, callback) => {
-								return new Date(value)>new Date(this.logisticQuotationForm.startDate)
+								return new Date(value) > new Date(this.logisticQuotationForm.startDate)
 							},
 							message: '结束时间要大于开始时间',
 							trigger: ['change'],
@@ -929,7 +929,8 @@
 				dateTimeStart: false,
 				//结束时间的选择器
 				dateTimeEnd: false,
-				logisticQuotationData: ""
+				logisticQuotationData: "",
+				inaploId:"",
 			}
 		},
 		created() {
@@ -1114,11 +1115,18 @@
 
 			//点击放弃竞价出的弹框
 			giveupbidding(item) {
-				if (item.offerId) {
-					this.offerId = item.offerId.join(',')
+				if (this.isRole) {
+					if (item.offerId) {
+						this.offerId = item.offerId.join(',')
+					}
+					this.giveupModalProduct = item.spuName
+				} else {
+					this.logisticQuotationData = item
+					this.bidId = item.bidId
+					this.custId=item.custId
 				}
-				this.giveupModalProduct = item.spuName
 				this.giveupbiddingShow = true;
+
 			},
 
 			//点击取消 取消询盘弹窗显示
@@ -1315,7 +1323,32 @@
 						})
 					}
 				} else {
+					let res = await fetch(this.api.v2.giveUpLogisticsBid, {
+						method: "post",
+						data: {
+							accessToken: uni.getStorageSync('accessToken'),
+							type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData === "PC006" ?
+								"conventional" : "",
+							bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
+							inaploId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaploId : "",
+							custId: this.custId && Number(this.custId)
+						}
+					})
 
+					if (res.data.code === '0') {
+						this.$refs.toast.show({
+							title: '放弃报价成功',
+							type: 'success',
+							position: 'top'
+						})
+						this.logicInquiryList()
+					} else {
+						this.$refs.toast.show({
+							title: '放弃报价失败',
+							type: 'error',
+							position: 'top'
+						})
+					}
 				}
 			},
 
