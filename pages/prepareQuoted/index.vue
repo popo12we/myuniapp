@@ -345,7 +345,7 @@
 										<u-col span="6">
 											<text class="red">截止日期</text>
 											<text class="mg15">:</text>
-											<text class="red inquiryDeadline">{{item.inquiryDeadline}}</text>
+											<text class="red inquiryDeadline">{{item. biddeadLine}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -373,7 +373,7 @@
 											<u-col span="6">
 												<text class="gray">货盘类型</text>
 												<text class="mg15">:</text>
-												<text class="gray">{{item.pallettypestr}}</text>
+												<text class="gray">{{item.palletType}}</text>
 											</u-col>
 											<u-col span="6">
 												<text class="gray">货物总量</text>
