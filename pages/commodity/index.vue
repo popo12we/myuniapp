@@ -289,7 +289,7 @@
 
 				if (res.data.code === '0') {
 					this.list = res.data.data
-					if (this.list.length > 0) {
+					if (this.list&&this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
 							item.down = false

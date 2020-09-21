@@ -8,7 +8,7 @@
 					<text class="bidding_name">{{bindingData.detail.spuName}}</text>
 					<text class="mg15"></text>
 					<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘',orangebg:showTag(bindingVuexCheckeddata)==='实单',graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">{{showTag(bindingVuexCheckeddata)}}</text>
-					<view :class="{isWinBidding:true,graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束',orangebg:bindingVuexCheckeddata.statusDesc==='已报价',redbg:bindingVuexCheckeddata.statusDesc==='已中标'}" v-if="bindingVuexCheckeddata.status==='quotedPrice'">{{bindingVuexCheckeddata.statusDesc}}</view>
+					<view :class="{isWinBidding:true,graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束',orangebg:showTag(bindingVuexCheckeddata)==='实单',redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘'}" v-if="bindingVuexCheckeddata.status==='quotedPrice'">{{bindingVuexCheckeddata.statusDesc}}</view>
 				</u-row>
 			</view>
 			<view class="binding-info_oneline">
@@ -21,7 +21,7 @@
 					<u-col span="5">
 						<text class="colorgary">品牌</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">菊兰</text>
+						<text class="colorgary">{{bindingData.detail.brand}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -116,12 +116,12 @@
 		</view>
 
 		<!-- 竞价排名 -->
-		<view class="binding-ranking" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
+		<view class="binding-ranking">
 			<view class="binding-ranking-title">
 				全部供应商报价排名(价格从低到高)
 			</view>
 			<!-- 具体的报价记录 -->
-			<view class="binding-record" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
+			<view class="binding-record">
 				<view class="binding-record_item" v-for="(item,index) in bindingData.rank" :key="index">
 					<u-row gutter="16">
 						<u-col span="2">
@@ -147,7 +147,7 @@
 		</view>
 
 		<!-- 我的报价记录 -->
-		<view class="mybinding" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
+		<view class="mybinding">
 			<view class="mybinding-title">
 				我的报价记录
 			</view>
