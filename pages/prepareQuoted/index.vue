@@ -1277,6 +1277,7 @@
 			//点轮播图跳转到待报价竞价模式
 			navigateTobidding(obj) {
 				obj.status='prepareQuoted'
+				this.$set(obj, 'titletext', '竞价')
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
 					url: '../bidding/index'

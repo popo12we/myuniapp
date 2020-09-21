@@ -8,7 +8,8 @@ const store = new Vuex.Store({
 	},
 	mutations: {
 	    // 点击字体图标更新一整项的逻辑
-	    check (state, payload,status) {
+	    check (state, payload) {
+		  console.log(payload)
 	      state.checkedData=payload
 	    }
 	  },

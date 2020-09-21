@@ -24,7 +24,7 @@
 		{
 			"path": "pages/bidding/index",
 			"style": {
-				"navigationBarTitleText": "竞价"
+				"navigationBarTitleText": ""
 			}
 		},
 		

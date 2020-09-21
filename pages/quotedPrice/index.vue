@@ -311,10 +311,11 @@
 
 			//点击详情跳转
 			toBidding(obj) {
-				obj.status='quotedPrice'
+				obj.status = 'quotedPrice'
+				this.$set(obj, 'titletext', '报价详情')
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
-					url: '../bidding/index'
+					url: '../bidding/index',
 				})
 			},
 			//询价单列表
@@ -359,7 +360,6 @@
 				return function(item) {
 					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
 				}
-
 			}
 		}
 	}
@@ -384,18 +384,20 @@
 		color: #fff;
 		background-color: #FF9900 !important
 	}
+
 	.bluebg {
 		color: #fff;
 		background-color: #0099cc !important
 	}
+
 	.shallowgray {
 		color: #c9c9cc !important;
 	}
-	
+
 	.gray {
 		color: #868686 !important;
 	}
-	
+
 	.graybg {
 		color: #868686 !important;
 		;

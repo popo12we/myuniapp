@@ -8,7 +8,8 @@
 					<text class="bidding_name">{{bindingData.detail.spuName}}</text>
 					<text class="mg15"></text>
 					<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘',orangebg:showTag(bindingVuexCheckeddata)==='实单',graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">{{showTag(bindingVuexCheckeddata)}}</text>
-					<view :class="{isWinBidding:true,graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束',orangebg:showTag(bindingVuexCheckeddata)==='实单',redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘'}" v-if="bindingVuexCheckeddata.status==='quotedPrice'">{{bindingVuexCheckeddata.statusDesc}}</view>
+					<view :class="{isWinBidding:true,graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束',orangebg:showTag(bindingVuexCheckeddata)==='实单',redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘'}"
+					 v-if="bindingVuexCheckeddata.status==='quotedPrice'">{{bindingVuexCheckeddata.statusDesc}}</view>
 				</u-row>
 			</view>
 			<view class="binding-info_oneline">
@@ -279,7 +280,7 @@
 				//放弃模态框是否显示
 				giveupbiddingShow: false,
 				//从上一个页面拿到的数据
-				bindingVuexCheckeddata:this.$store.state.checkedData
+				bindingVuexCheckeddata: this.$store.state.checkedData
 			}
 		},
 		onReady() {
@@ -291,7 +292,7 @@
 		methods: {
 			//拿到详细的数据
 			async getBiddingData() {
-				
+
 				let inquiryCode = this.$store.state.checkedData.inquiryCode
 				let res = await fetch(this.api.v2.inquiryDetail, {
 					method: "get",
@@ -308,12 +309,12 @@
 			modalOpen() {
 				this.binddingShow = true
 			},
-			
+
 			//取消关闭竞价模态框
-			cancelBidding(){
+			cancelBidding() {
 				this.binddingShow = false
 			},
-			
+
 			// 打开选时间
 			showValidity() {
 				this.dateTime = true
@@ -322,19 +323,19 @@
 			confirmTime(e) {
 				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
 			},
-			
+
 			//点击放弃竞价出的弹框
 			giveupbidding() {
 				this.giveupbiddingShow = true;
 			},
-			
+
 			//提交报价
 			async submitBidding2() {
-				let offerId=''
-				if(this.$store.state.checkedData.offerId.length>0){
-					offerId=this.$store.state.checkedData.offerId[0]
+				let offerId = ''
+				if (this.$store.state.checkedData.offerId.length > 0) {
+					offerId = this.$store.state.checkedData.offerId[0]
 				}
-				
+
 				this.$refs.iForm2.validate(async valid => {
 					if (valid) {
 						let res = await fetch(this.api.v2.submitQuotation, {
@@ -353,7 +354,7 @@
 								}]
 							}
 						})
-			
+
 						this.inquiryShow = false
 						this.binddingShow = false
 						if (res.data.code === '0') {
@@ -372,12 +373,12 @@
 					}
 				})
 			},
-			
+
 			//确认放弃报价
 			async sureGiveupBidding() {
-				let offerId=''
-				if(this.$store.state.checkedData.offerId.length>0){
-					offerId=this.$store.state.checkedData.offerId[0]
+				let offerId = ''
+				if (this.$store.state.checkedData.offerId.length > 0) {
+					offerId = this.$store.state.checkedData.offerId[0]
 				}
 				let res = await fetch(this.api.v2.giveupOffer, {
 					method: "post",
@@ -386,7 +387,7 @@
 						offerId
 					}
 				})
-			
+
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: '放弃报价成功',
@@ -400,16 +401,37 @@
 						position: 'top'
 					})
 				}
-			}	
+			}
 		},
 		computed: {
 			showTag() {
 				return function(item) {
 					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
 				}
-		
+
+			}
+		},
+		watch: {
+			'$store.state.checkData': {
+				deep: true,
+				immediate: true,
+				handler() {
+					wx.setNavigationBarTitle({
+						title: this.bindingVuexCheckeddata.titletext
+					})
+				}
+
 			}
 		}
+		// watch: {
+		//          car: {
+		//            deep: true, 
+		//            handler(value) {
+		//              console.log('你变了', value)
+		//            },
+		//            immediate: false
+		//          }
+		//        }
 	}
 </script>
 <style lang="scss" scoped>
@@ -425,35 +447,38 @@
 	.colorgary {
 		color: #868686;
 	}
+
 	.red {
 		color: #D0021B !important
 	}
-	
+
 	.redbg {
 		color: #fff;
 		background-color: #D0021B !important
 	}
-	
+
 	.orange {
 		color: #FF9900 !important
 	}
-	
+
 	.orangebg {
 		color: #fff;
 		background-color: #FF9900 !important
 	}
+
 	.bluebg {
 		color: #fff;
 		background-color: #0099cc !important
 	}
+
 	.shallowgray {
 		color: #c9c9cc !important;
 	}
-	
+
 	.gray {
 		color: #868686 !important;
 	}
-	
+
 	.graybg {
 		color: #868686 !important;
 		;
@@ -596,7 +621,7 @@
 				overflow: hidden;
 			}
 		}
-		
+
 		//放弃报价模态框
 		.giveupbiddingModal {
 			.giveupbiddingModal_oneline {
