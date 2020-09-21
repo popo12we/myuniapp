@@ -276,7 +276,7 @@
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
 							<swiper class="swiper" :indicator-dots="indicatorDots">
-								<swiper-item v-for="item in logicSwiperList" :key="item.id">
+								<swiper-item v-for="item in logicSwiperList" :key="item.id" @click="navigateTobidding(item)">
 									<!-- 具体的轮播图页面 -->
 									<view class="swiper-item">
 										<view class="swiper-item_left">
@@ -1121,9 +1121,11 @@
 					}
 					this.giveupModalProduct = item.spuName
 				} else {
+					console.log(item)
 					this.logisticQuotationData = item
 					this.bidId = item.bidId
 					this.custId=item.custId
+					this.inaploId=item.inaplosuppId
 				}
 				this.giveupbiddingShow = true;
 
@@ -1327,7 +1329,7 @@
 						method: "post",
 						data: {
 							accessToken: uni.getStorageSync('accessToken'),
-							type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData === "PC006" ?
+							type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData.moduleCode === "PC006" ?
 								"conventional" : "",
 							bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
 							inaploId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaploId : "",
@@ -1354,12 +1356,21 @@
 
 			//点轮播图跳转到待报价竞价模式
 			navigateTobidding(obj) {
-				obj.status = 'prepareQuoted'
-				this.$set(obj, 'titletext', '竞价')
-				this.$store.dispatch('checkOne', obj)
-				uni.navigateTo({
-					url: '../bidding/index'
-				})
+				if(this.isRole){
+					obj.status = 'prepareQuoted'
+					this.$set(obj, 'titletext', '竞价')
+					this.$store.dispatch('checkOne', obj)
+					uni.navigateTo({
+						url: '../bidding/index'
+					})
+				}else{
+					obj.status = 'prepareQuoted'
+					this.$set(obj, 'titletext', '实盘询价')
+					this.$store.dispatch('checkOne', obj)
+					uni.navigateTo({
+						url: '../bidding/index'
+					})
+				}
 			},
 
 			//点击搜索
@@ -1391,6 +1402,9 @@
 
 			//重置报价模态框
 			resetLogisticQuotationForm() {
+				this.checkscheduleList.forEach(item=>{
+					item.checked=false
+				})
 				this.logisticQuotationData = ""
 				this.logisticQuotationForm = {
 					// 价格
@@ -1482,6 +1496,7 @@
 				this.resetLogisticQuotationForm()
 				this.bidId = item.bidId
 				this.custId = item.custId
+				this.inaploId=item.inaplosuppId
 				this.logisticQuotationFormShow = true
 				this.logisticQuotationData = item
 			},
@@ -1498,7 +1513,7 @@
 							method: "post",
 							data: {
 								accessToken: uni.getStorageSync('accessToken'),
-								type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData === "PC006" ?
+								type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData.moduleCode === "PC006" ?
 									"conventional" : "",
 								list: [{
 									bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
