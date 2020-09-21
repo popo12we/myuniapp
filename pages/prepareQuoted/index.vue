@@ -545,6 +545,10 @@
 		<u-select v-model="selectAppraisalCertificateShow" :list="selectAppraisalCertificateList" @confirm="confirmAppraisalCertificate"></u-select>
 		<!-- 时间选择 -->
 		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
+		<!-- 时间选择(开始) -->
+		<u-picker v-model="dateTimeStart" mode="time" :params="paramsLogistic" :defaultTime="defaultTime" @confirm="confirmTimeStart"></u-picker>
+		<!-- 时间选择(开始) -->
+		<u-picker v-model="dateTimeEnd" mode="time" :params="paramsLogistic" :defaultTime="defaultTime" @confirm="confirmTimeEnd"></u-picker>
 
 		<!-- 物流报价模态框 -->
 		<u-modal v-model="logisticQuotationFormShow" :show-title="false" :show-confirm-button="false" z-index="10000">
@@ -553,8 +557,11 @@
 					<u-form-item label="价格" prop="price">
 						<u-input v-model="logisticQuotationForm.price" placeholder="请输入价格" />
 					</u-form-item>
-					<u-form-item label="有效期" prop="expiredDate">
-						<u-input v-model="logisticQuotationForm.expiredDate" type="select" @click="showValidity" placeholder="请输入有效期" />
+					<u-form-item label="开始时间" prop="startDate">
+						<u-input v-model="logisticQuotationForm.startDate" type="select" @click="showValidityStart" placeholder="请输入开始时间" />
+					</u-form-item>
+					<u-form-item label="结束时间" prop="expiredDate">
+						<u-input v-model="logisticQuotationForm.expiredDate" type="select" @click="showValidityEnd" placeholder="请输入结束时间" />
 					</u-form-item>
 					<u-form-item label="船公司" prop="shippingName">
 						<u-input v-model="logisticQuotationForm.shippingName" placeholder="请输入船公司" />
@@ -568,7 +575,8 @@
 						</u-checkbox-group>
 					</u-form-item>
 					<u-form-item label="转运方式" prop="transferMethod">
-						<u-input v-model="logisticQuotationForm.transferMethodValue" type="select" @click="showTransferMethod" placeholder="请输入转运方式" />
+						<u-input v-model="logisticQuotationForm.transferMethodValue" type="select" @click="showTransferMethod"
+						 placeholder="请输入转运方式" />
 					</u-form-item>
 					<u-form-item label="航程" prop="voyage">
 						<u-input v-model="logisticQuotationForm.voyage" placeholder="请输入航程" />
@@ -592,7 +600,7 @@
 								<u-button type="error" plain @click="giveuptoLogisticQuotation">取消</u-button>
 							</u-col>
 							<u-col span="6">
-								<u-button type="error" @click="logisticSubmitBidding">提交报价</u-button>
+								<u-button type="error" @click="logisticSubmitBidding(item)">提交报价</u-button>
 							</u-col>
 						</u-row>
 					</view>
@@ -763,7 +771,9 @@
 				logisticQuotationForm: {
 					// 价格
 					price: "",
-					// 有效期
+					//开始时间
+					startDate: "",
+					// 有效期（结束时间）
 					expiredDate: "",
 					// 船公司
 					shippingName: "",
@@ -774,16 +784,16 @@
 					// 航程
 					voyage: "",
 					//价格趋势
-					trend:"",
+					trend: "",
 					// 鉴定书
 					appraisalCertificate: "",
 					// 趋势说明
 					explain: "",
 					// 备注
 					remark: "",
-					appraisalCertificateValue:"",
-					trendValue:"",
-					appraisalCertificateValue:""
+					appraisalCertificateValue: "",
+					trendValue: "",
+					appraisalCertificateValue: ""
 				},
 				rules3: {
 					price: [{
@@ -799,15 +809,29 @@
 							return
 						}
 					}],
-					expiredDate: [{
+					startDate: [{
 						required: true,
-						message: '请选择有效期',
+						message: '请选择开始时间',
 						trigger: ['change']
 					}],
+					expiredDate: [{
+							required: true,
+							message: '请选择结束时间',
+							trigger: ['change']
+						},
+						{
+							// 结束时间大于开始时间
+							validator: (rule, value, callback) => {
+								return new Date(value)>new Date(this.logisticQuotationForm.startDate)
+							},
+							message: '结束时间要大于开始时间',
+							trigger: ['change'],
+						}
+					],
 					shippingName: [{
 						required: true,
 						message: '请填写船公司',
-						trigger: ['change','blur'],
+						trigger: ['change', 'blur'],
 					}],
 					schedule: [{
 						required: true,
@@ -827,7 +851,7 @@
 					voyage: [{
 						required: true,
 						message: '请填写航程',
-						trigger:  ['change','blur'],
+						trigger: ['change', 'blur'],
 					}],
 					trend: [{
 						required: true,
@@ -866,37 +890,46 @@
 						label: "是",
 					},
 				],
-				checkscheduleList:[
-				{
-					name: '周一',
-					checked: false,
+				checkscheduleList: [{
+						name: '周一',
+						checked: false,
+					},
+					{
+						name: '周二',
+						checked: false,
+					},
+					{
+						name: '周三',
+						checked: false,
+					},
+					{
+						name: '周四',
+						checked: false,
+					},
+					{
+						name: '周五',
+						checked: false,
+					},
+					{
+						name: '周六',
+						checked: false,
+					},
+					{
+						name: '周日',
+						checked: false,
+					},
+				],
+				//物流时间选择器配置
+				paramsLogistic: {
+					year: true,
+					month: true,
+					day: true
 				},
-				{
-					name: '周二',
-					checked: false,
-				},
-				{
-					name: '周三',
-					checked: false,
-				},
-				{
-					name: '周四',
-					checked: false,
-				},
-				{
-					name: '周五',
-					checked: false,
-				},
-				{
-					name: '周六',
-					checked: false,
-				},
-				{
-					name: '周日',
-					checked: false,
-				},
-				
-			],
+				//开始时间的选择器
+				dateTimeStart: false,
+				//结束时间的选择器
+				dateTimeEnd: false,
+				logisticQuotationData: ""
 			}
 		},
 		created() {
@@ -924,7 +957,7 @@
 					method: "get",
 					data: {
 						accessToken: uni.getStorageSync('accessToken'),
-						status:0,
+						status: 0,
 						keywords: this.keywords
 					}
 				})
@@ -934,7 +967,7 @@
 				this.realOrderList = []
 				if (res.data.code === '0') {
 					this.inquiryList = res.data.data.list
-					if (this.inquiryList&&this.inquiryList.length > 0) {
+					if (this.inquiryList && this.inquiryList.length > 0) {
 						this.inquiryList.forEach((item, index) => {
 							item.checked = false
 							item.down = false
@@ -974,7 +1007,7 @@
 				this.logisticRealOrderList = []
 				if (res.data.code === '0') {
 					this.list = res.data.data
-					if (this.list&&this.list.length > 0) {
+					if (this.list && this.list.length > 0) {
 						this.list.forEach((item, index) => {
 							item.checked = false
 							item.down = false
@@ -1124,21 +1157,21 @@
 			},
 			//确认中转方式
 			confirmTransferMethod(e) {
-				this.logisticQuotationForm.transferMethodValue=e[0].label
+				this.logisticQuotationForm.transferMethodValue = e[0].label
 				this.logisticQuotationForm.transferMethod = e[0].value
 			},
 			//确认有无鉴定书
 			confirmAppraisalCertificate(e) {
 				this.logisticQuotationForm.appraisalCertificate = e[0].value
-				this.logisticQuotationForm.appraisalCertificateValue=e[0].label
+				this.logisticQuotationForm.appraisalCertificateValue = e[0].label
 			},
 			//确认价格趋势
 			confirmPriceTrend(e) {
-				if(this.isRole){
+				if (this.isRole) {
 					this.inquiryForm.trend = e[0].label
 					this.inquiryForm.pricetrendValue = e[0].value
-				}else{
-					this.logisticQuotationForm.trend =e[0].value 
+				} else {
+					this.logisticQuotationForm.trend = e[0].value
 					this.logisticQuotationForm.trendValue = e[0].label
 				}
 			},
@@ -1234,14 +1267,26 @@
 			showValidity() {
 				this.dateTime = true
 			},
+			showValidityStart() {
+				this.dateTimeStart = true
+			},
+			showValidityEnd() {
+				this.dateTimeEnd = true
+			},
 
 			//询盘确认时间
 			confirmTime(e) {
 				if (this.isRole) {
 					this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
-				} else {
-					this.logisticQuotationForm.expiredDate = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
 				}
+			},
+			//确认开始时间
+			confirmTimeStart(e) {
+				this.logisticQuotationForm.startDate = `${e.year}-${e.month}-${e.day}`
+			},
+			//确认结束时间
+			confirmTimeEnd(e) {
+				this.logisticQuotationForm.expiredDate = `${e.year}-${e.month}-${e.day}`
 			},
 
 			//确认放弃报价
@@ -1276,7 +1321,7 @@
 
 			//点轮播图跳转到待报价竞价模式
 			navigateTobidding(obj) {
-				obj.status='prepareQuoted'
+				obj.status = 'prepareQuoted'
 				this.$set(obj, 'titletext', '竞价')
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
@@ -1310,13 +1355,16 @@
 				}
 				this.$refs['iForm1'].resetFields();
 			},
-			
+
 			//重置报价模态框
 			resetLogisticQuotationForm() {
-				this.logisticQuotationForm={
+				this.logisticQuotationData = ""
+				this.logisticQuotationForm = {
 					// 价格
 					price: "",
-					// 有效期
+					// 开始时间
+					startDate: "",
+					// 有效期(结束时间)
 					expiredDate: "",
 					// 船公司
 					shippingName: "",
@@ -1327,16 +1375,16 @@
 					// 航程
 					voyage: "",
 					//价格趋势
-					trend:"",
+					trend: "",
 					// 鉴定书
 					appraisalCertificate: "",
 					// 趋势说明
 					explain: "",
 					// 备注
 					remark: "",
-					appraisalCertificateValue:"",
-					trendValue:"",
-					appraisalCertificateValue:""
+					appraisalCertificateValue: "",
+					trendValue: "",
+					appraisalCertificateValue: ""
 				}
 				this.$refs['iForm3'].resetFields();
 			},
@@ -1398,10 +1446,11 @@
 			//物流
 			//物流展示报价模态框
 			toLogisticQuotation(item) {
+				this.resetLogisticQuotationForm()
 				this.bidId = item.bidId
 				this.custId = item.custId
 				this.logisticQuotationFormShow = true
-				this.resetLogisticQuotationForm()
+				this.logisticQuotationData = item
 			},
 			giveuptoLogisticQuotation() {
 				this.resetLogisticQuotationForm()
@@ -1409,69 +1458,76 @@
 			},
 			//物流模态框提价报价
 			logisticSubmitBidding() {
+				console.log(this.logisticQuotationData)
 				this.$refs.iForm3.validate(async valid => {
 					if (valid) {
 						let res = await fetch(this.api.v2.logisticsBidQuotation, {
 							method: "post",
 							data: {
 								accessToken: uni.getStorageSync('accessToken'),
+								type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData === "PC006" ?
+									"conventional" : "",
 								list: [{
-									bidId: this.bidId,
-									custId: this.custId&&Number(this.custId),
+									bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
+									inaploId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaploId : "",
+									custId: this.custId && Number(this.custId),
 									//价格
-									price: this.logisticQuotationForm.price&&Number(this.logisticQuotationForm.price),
-									//有效期
-									expiredDate: this.logisticQuotationForm.expiredDate + ":00",
+									price: this.logisticQuotationForm.price && Number(this.logisticQuotationForm.price),
+									//开始时间
+									startDate: this.logisticQuotationForm.startDate + " " + "00:00:00",
+									//有效期(结束时间)
+									expiredDate: this.logisticQuotationForm.expiredDate + " " + "23:59:59",
 									//船公司
 									shippingName: this.logisticQuotationForm.shippingName,
 									//船期
 									schedule: this.logisticQuotationForm.schedule,
 									//转运方式
-									transferMethod: this.logisticQuotationForm.transferMethod&&Number(this.logisticQuotationForm.transferMethod),
+									transferMethod: this.logisticQuotationForm.transferMethod && Number(this.logisticQuotationForm.transferMethod),
 									//航程
-									voyage:this.logisticQuotationForm.voyage&&Number(this.logisticQuotationForm.voyage),
+									voyage: this.logisticQuotationForm.voyage && Number(this.logisticQuotationForm.voyage),
 									//鉴定书
-									isCertificate:this.logisticQuotationForm.appraisalCertificate&Number(this.logisticQuotationForm.appraisalCertificate),
+									isCertificate: this.logisticQuotationForm.appraisalCertificate & Number(this.logisticQuotationForm.appraisalCertificate),
 									//价格趋势
-									priceTrendType:this.logisticQuotationForm.trend&Number(this.logisticQuotationForm.trend),
+									priceTrendType: this.logisticQuotationForm.trend & Number(this.logisticQuotationForm.trend),
 									//趋势说明
-									priceTrendRemark:this.logisticQuotationForm.explain,
+									priceTrendRemark: this.logisticQuotationForm.explain,
 									// 备注
 									remark: this.logisticQuotationForm.remark,
 								}]
 							}
 						})
-                        if (res.data.code === '0') {
-                        	this.$refs.toast.show({
-                        		title: '提交报价成功',
-                        		type: 'success',
-                        		position: 'top'
-                        	})
-                        } else {
-                        	this.$refs.toast.show({
-                        		title: '提交报价失败',
-                        		type: 'error',
-                        		position: 'top'
-                        	})
-                        }
+						if (res.data.code === '0') {
+							this.$refs.toast.show({
+								title: '提交报价成功',
+								type: 'success',
+								position: 'top'
+							})
+						} else {
+							this.$refs.toast.show({
+								title: '提交报价失败',
+								type: 'error',
+								position: 'top'
+							})
+						}
 						this.resetLogisticQuotationForm()
+						this.logicInquiryList()
 						this.logisticQuotationFormShow = false
 					}
 				})
 			},
-			checkboxGroupChange(e){
-				let tempArr=[]
-				if(e.length>0){
-					if(e.includes('周一'))tempArr.push(1)
-					if(e.includes('周二'))tempArr.push(2)
-					if(e.includes('周三'))tempArr.push(3)
-					if(e.includes('周四'))tempArr.push(4)
-					if(e.includes('周五'))tempArr.push(5)
-					if(e.includes('周六'))tempArr.push(6)
-					if(e.includes('周日'))tempArr.push(7)
+			checkboxGroupChange(e) {
+				let tempArr = []
+				if (e.length > 0) {
+					if (e.includes('周一')) tempArr.push(1)
+					if (e.includes('周二')) tempArr.push(2)
+					if (e.includes('周三')) tempArr.push(3)
+					if (e.includes('周四')) tempArr.push(4)
+					if (e.includes('周五')) tempArr.push(5)
+					if (e.includes('周六')) tempArr.push(6)
+					if (e.includes('周日')) tempArr.push(7)
 				}
-				let tempStr=tempArr.join(',')
-				this.logisticQuotationForm.schedule=tempStr
+				let tempStr = tempArr.join(',')
+				this.logisticQuotationForm.schedule = tempStr
 			},
 		},
 
@@ -1482,8 +1538,8 @@
 			},
 
 			swiperList() {
-				let arr=[...this.biddingList, ...this.realOrderList]
-				arr=arr.filter(item=>{
+				let arr = [...this.biddingList, ...this.realOrderList]
+				arr = arr.filter(item => {
 					return new Date(item.inquiryDeadline).getTime() > new Date().getTime()
 				})
 				return arr
