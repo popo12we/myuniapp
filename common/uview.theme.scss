@@ -29,11 +29,52 @@ $u-border-color: #e4e7ed;
 $u-bg-color: #f3f4f6;
 $u-form-item-border-color: #dcdfe6;
 $u-form-item-height: 70rpx;
-
+//公共样式
 .fr{
 	float: right;
 }
+.red {
+	color: #D0021B !important
+}
 
-.mg15 {
-		margin: 0 15rpx;
+.redbg {
+	color: #fff;
+	background-color: #D0021B !important
+}
+
+.orange {
+	color: #FF9900 !important
+}
+
+.orangebg {
+	color: #fff;
+	background-color: #FF9900 !important
+}
+
+.bluebg {
+	color: #fff;
+	background-color: #0099cc !important
+}
+
+.shallowgray {
+	color: #c9c9cc !important;
+}
+
+.gray {
+	color: #868686 !important;
+}
+
+.graybg {
+	color: #868686 !important;
+	background-color: #f2f2f2 !important
+}
+
+.mt15 {
+	margin-top: 15rpx;
+}
+.mg-t24 {
+	margin-top: 24rpx;
+}
+.deepgray {
+	color: #868686 !important;
 }

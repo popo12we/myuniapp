@@ -271,7 +271,7 @@
 			<view class="commodity_list_tips">您现在有 {{logicSwiperList.length}} 条实盘询价</view>
 
 			<!-- 轮播图区域 -->
-			<view class="swiper_box" v-if="logisticRealOrderList.length>0">
+			<view class="swiper_box" v-if="logicSwiperList.length>0">
 				<view class="uni-padding-wrap">
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
@@ -1125,7 +1125,7 @@
 					this.logisticQuotationData = item
 					this.bidId = item.bidId
 					this.custId=item.custId
-					this.inaploId=item.inaplosuppId
+					this.inaploId=item.inaploId
 				}
 				this.giveupbiddingShow = true;
 
@@ -1368,7 +1368,7 @@
 					this.$set(obj, 'titletext', '实盘询价')
 					this.$store.dispatch('checkOne', obj)
 					uni.navigateTo({
-						url: '../bidding/index'
+						url: '../firmOfferInquiry/index'
 					})
 				}
 			},
@@ -1496,7 +1496,7 @@
 				this.resetLogisticQuotationForm()
 				this.bidId = item.bidId
 				this.custId = item.custId
-				this.inaploId=item.inaplosuppId
+				this.inaploId=item.inaploId
 				this.logisticQuotationFormShow = true
 				this.logisticQuotationData = item
 			},
@@ -1609,20 +1609,6 @@
 </script>
 
 <style lang="scss" scoped>
-	//公共样式
-
-	.gray {
-		color: #868686 !important;
-	}
-
-	.red {
-		color: #d0021b !important;
-	}
-
-	.mt15 {
-		margin-top: 15rpx;
-	}
-
 	.prepareQuoted {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;

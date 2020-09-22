@@ -4,18 +4,15 @@
 		<!-- 竞价信息 -->
 		<view class="binding-info">
 			<view class="binding-info_oneline  binding-info_oneline_title">
-				<view class="firsttext colorgary">
-					黑海
-				</view>
 				<view class="secondtext">
-					上海
+					{{bindingVuexCheckeddata.startPort}}
 				</view>
 				<view class="thirdtext">
 					<view>直达</view>
 					<view>——</view>
 				</view>
 				<view class="fourthtext">
-					奥德赛
+					{{bindingVuexCheckeddata.arrivePort}}
 				</view>
 				<view class="fifthtext colorgary">
 					1*20'GP
@@ -89,8 +86,8 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">上海---</text>
-						<text class="colorgary">拉各斯</text>
+						<text class="colorgary">{{bindingVuexCheckeddata.startPort}}---</text>
+						<text class="colorgary">{{bindingVuexCheckeddata.arrivePort}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -334,6 +331,7 @@
 </template>
 
 <script>
+	import fetch from '../../utils/fetch.js'
 	export default {
 		data() {
 			return {
@@ -341,10 +339,29 @@
 				modalShow: false,
 				remark: "",
 				//是已报价还是未报价 已报价true 未报价false
-				quotedPrice: true
+				quotedPrice: true,
+				//从上一个页面拿到的数据
+				bindingVuexCheckeddata: this.$store.state.checkedData
 			}
 		},
+			
+		created(){
+			this.getDetails()
+		},
+		
 		methods: {
+			//拿到详细信息
+			async getDetails() {
+				let res = await fetch(this.api.v2.logisticssupplier, {
+					method: "get",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						actionType: "details",
+						bidId:this.bindingVuexCheckeddata.bidId
+					}
+				})
+				console.log(res)
+			},
 			//点击打开竞价模态框
 			modalOpen() {
 				this.modalShow = true

@@ -1,5 +1,5 @@
 <template>
-	<!-- 商品（没有点批量报价的商品） -->
+	<!-- 商品 -->
 	<view class="commodity">
 		<!-- 输入框 -->
 		<view class="inp_area">
@@ -534,19 +534,6 @@
 </script>
 
 <style lang="scss" scoped>
-	//公共样式
-	.gray {
-		color: #c9c9c9 !important;
-	}
-
-	.deepgray {
-		color: #868686 !important;
-	}
-
-	.red {
-		color: #d0021b !important;
-	}
-
 	.commodity {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;

@@ -126,136 +126,28 @@
 			</view>
 		</view>
 
-		<!-- 物流供应商已报价（物流） -->
 		<view class="logisticsQuotedPrice" v-if="!isRole">
-			<!-- 输入框 -->
-			<view class="inp_area">
-				<!-- 全选 -->
-				<view class="allChoose">
-					<u-checkbox v-model="allChecked" :active-color='activeColor' @change="checkboxAllChange">
-						<text class="allChoose_text">全选</text>
-					</u-checkbox>
-				</view>
-				<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
-				</u-field>
-				<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
+			<view class="u-tabs-box">
+				<u-tabs-swiper activeColor="#D0021B" ref="tabs" :list="tabTitlelist" :current="current" @change="change" :is-scroll="false"
+				 swiperWidth="750"></u-tabs-swiper>
 			</view>
-
-			<!-- 商品列表 -->
-			<view class="commodity_list">
-				<u-checkbox-group :wrap="true" :active-color='activeColor'>
-					<u-collapse>
-						<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="index" :name="item.name">
-							<view class="checkbox_view">
-								<view class="checkbox_view_oneline  checkbox_view_oneline_title">
-									<!-- <text class="checkbox_view_name gray">大豆分离蛋白</text> -->
-									<view class="secondtext">上海</view>
-									<view class="thirdtext">
-										<view>直达</view>
-										<view>——</view>
-									</view>
-									<view class="fourthtext">奥德赛</view>
-									<text class="mg15"></text>
-									<text class="checkbox_view_tab">实单</text>
-									<view class="isWinBidding">已中标</view>
-								</view>
-
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="7">
-											<text class="gray">规格</text>
-											<text class="mg15">:</text>
-											<text class="gray">Emulsion</text>
-										</u-col>
-										<u-col span="5">
-											<text class="gray">品牌</text>
-											<text class="mg15">:</text>
-											<text class="gray">菊兰</text>
-										</u-col>
-									</u-row>
-								</view>
-
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="7">
-											<text class="gray">包装</text>
-											<text class="mg15">:</text>
-											<text class="gray">20 KG STEEL DRUM</text>
-										</u-col>
-										<u-col span="5">
-											<text class="gray">数量</text>
-											<text class="mg15">:</text>
-											<text class="gray">100KG</text>
-										</u-col>
-									</u-row>
-								</view>
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="12">
-											<view>
-												<text class="red">2020-07-30</text>
-												<text class="mg15"></text>
-												<text class="red">18：00截至报价</text>
-												<u-button type="error" shape="circle" plain size="medium" class='fr' @click="toBidding" v-if="showTag(item)==='竞价'">详情</u-button>
-											</view>
-										</u-col>
-									</u-row>
-								</view>
-
-								<u-collapse-item>
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="7">
-												<text class="gray">上海</text>
-												<text class="mg15">---</text>
-												<text class="gray">拉各斯</text>
-											</u-col>
-											<u-col span="5">
-												<text class="gray">20GP</text>
-											</u-col>
-										</u-row>
-									</view>
-
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="7">
-												<text class="gray">期望五天交货</text>
-											</u-col>
-											<u-col span="5">
-												<text class="gray">打托</text>
-												<text class="mg15">:</text>
-												<text class="gray">是</text>
-											</u-col>
-										</u-row>
-									</view>
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="12">
-												<text class="gray">询价单编号：IN2087973</text>
-											</u-col>
-										</u-row>
-									</view>
-
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="12">
-												<text class="gray">备注:</text>
-											</u-col>
-										</u-row>
-									</view>
-									<view class="checkbox_view_oneline">
-										<u-row gutter="16">
-											<u-col span="12">
-												<text class="gray">一种食品添加剂</text>
-											</u-col>
-										</u-row>
-									</view>
-								</u-collapse-item>
-							</view>
-						</u-checkbox>
-					</u-collapse>
-				</u-checkbox-group>
-			</view>
+			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
+						<view class="page-box">
+							111
+						</view>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
+						<view class="page-box">
+							
+							222
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
 		</view>
 		<!-- 底部导航 -->
 		<Tabbar></Tabbar>
@@ -290,8 +182,18 @@
 				//询盘数组
 				Inquiry: [],
 				//实单数组
-				realOrderList: []
-
+				realOrderList: [],
+				//物流已报价tab栏标题
+				tabTitlelist: [{
+						name: '待付款'
+					},
+					{
+						name: '待发货'
+					}
+				],
+				current: 0,
+				swiperCurrent: 0,
+				dx: 0
 			}
 		},
 		methods: {
@@ -348,9 +250,28 @@
 			//点击搜索按钮
 			checkedAll() {
 				this.getInquiryList()
+			},
+			// tab栏切换
+			change(index) {
+				this.swiperCurrent = index
+			},
+			transition({
+				detail: {
+					dx
+				}
+			}) {
+				this.$refs.tabs.setDx(dx);
+			},
+			animationfinish({
+				detail: {
+					current
+				}
+			}) {
+				this.$refs.tabs.setFinishCurrent(current);
+				this.swiperCurrent = current;
+				this.current = current;
 			}
 		},
-
 		computed: {
 			//判断哪个角色权限
 			isRole() {
@@ -366,48 +287,6 @@
 </script>
 
 <style lang="scss" scoped>
-	//公共样式
-	.red {
-		color: #D0021B !important
-	}
-
-	.redbg {
-		color: #fff;
-		background-color: #D0021B !important
-	}
-
-	.orange {
-		color: #FF9900 !important
-	}
-
-	.orangebg {
-		color: #fff;
-		background-color: #FF9900 !important
-	}
-
-	.bluebg {
-		color: #fff;
-		background-color: #0099cc !important
-	}
-
-	.shallowgray {
-		color: #c9c9cc !important;
-	}
-
-	.gray {
-		color: #868686 !important;
-	}
-
-	.graybg {
-		color: #868686 !important;
-		;
-		background-color: #f2f2f2 !important
-	}
-
-	.mt15 {
-		margin-top: 15rpx;
-	}
-
 	// 产品供应商已报价（非竞价模式）
 	.quotedPrice {
 		/deep/ .u-field {

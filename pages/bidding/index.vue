@@ -15,14 +15,14 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">规格</text>
+						<text class="gray">规格</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">{{bindingData.detail.spuSpec}}</text>
+						<text class="gray">{{bindingData.detail.spuSpec}}</text>
 					</u-col>
 					<u-col span="5">
-						<text class="colorgary">品牌</text>
+						<text class="gray">品牌</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">{{bindingData.detail.brand}}</text>
+						<text class="gray">{{bindingData.detail.brand}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -30,14 +30,14 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">包装</text>
+						<text class="gray">包装</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">{{bindingData.detail.packageInfo}}</text>
+						<text class="gray">{{bindingData.detail.packageInfo}}</text>
 					</u-col>
 					<u-col span="5">
-						<text class="colorgary">数量</text>
+						<text class="gray">数量</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">{{bindingData.detail.saleQty}}{{bindingData.detail.unit}}</text>
+						<text class="gray">{{bindingData.detail.saleQty}}{{bindingData.detail.unit}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -45,9 +45,9 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">标的价格(USD)</text>
+						<text class="gray">标的价格(USD)</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">1.5</text>
+						<text class="gray">1.5</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -55,9 +55,9 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">当前出价(USD)</text>
+						<text class="gray">当前出价(USD)</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">1.63</text>
+						<text class="gray">1.63</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -65,8 +65,8 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">{{bindingData.detail.shipPort}}---</text>
-						<text class="colorgary">{{bindingData.detail.destinationPort}}</text>
+						<text class="gray">{{bindingData.detail.shipPort}}---</text>
+						<text class="gray">{{bindingData.detail.destinationPort}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -74,7 +74,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text class="colorgary">期望5天交货</text>
+						<text class="gray">期望5天交货</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -82,9 +82,9 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">询价单编号</text>
+						<text class="gray">询价单编号</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">{{bindingData.detail.inquiryCode}}</text>
+						<text class="gray">{{bindingData.detail.inquiryCode}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -92,7 +92,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text class="colorgary">备注</text>
+						<text class="gray">备注</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -100,7 +100,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text class="colorgary">一种食品添加剂</text>
+						<text class="gray">一种食品添加剂</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -108,9 +108,9 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text class="colorred">{{bindingData.detail.inquiryDeadline}}</text>
+						<text class="red">{{bindingData.detail.inquiryDeadline}}</text>
 						<text class="mg15"></text>
-						<text class="colorred">12:00截止报价</text>
+						<text class="red">12:00截止报价</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -157,7 +157,7 @@
 				<view class="mybinding-recode_item" v-for="(item,index) in bindingData.history" :key="index">
 					<view class="mybinding-recode_item_count">
 						<text>第{{index+1}}次报价</text>
-						<text class="colorred" v-if="item.sortNumber">(剩余报价次数{{item.sortNumber}}次)</text>
+						<text class="red" v-if="item.sortNumber">(剩余报价次数{{item.sortNumber}}次)</text>
 					</view>
 					<view class="mybinding-recode_item_price">
 						<text>价格{{item.cur}}:{{item.price}}</text>
@@ -211,7 +211,7 @@
 		<u-modal v-model="giveupbiddingShow" :show-title="false" :show-cancel-button="true" @confirm="sureGiveupBidding"
 		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
 			<view class="giveupbiddingModal_oneline">确定放弃报价？</view>
-			<view class="red giveupbiddingModal_oneline colorred">{{bindingData.detail.spuName}}</view>
+			<view class="red giveupbiddingModal_oneline red">{{bindingData.detail.spuName}}</view>
 		</u-modal>
 		<!-- 时间选择 -->
 		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
@@ -423,68 +423,9 @@
 
 			}
 		}
-		// watch: {
-		//          car: {
-		//            deep: true, 
-		//            handler(value) {
-		//              console.log('你变了', value)
-		//            },
-		//            immediate: false
-		//          }
-		//        }
 	}
 </script>
 <style lang="scss" scoped>
-	// 公共
-	.mg-t24 {
-		margin-top: 24rpx;
-	}
-
-	.colorred {
-		color: #d0021b;
-	}
-
-	.colorgary {
-		color: #868686;
-	}
-
-	.red {
-		color: #D0021B !important
-	}
-
-	.redbg {
-		color: #fff;
-		background-color: #D0021B !important
-	}
-
-	.orange {
-		color: #FF9900 !important
-	}
-
-	.orangebg {
-		color: #fff;
-		background-color: #FF9900 !important
-	}
-
-	.bluebg {
-		color: #fff;
-		background-color: #0099cc !important
-	}
-
-	.shallowgray {
-		color: #c9c9cc !important;
-	}
-
-	.gray {
-		color: #868686 !important;
-	}
-
-	.graybg {
-		color: #868686 !important;
-		;
-		background-color: #f2f2f2 !important
-	}
-
 	.binding {
 		background-color: #f9f9f9;
 		margin-bottom: 30rpx;

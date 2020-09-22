@@ -85,15 +85,6 @@
 </script>
 
 <style lang="scss" scoped>
-	//公共样式
-	.gray {
-		color: #c9c9c9 !important;
-	}
-
-	.deepgray {
-		color: #868686 !important;
-	}
-
 	.soonExpire {
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
