@@ -114,17 +114,17 @@
 		</view>
 
 		<!-- 竞价排名 -->
-		<view class="binding-ranking">
+		<view class="binding-ranking" v-if="bindingData.logisticsbidsupplierVos">
 			<view class="binding-ranking-title">
 				全部供应商报价排名(价格从低到高)
 			</view>
 			<!-- 具体的报价记录 -->
-			<view class="binding-record">
-				<view class="binding-record_item">
+			<view class="binding-record" v-if="bindingData.logisticsbidsupplierVos">
+				<view class="binding-record_item" v-for="(item,index) in bindingData.logisticsbidsupplierVos" :key="index">
 					<u-row gutter="16">
 						<u-col span="2">
 							<view class="binding-record_item_sort">
-								1
+								{{item.isMy=='1'?"我":index+1}}
 							</view>
 						</u-col>
 						<u-col span="3">
@@ -135,118 +135,12 @@
 						</u-col>
 						<u-col span="6">
 							<view class="binding-record_item_info">
-								<view>1.63</view>
-								<view class="mg-t24">2020-08-16 12:00:00</view>
+								<view>*******</view>
+								<view class="mg-t24">{{item.offerTime}}</view>
 							</view>
 						</u-col>
 					</u-row>
 				</view>
-
-				<view class="binding-record_item">
-					<u-row gutter="16">
-						<u-col span="2">
-							<view class="binding-record_item_sort">
-								2
-							</view>
-						</u-col>
-						<u-col span="3">
-							<view class="binding-record_item_content">
-								<view>价格USD</view>
-								<view class="mg-t24">日期</view>
-							</view>
-						</u-col>
-						<u-col span="6">
-							<view class="binding-record_item_info">
-								<view>1.63</view>
-								<view class="mg-t24">2020-08-16 12:00:00</view>
-							</view>
-						</u-col>
-					</u-row>
-				</view>
-
-				<view class="binding-record_item">
-					<u-row gutter="16">
-						<u-col span="2">
-							<view class="binding-record_item_sort">
-								3
-							</view>
-						</u-col>
-						<u-col span="3">
-							<view class="binding-record_item_content">
-								<view>价格USD</view>
-								<view class="mg-t24">日期</view>
-							</view>
-						</u-col>
-						<u-col span="6">
-							<view class="binding-record_item_info">
-								<view>1.63</view>
-								<view class="mg-t24">2020-08-16 12:00:00</view>
-							</view>
-						</u-col>
-					</u-row>
-				</view>
-			</view>
-		</view>
-
-		<!-- 我的报价记录 -->
-		<view class="mybinding">
-			<view class="mybinding-title">
-				我的报价记录
-			</view>
-			<!-- 我的具体报价记录 -->
-			<view class="mybinding-recode">
-				<view class="mybinding-recode_item">
-					<view class="mybinding-recode_item_count">
-						<text>第二次报价</text>
-						<text>(剩余报价次数1次)</text>
-					</view>
-					<view class="mybinding-recode_item_price">
-						<text>价格(USD):1.71/KG</text>
-					</view>
-					<view class="mybinding-recode_item_remark">
-						<text>最近工厂进度趋于稳定,价格稳定</text>
-					</view>
-					<view class="mybinding-recode_item_ball"></view>
-				</view>
-
-				<view class="mybinding-recode_item">
-					<view class="mybinding-recode_item_count">
-						<text>第二次报价</text>
-						<text>(剩余报价次数1次)</text>
-					</view>
-					<view class="mybinding-recode_item_price">
-						<text>价格(USD):1.71/KG</text>
-					</view>
-					<view class="mybinding-recode_item_remark">
-						<text>最近工厂进度趋于稳定,价格稳定</text>
-					</view>
-					<view class="mybinding-recode_item_ball"></view>
-				</view>
-
-				<view class="mybinding-recode_item">
-					<view class="mybinding-recode_item_count">
-						<text>第二次报价</text>
-						<text>(剩余报价次数1次)</text>
-					</view>
-					<view class="mybinding-recode_item_price">
-						<text>价格(USD):1.71/KG</text>
-					</view>
-					<view class="mybinding-recode_item_remark">
-						<text>最近工厂进度趋于稳定,价格稳定</text>
-					</view>
-					<view class="mybinding-recode_item_ball"></view>
-				</view>
-			</view>
-
-			<view class="binding-info_oneline">
-				<u-row gutter="16">
-					<u-col span="6">
-						<u-button type="error" plain>放弃报价</u-button>
-					</u-col>
-					<u-col span="6">
-						<u-button type="error" @click="modalOpen">我要报价</u-button>
-					</u-col>
-				</u-row>
 			</view>
 		</view>
 
@@ -459,53 +353,6 @@
 						font-size: 32rpx;
 					}
 				}
-			}
-		}
-
-		//我的报价记录
-		.mybinding {
-			margin-top: 20rpx;
-			background-color: #fff;
-			padding: 0 30rpx;
-
-			.mybinding-title {
-				height: 66rpx;
-				line-height: 66rpx;
-			}
-
-			//我的报价记录具体内容
-			.mybinding-recode {
-				.mybinding-recode_item {
-					padding-left: 50rpx;
-					border-left: 8rpx solid #c9c9c9;
-					position: relative;
-
-					>view {
-						margin-bottom: 20rpx;
-					}
-
-					.mybinding-recode_item_price,
-					.mybinding-recode_item_remark {
-						color: #868686;
-					}
-
-					.mybinding-recode_item_remark {
-						border-bottom: 2rpx solid #f8f8f8;
-						padding-bottom: 25rpx;
-					}
-
-					.mybinding-recode_item_ball {
-						width: 28rpx;
-						height: 28rpx;
-						background-color: #D0021B;
-						border-radius: 50%;
-						position: absolute;
-						top: 50%;
-						left: 0;
-						transform: translate(-60%, -50%);
-					}
-				}
-
 			}
 		}
 
