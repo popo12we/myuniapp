@@ -378,7 +378,7 @@
 											<u-col span="6">
 												<text class="gray">货物总量</text>
 												<text class="mg15">:</text>
-												<text class="gray">{{item.cargoWeight}}</text>
+												<text class="gray" v-if="item.footNumber&&item.cabinetType">{{item.footNumber}}*{{item.cabinetType}}</text>
 											</u-col>
 										</u-row>
 									</view>

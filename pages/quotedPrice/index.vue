@@ -185,10 +185,10 @@
 				realOrderList: [],
 				//物流已报价tab栏标题
 				tabTitlelist: [{
-						name: '待付款'
+						name: '实盘询价'
 					},
 					{
-						name: '待发货'
+						name: '常规询价'
 					}
 				],
 				current: 0,

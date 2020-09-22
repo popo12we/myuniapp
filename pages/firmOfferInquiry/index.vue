@@ -8,130 +8,106 @@
 					{{bindingVuexCheckeddata.startPort}}
 				</view>
 				<view class="thirdtext">
-					<view>直达</view>
+					<view>{{bindingData.transferMethod}}</view>
 					<view>——</view>
 				</view>
 				<view class="fourthtext">
 					{{bindingVuexCheckeddata.arrivePort}}
 				</view>
-				<view class="fifthtext colorgary">
+				<view class="fifthtext gray">
 					1*20'GP
 				</view>
 			</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<view class="colorgary">周一，周三，周五</view>
+						<view class="gray">{{"周"+bindingData.schedule}}</view>
 					</u-col>
 				</u-row>
 			</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<view class="colorgary">2020-08-05 至 2020-08-15</view>
+						<text class="gray">预计出运</text>
+						<text class="mg15">:</text>
+						<text class="gray">{{bindingData.planshipDate}}</text>
 					</u-col>
 				</u-row>
 			</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">规格</text>
+						<text class="gray">货盘类型</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">Emulsion</text>
+						<text class="gray">{{bindingData.palletType}}</text>
 					</u-col>
 					<u-col span="5">
-						<text class="colorgary">品牌</text>
+						<text class="gray">货物总量</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">菊兰</text>
+						<text class="gray">{{bindingData.footNumber}}*{{bindingData.cabinetType}}</text>
 					</u-col>
 				</u-row>
 			</view>
-
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">包装</text>
+						<text class="gray">货物毛重</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">20 KG STEEL DRUM</text>
+						<text class="gray">{{bindingData.gw}}</text>
 					</u-col>
 					<u-col span="5">
-						<text class="colorgary">数量</text>
+						<text class="gray">指定承运人</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">25KG</text>
-
+						<text class="gray">{{bindingData.carrier}}</text>
 					</u-col>
 				</u-row>
 			</view>
-
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">标的价格(USD)</text>
+						<text class="gray">{{bindingData.loadDock}}</text>
+						<text class="mg15">--</text>
+						<text class="gray">{{bindingData.unLoadDock}}</text>
+					</u-col>
+					<u-col span="5">
+						<text class="gray">鉴定书</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">1.5</text>
+						<text class="gray">{{bindingData.isCertificate===1?"是":"否"}}</text>
 					</u-col>
 				</u-row>
 			</view>
-
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">当前出价(USD)</text>
+						<text class="gray">危险品</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">1.63</text>
+						<text class="gray">{{bindingData.danger===1?"是":"否"}}</text>
 					</u-col>
 				</u-row>
 			</view>
-
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">{{bindingVuexCheckeddata.startPort}}---</text>
-						<text class="colorgary">{{bindingVuexCheckeddata.arrivePort}}</text>
+						<text class="gray">贸易订单号</text>
+						<text class="mg15">:</text>
+						<text class="gray"></text>
 					</u-col>
 				</u-row>
 			</view>
-
-			<view class="binding-info_oneline">
-				<u-row gutter="16">
-					<u-col span="12">
-						<text class="colorgary">期望5天交货</text>
-					</u-col>
-				</u-row>
-			</view>
-
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="colorgary">询价单编号</text>
+						<text class="gray">订舱要求</text>
 						<text class="mg15">:</text>
-						<text class="colorgary">IN2087973</text>
+						<text class="gray">{{bindingData.booking}}</text>
 					</u-col>
 				</u-row>
 			</view>
-
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text class="colorgary">备注</text>
-					</u-col>
-				</u-row>
-			</view>
-
-			<view class="binding-info_oneline">
-				<u-row gutter="16">
-					<u-col span="12">
-						<text class="colorgary">一种食品添加剂</text>
-					</u-col>
-				</u-row>
-			</view>
-
-			<view class="binding-info_oneline">
-				<u-row gutter="16">
-					<u-col span="12">
-						<text class="colorred">2020-08-07</text>
-						<text class="mg15">:</text>
-						<text class="colorred">12:00截止报价</text>
+						<text class="red">{{bindingData.biddeadLine}}</text>
+						<text class="red">截止报价</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -341,7 +317,8 @@
 				//是已报价还是未报价 已报价true 未报价false
 				quotedPrice: true,
 				//从上一个页面拿到的数据
-				bindingVuexCheckeddata: this.$store.state.checkedData
+				bindingVuexCheckeddata: this.$store.state.checkedData,
+				bindingData:{}
 			}
 		},
 			
@@ -361,6 +338,9 @@
 					}
 				})
 				console.log(res)
+				if (res.data.code === '0') {
+					this.bindingData=res.data.data
+				}
 			},
 			//点击打开竞价模态框
 			modalOpen() {
@@ -370,19 +350,6 @@
 	}
 </script>
 <style lang="scss" scoped>
-	// 公共
-	.mg-t24 {
-		margin-top: 24rpx;
-	}
-
-	.colorred {
-		color: #d0021b;
-	}
-
-	.colorgary {
-		color: #868686;
-	}
-
 	.firmOfferInquiry {
 		background-color: #f9f9f9;
 		margin-bottom: 30rpx;
