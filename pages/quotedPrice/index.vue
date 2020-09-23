@@ -143,113 +143,83 @@
 
 							<!-- 商品列表 -->
 							<view class="commodity_list">
-								<u-collapse :accordion="false">
-									<view class="checkbox_view" v-for="(item, index) in logisticsGeneralList" :key="index">
-										<view class="checkbox_view_oneline  checkbox_view_oneline_title">
-											<!-- <text class="checkbox_view_name gray">大豆分离蛋白</text> -->
-											<view class="secondtext">上海</view>
-											<view class="thirdtext">
-												<view>直达</view>
-												<view>——</view>
-											</view>
-											<view class="fourthtext">奥德赛</view>
-											<text class="mg15"></text>
-											<text class="checkbox_view_tab">实单</text>
-											<view class="isWinBidding">已中标</view>
+								<view class="checkbox_view" v-for="(item, index) in logisticsGeneralList" :key="index">
+									<view class="checkbox_view_oneline  checkbox_view_oneline_title">
+										<!-- <text class="checkbox_view_name gray">大豆分离蛋白</text> -->
+										<view class="secondtext">{{item.startPort}}</view>
+										<view class="thirdtext">
+											<view>直达</view>
+											<view>——</view>
 										</view>
-
-										<view class="checkbox_view_oneline">
-											<u-row gutter="16">
-												<u-col span="7">
-													<text class="gray">规格</text>
-													<text class="mg15">:</text>
-													<text class="gray">Emulsion</text>
-												</u-col>
-												<u-col span="5">
-													<text class="gray">品牌</text>
-													<text class="mg15">:</text>
-													<text class="gray">菊兰</text>
-												</u-col>
-											</u-row>
-										</view>
-
-										<view class="checkbox_view_oneline">
-											<u-row gutter="16">
-												<u-col span="7">
-													<text class="gray">包装</text>
-													<text class="mg15">:</text>
-													<text class="gray">20 KG STEEL DRUM</text>
-												</u-col>
-												<u-col span="5">
-													<text class="gray">数量</text>
-													<text class="mg15">:</text>
-													<text class="gray">100KG</text>
-												</u-col>
-											</u-row>
-										</view>
-										<view class="checkbox_view_oneline">
-											<u-row gutter="16">
-												<u-col span="12">
-													<view>
-														<text class="red">2020-07-30</text>
-														<text class="mg15"></text>
-														<text class="red">18：00截至报价</text>
-														<u-button type="error" shape="circle" plain size="medium" class='fr' @click="toBidding" v-if="showTag(item)==='竞价'">详情</u-button>
-													</view>
-												</u-col>
-											</u-row>
-										</view>
-										<u-collapse-item>
-											<view class="checkbox_view_oneline">
-												<u-row gutter="16">
-													<u-col span="7">
-														<text class="gray">上海</text>
-														<text class="mg15">---</text>
-														<text class="gray">拉各斯</text>
-													</u-col>
-													<u-col span="5">
-														<text class="gray">20GP</text>
-													</u-col>
-												</u-row>
-											</view>
-
-											<view class="checkbox_view_oneline">
-												<u-row gutter="16">
-													<u-col span="7">
-														<text class="gray">期望五天交货</text>
-													</u-col>
-													<u-col span="5">
-														<text class="gray">打托</text>
-														<text class="mg15">:</text>
-														<text class="gray">是</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="checkbox_view_oneline">
-												<u-row gutter="16">
-													<u-col span="12">
-														<text class="gray">询价单编号：IN2087973</text>
-													</u-col>
-												</u-row>
-											</view>
-
-											<view class="checkbox_view_oneline">
-												<u-row gutter="16">
-													<u-col span="12">
-														<text class="gray">备注:</text>
-													</u-col>
-												</u-row>
-											</view>
-											<view class="checkbox_view_oneline">
-												<u-row gutter="16">
-													<u-col span="12">
-														<text class="gray">一种食品添加剂</text>
-													</u-col>
-												</u-row>
-											</view>
-										</u-collapse-item>
+										<view class="fourthtext">{{item.arrivePort}}</view>
+										<text class="mg15"></text>
+										<text :class="{checkbox_view_tab:true,redbg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">实盘</text>
+										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagState(item)}}</view>
 									</view>
-								</u-collapse>
+									<view class="checkbox_view_oneline">
+										<u-row gutter="16">
+											<u-col span="7">
+												<text class="gray">箱型</text>
+												<text class="mg15">:</text>
+												<text class="gray">20GP</text>
+											</u-col>
+											<u-col span="5">
+												<text class="gray">截止日期</text>
+												<text class="mg15">:</text>
+												<text class="gray">2020-08-05</text>
+											</u-col>
+										</u-row>
+									</view>
+									<view class="checkbox_view_oneline">
+										<u-row gutter="16">
+											<u-col span="7">
+												<text class="gray">货盘类型</text>
+												<text class="mg15">:</text>
+												<text class="gray">海运整箱</text>
+											</u-col>
+											<u-col span="5">
+												<text class="gray">货物总量</text>
+												<text class="mg15">:</text>
+												<text class="gray">1*20‘GP</text>
+											</u-col>
+										</u-row>
+									</view>
+									<view class="checkbox_view_oneline">
+										<u-row gutter="16">
+											<u-col span="7">
+												<view>
+													<text class="gray">货物毛重</text>
+													<text class="mg15"></text>
+													<text class="gray">200KG</text>
+												</view>
+											</u-col>
+											<u-col span="5">
+												<text class="gray">预计出运</text>
+												<text class="mg15">:</text>
+												<text class="gray">2020-08-05</text>
+											</u-col>
+										</u-row>
+									</view>
+									<view class="checkbox_view_oneline">
+										<u-row gutter="16">
+											<u-col span="7">
+												<text class="gray">装货码头</text>
+												<text class="mg15">--</text>
+												<text class="gray">卸货码头</text>
+											</u-col>
+											<u-col span="5">
+												<text class="gray">货物类型</text>
+												<text class="mg15">--</text>
+												<text class="gray">一般化工品</text>
+											</u-col>
+										</u-row>
+									</view>
+									<view class="checkbox_view_oneline">
+										<u-row gutter="16">
+											<u-button type="error" shape="circle" plain size="medium" class='fr'>详情</u-button>
+										</u-row>
+									</view>
+								</view>
 							</view>
 						</view>
 					</scroll-view>
@@ -548,6 +518,17 @@
 				return function(item) {
 					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
 				}
+			},
+			//报价状态
+			showTagState(){
+				return function(item) {
+					return item.state === 1 ? '已报价' : item.state === 3 ? "已放弃" : item.state === 4?'已结束':'未报价'
+				}
+			},
+			showTagIsoutbid(){
+				return function(item) {
+					return item.state === 1 ? '已中标' : '未中标'
+				}
 			}
 		}
 	}
@@ -624,12 +605,10 @@
 					left: 75%;
 					width: 120rpx;
 					height: 50rpx;
-					color: #fff;
 					text-align: center;
 					line-height: 48rpx;
 					border-bottom-left-radius: 20rpx;
 					border-bottom-right-radius: 20rpx;
-					background-color: #D0021B;
 					font-size: 24rpx;
 				}
 
@@ -762,12 +741,10 @@
 					left: 75%;
 					width: 120rpx;
 					height: 50rpx;
-					color: #fff;
 					text-align: center;
 					line-height: 48rpx;
 					border-bottom-left-radius: 20rpx;
 					border-bottom-right-radius: 20rpx;
-					background-color: #D0021B;
 					font-size: 24rpx;
 				}
 
@@ -779,6 +756,8 @@
 				}
 
 				.checkbox_view_oneline {
+					margin: 10rpx 0;
+					font-size: 24rpx;
 					.firsttext {
 						font-size: 24rpx;
 						line-height: 50rpx;
