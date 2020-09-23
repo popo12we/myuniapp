@@ -12,8 +12,7 @@
 			<!-- 商品列表 -->
 			<view class="commodity_list">
 				<u-checkbox-group :wrap="true" :active-color='activeColor'>
-					<u-collapse>
-
+					<u-collapse :accordion="false">
 						<view class="checkbox_view" v-for="(item, index) in list" :key="index" :name="item.name">
 							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">
 								<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
@@ -120,7 +119,6 @@
 								</view>
 							</u-collapse-item>
 						</view>
-
 					</u-collapse>
 				</u-checkbox-group>
 			</view>
@@ -135,15 +133,250 @@
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
 						<view class="page-box">
-							111
+							<!-- 输入框 -->
+							<view class="inp_area">
+								<!-- 全选 -->
+								<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
+								</u-field>
+								<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
+							</view>
+
+							<!-- 商品列表 -->
+							<view class="commodity_list">
+								<u-collapse :accordion="false">
+									<view class="checkbox_view" v-for="(item, index) in logisticsGeneralList" :key="index">
+										<view class="checkbox_view_oneline  checkbox_view_oneline_title">
+											<!-- <text class="checkbox_view_name gray">大豆分离蛋白</text> -->
+											<view class="secondtext">上海</view>
+											<view class="thirdtext">
+												<view>直达</view>
+												<view>——</view>
+											</view>
+											<view class="fourthtext">奥德赛</view>
+											<text class="mg15"></text>
+											<text class="checkbox_view_tab">实单</text>
+											<view class="isWinBidding">已中标</view>
+										</view>
+
+										<view class="checkbox_view_oneline">
+											<u-row gutter="16">
+												<u-col span="7">
+													<text class="gray">规格</text>
+													<text class="mg15">:</text>
+													<text class="gray">Emulsion</text>
+												</u-col>
+												<u-col span="5">
+													<text class="gray">品牌</text>
+													<text class="mg15">:</text>
+													<text class="gray">菊兰</text>
+												</u-col>
+											</u-row>
+										</view>
+
+										<view class="checkbox_view_oneline">
+											<u-row gutter="16">
+												<u-col span="7">
+													<text class="gray">包装</text>
+													<text class="mg15">:</text>
+													<text class="gray">20 KG STEEL DRUM</text>
+												</u-col>
+												<u-col span="5">
+													<text class="gray">数量</text>
+													<text class="mg15">:</text>
+													<text class="gray">100KG</text>
+												</u-col>
+											</u-row>
+										</view>
+										<view class="checkbox_view_oneline">
+											<u-row gutter="16">
+												<u-col span="12">
+													<view>
+														<text class="red">2020-07-30</text>
+														<text class="mg15"></text>
+														<text class="red">18：00截至报价</text>
+														<u-button type="error" shape="circle" plain size="medium" class='fr' @click="toBidding" v-if="showTag(item)==='竞价'">详情</u-button>
+													</view>
+												</u-col>
+											</u-row>
+										</view>
+										<u-collapse-item>
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="7">
+														<text class="gray">上海</text>
+														<text class="mg15">---</text>
+														<text class="gray">拉各斯</text>
+													</u-col>
+													<u-col span="5">
+														<text class="gray">20GP</text>
+													</u-col>
+												</u-row>
+											</view>
+
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="7">
+														<text class="gray">期望五天交货</text>
+													</u-col>
+													<u-col span="5">
+														<text class="gray">打托</text>
+														<text class="mg15">:</text>
+														<text class="gray">是</text>
+													</u-col>
+												</u-row>
+											</view>
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="12">
+														<text class="gray">询价单编号：IN2087973</text>
+													</u-col>
+												</u-row>
+											</view>
+
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="12">
+														<text class="gray">备注:</text>
+													</u-col>
+												</u-row>
+											</view>
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="12">
+														<text class="gray">一种食品添加剂</text>
+													</u-col>
+												</u-row>
+											</view>
+										</u-collapse-item>
+									</view>
+								</u-collapse>
+							</view>
 						</view>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
 						<view class="page-box">
-							
-							222
+							<view class="page-box">
+								<!-- 输入框 -->
+								<view class="inp_area">
+									<!-- 全选 -->
+									<u-field v-model="name" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false">
+									</u-field>
+									<u-button @click="checkedAll" type="error" size='mini' class="search_btn">搜索</u-button>
+								</view>
+
+								<!-- 商品列表 -->
+								<view class="commodity_list">
+									<u-collapse :accordion="false">
+										<view class="checkbox_view" v-for="(item, index) in logisticsUngeneralList" :key="index">
+											<view class="checkbox_view_oneline  checkbox_view_oneline_title">
+												<!-- <text class="checkbox_view_name gray">大豆分离蛋白</text> -->
+												<view class="secondtext">上海</view>
+												<view class="thirdtext">
+													<view>直达</view>
+													<view>——</view>
+												</view>
+												<view class="fourthtext">奥德赛</view>
+												<text class="mg15"></text>
+												<text class="checkbox_view_tab">实单</text>
+												<view class="isWinBidding">已中标</view>
+											</view>
+
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="7">
+														<text class="gray">规格</text>
+														<text class="mg15">:</text>
+														<text class="gray">Emulsion</text>
+													</u-col>
+													<u-col span="5">
+														<text class="gray">品牌</text>
+														<text class="mg15">:</text>
+														<text class="gray">菊兰</text>
+													</u-col>
+												</u-row>
+											</view>
+
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="7">
+														<text class="gray">包装</text>
+														<text class="mg15">:</text>
+														<text class="gray">20 KG STEEL DRUM</text>
+													</u-col>
+													<u-col span="5">
+														<text class="gray">数量</text>
+														<text class="mg15">:</text>
+														<text class="gray">100KG</text>
+													</u-col>
+												</u-row>
+											</view>
+											<view class="checkbox_view_oneline">
+												<u-row gutter="16">
+													<u-col span="12">
+														<view>
+															<text class="red">2020-07-30</text>
+															<text class="mg15"></text>
+															<text class="red">18：00截至报价</text>
+															<u-button type="error" shape="circle" plain size="medium" class='fr' @click="toBidding" v-if="showTag(item)==='竞价'">详情</u-button>
+														</view>
+													</u-col>
+												</u-row>
+											</view>
+
+											<u-collapse-item>
+												<view class="checkbox_view_oneline">
+													<u-row gutter="16">
+														<u-col span="7">
+															<text class="gray">上海</text>
+															<text class="mg15">---</text>
+															<text class="gray">拉各斯</text>
+														</u-col>
+														<u-col span="5">
+															<text class="gray">20GP</text>
+														</u-col>
+													</u-row>
+												</view>
+
+												<view class="checkbox_view_oneline">
+													<u-row gutter="16">
+														<u-col span="7">
+															<text class="gray">期望五天交货</text>
+														</u-col>
+														<u-col span="5">
+															<text class="gray">打托</text>
+															<text class="mg15">:</text>
+															<text class="gray">是</text>
+														</u-col>
+													</u-row>
+												</view>
+												<view class="checkbox_view_oneline">
+													<u-row gutter="16">
+														<u-col span="12">
+															<text class="gray">询价单编号：IN2087973</text>
+														</u-col>
+													</u-row>
+												</view>
+												<view class="checkbox_view_oneline">
+													<u-row gutter="16">
+														<u-col span="12">
+															<text class="gray">备注:</text>
+														</u-col>
+													</u-row>
+												</view>
+												<view class="checkbox_view_oneline">
+													<u-row gutter="16">
+														<u-col span="12">
+															<text class="gray">一种食品添加剂</text>
+														</u-col>
+													</u-row>
+												</view>
+											</u-collapse-item>
+										</view>
+									</u-collapse>
+								</view>
+							</view>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -165,6 +398,8 @@
 		created() {
 			if (this.isRole) {
 				this.getInquiryList()
+			} else {
+				this.getLogisticsQuotedPriceList()
 			}
 		},
 		data() {
@@ -193,7 +428,11 @@
 				],
 				current: 0,
 				swiperCurrent: 0,
-				dx: 0
+				dx: 0,
+				//实盘询价数据
+				logisticsGeneralList: [],
+				//常规询价数据
+				logisticsUngeneralList: []
 			}
 		},
 		methods: {
@@ -246,7 +485,34 @@
 					}
 				}
 			},
-
+			//拿到历史报价
+			async getLogisticsQuotedPriceList(index) {
+				let dataType = ''
+				if (!index) {
+					dataType = 'ungeneral'
+				} else {
+					dataType = 'general'
+				}
+				let res = await fetch(this.api.v2.logisticssupplier, {
+					method: "get",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						actionType: 'alreadyList',
+						dataType,
+						from: 0,
+						size: 10
+					}
+				})
+				if (res.data.code === '0') {
+					this.logisticsGeneralList = []
+					this.logisticsUngeneralList = []
+					if (!index) {
+						this.logisticsGeneralList = res.data.data
+					} else {
+						this.logisticsUngeneralList = res.data.data
+					}
+				}
+			},
 			//点击搜索按钮
 			checkedAll() {
 				this.getInquiryList()
@@ -254,6 +520,7 @@
 			// tab栏切换
 			change(index) {
 				this.swiperCurrent = index
+				this.getLogisticsQuotedPriceList(index)
 			},
 			transition({
 				detail: {
@@ -421,6 +688,19 @@
 
 	// 物流供应商已报价（物流）
 	.logisticsQuotedPrice {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - var(--window-top));
+		width: 100%;
+
+		.swiper-box {
+			flex: 1;
+		}
+
+		.swiper-item {
+			height: 100%;
+		}
+
 		.inp_area {
 			padding: 0 30rpx 0 10rpx;
 			display: flex;
