@@ -215,8 +215,10 @@
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											 @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											 @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -246,7 +248,7 @@
 										</view>
 										<view :class="{fourthtext:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.arrivePort}}</view>
 										<text class="mg15"></text>
-										<text :class="{checkbox_view_tab:true,redbg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">实盘</text>
+										<text :class="{checkbox_view_tab:true,bluebg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">常规</text>
 										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagState(item)}}</view>
 									</view>
 									<view class="checkbox_view_oneline">
@@ -305,8 +307,10 @@
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											 @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											 @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -330,7 +334,8 @@
 			Tabbar
 		},
 		onShow() {
-			this.isRole=uni.getStorageSync('roleId') === 1 ? true : false
+			this.isRole = uni.getStorageSync('roleId') === 1 ? true : false
+			this.currentPage = 0
 			if (this.isRole) {
 				this.getInquiryList()
 			} else {
@@ -368,7 +373,9 @@
 				logisticsGeneralList: [],
 				//常规询价数据
 				logisticsUngeneralList: [],
-				isRole:uni.getStorageSync('roleId') === 1 ? true : false
+				isRole: uni.getStorageSync('roleId') === 1 ? true : false,
+				//用于下拉刷新
+				currentPage: 0
 			}
 		},
 		methods: {
@@ -381,7 +388,7 @@
 					url: '../bidding/index',
 				})
 			},
-			
+
 			//询价单列表
 			async getInquiryList() {
 				let res = await fetch(this.api.v2.inquiryList, {
@@ -422,7 +429,7 @@
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: 'alreadyList',
 						dataType,
-						from: 0,
+						from: this.currentPage,
 						size: 10
 					}
 				})
@@ -461,7 +468,7 @@
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			toBiddingLogistics(obj,status){
+			toBiddingLogistics(obj, status) {
 				this.$set(obj, 'titletext', status)
 				this.$set(obj, 'status', status)
 				this.$store.dispatch('checkOne', obj)
@@ -471,6 +478,18 @@
 			},
 			//下拉加载
 			reachBottom() {
+				if (this.swiperCurrent === 0) {
+					if (this.logisticsGeneralList.length > 10) {
+						this.currentPage++
+						this.swiperCurrent(this.swiperCurrent)
+					}
+				}
+				if (this.swiperCurrent === 1) {
+					if (this.logisticsUngeneralList.length > 10) {
+						this.currentPage++
+						this.swiperCurrent(this.swiperCurrent)
+					}
+				}
 
 			}
 		},
