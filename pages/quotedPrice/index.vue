@@ -17,8 +17,8 @@
 							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">
 								<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
 								<text class="mg15"></text>
-								<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单',graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{showTag(item)}}</text>
-								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:showTag(item)==='实单',redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘'}">{{item.statusDesc}}</view>
+								<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单'}">{{showTag(item)}}</text>
+								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:showTag(item)==='实单'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束',redbg:showTag(item)==='竞价'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束',bluebg:showTag(item)==='询盘'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束'}">{{item.statusDesc}}</view>
 							</view>
 
 							<view class="checkbox_view_oneline">
@@ -434,12 +434,10 @@
 					}
 				})
 				if (res.data.code === '0') {
-					this.logisticsGeneralList = []
-					this.logisticsUngeneralList = []
 					if (!index) {
-						this.logisticsGeneralList = res.data.data
+						this.logisticsGeneralList = [...this.logisticsGeneralList,...res.data.data]
 					} else {
-						this.logisticsUngeneralList = res.data.data
+						this.logisticsUngeneralList = [...this.logisticsUngeneralList,...res.data.data]
 					}
 				}
 			},
@@ -478,18 +476,18 @@
 			},
 			//下拉加载
 			reachBottom() {
-				if (this.swiperCurrent === 0) {
-					if (this.logisticsGeneralList.length > 10) {
-						this.currentPage++
-						this.swiperCurrent(this.swiperCurrent)
-					}
-				}
-				if (this.swiperCurrent === 1) {
-					if (this.logisticsUngeneralList.length > 10) {
-						this.currentPage++
-						this.swiperCurrent(this.swiperCurrent)
-					}
-				}
+				// if (this.swiperCurrent === 0) {
+				// 	if (this.logisticsGeneralList.length >= 10) {
+				// 		this.currentPage++
+				// 		this.getLogisticsQuotedPriceList(this.swiperCurrent)
+				// 	}
+				// }
+				// if (this.swiperCurrent === 1) {
+				// 	if (this.logisticsUngeneralList.length >= 10) {
+				// 		this.currentPage++
+				// 		this.getLogisticsQuotedPriceList(this.swiperCurrent)
+				// 	}
+				// }
 
 			}
 		},

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/quotedPrice/index",
     "pages/login/index",
+    "pages/quotedPrice/index",
     "pages/prepareQuoted/index",
     "pages/bidding/index",
     "pages/profile/index",

@@ -287,7 +287,7 @@
 											</view>
 										</view>
 										<view class="swiper-item_right">
-											<span class="iconfont icon_close" @click="giveupbidding(item)">&#xe607;</span>
+											<span class="iconfont icon_close" @click.stop="giveupbidding(item)">&#xe607;</span>
 										</view>
 										<view class="swiper-item_center">
 											<view class="swiper_center_oneline_title clearfix">
