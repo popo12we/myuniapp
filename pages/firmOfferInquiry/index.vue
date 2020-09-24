@@ -1,8 +1,8 @@
 <template>
 	<!-- 物流供应商待报价页面(实盘询价) -->
 	<view class="firmOfferInquiry">
-		<!-- 竞价信息 -->
-		<view class="binding-info">
+		<!-- 竞价信息(物流常规询价) -->
+		<view class="binding-info" v-if="bindingVuexCheckeddata.titletext==='实盘询价'">
 			<view class="binding-info_oneline  binding-info_oneline_title">
 				<view class="secondtext">
 					{{bindingVuexCheckeddata.startPort}}
@@ -113,8 +113,144 @@
 			</view>
 		</view>
 
+
+
+
+
+
+		<!-- 常规询价 -->
+		<view class="binding-info" v-if="bindingVuexCheckeddata.titletext==='常规询价'">
+			<view class="binding-info_oneline  binding-info_oneline_title">
+				<view class="secondtext">
+					{{bindingData.logisticsbIdVo.startPort}}
+				</view>
+				<view class="thirdtext">
+					<view>{{bindingData.logisticsbIdVo.transferMethod}}</view>
+					<view>——</view>
+				</view>
+				<view class="fourthtext">
+					{{bindingData.logisticsbIdVo.arrivePort}}
+				</view>
+			</view>
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text class="gray">货物总量</text>
+						<text class="mg15">:</text>
+						<text class="gray">1*20GP</text>
+					</u-col>
+					<u-col span="5">
+						<text class="red">截止日期</text>
+						<text class="mg15">:</text>
+						<text class="red">2020-08-05</text>
+					</u-col>
+				</u-row>
+			</view>
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text class="gray">货盘类型</text>
+						<text class="mg15">:</text>
+						<text class="gray">海运整箱</text>
+					</u-col>
+					<u-col span="5">
+						<text class="gray">危险品</text>
+						<text class="mg15">:</text>
+						<text class="gray">是</text>
+					</u-col>
+				</u-row>
+			</view>
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text class="gray">货物毛重</text>
+						<text class="mg15">:</text>
+						<text class="gray">200KG</text>
+					</u-col>
+					<u-col span="5">
+						<text class="gray">预计出运</text>
+						<text class="mg15">:</text>
+						<text class="gray">2020-08-05</text>
+					</u-col>
+				</u-row>
+			</view>
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text class="gray">危险品</text>
+						<text class="mg15">:</text>
+						<text class="gray">{{bindingData.danger===1?"是":"否"}}</text>
+					</u-col>
+				</u-row>
+			</view>
+			<view class="binding-info_oneline">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text class="gray">备注</text>
+						<text class="mg15">:</text>
+						<text class="gray">一种食品添加剂</text>
+					</u-col>
+				</u-row>
+			</view>
+		</view>
+
+
 		<!-- 竞价排名 -->
-		<view class="binding-ranking" v-if="bindingData.logisticsbidsupplierVos">
+		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='常规询价'">
+			<view class="binding-ranking-title">
+				我的报价记录
+			</view>
+			<!-- 具体的报价记录 -->
+			<view class="binding-record" v-if="bindingData.logisticsbidsupplierVo">
+				<view class="binding-record-item">
+					<text class="gray">价格(USD)</text>
+					<text class="mg15">:</text>
+					<text class="gray">1200</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">有效期</text>
+					<text class="mg15">:</text>
+					<text class="gray">2020-08-15</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">船公司</text>
+					<text class="mg15">:</text>
+					<text class="gray">MSK</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">船期</text>
+					<text class="mg15">:</text>
+					<text class="gray">周一、周三、周五</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">转运方式</text>
+					<text class="mg15">:</text>
+					<text class="gray">直达</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">航程</text>
+					<text class="mg15">:</text>
+					<text class="gray">60</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">价格趋势</text>
+					<text class="mg15">:</text>
+					<text class="gray">平稳</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">趋势说明</text>
+					<text class="mg15">:</text>
+					<text class="gray">最近价格趋势很平稳</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">备注</text>
+					<text class="mg15">:</text>
+					<text class="gray">我是一条备注</text>
+				</view>
+			</view>
+		</view>
+		<!-- 竞价排名 -->
+		<view class="binding-ranking" v-if="bindingData.logisticsbidsupplierVos&&bindingVuexCheckeddata.titletext==='实盘询价'">
 			<view class="binding-ranking-title">
 				全部供应商报价排名(价格从低到高)
 			</view>
@@ -213,41 +349,41 @@
 				quotedPrice: true,
 				//从上一个页面拿到的数据
 				bindingVuexCheckeddata: this.$store.state.checkedData,
-				bindingData:{}
+				bindingData: {}
 			}
 		},
-			
-		created(){
+
+		created() {
 			this.getDetails()
 		},
-		
+
 		methods: {
 			//拿到详细信息
 			async getDetails() {
-				let data={}
+				let data = {}
 				console.log(this.bindingVuexCheckeddata)
-				if (this.bindingVuexCheckeddata.status==="实盘询价") {
-					data={
+				if (this.bindingVuexCheckeddata.status === "实盘询价") {
+					data = {
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: "details",
-						dataType:'ungeneral',
-						bidId:this.bindingVuexCheckeddata.bidId
-					} 
+						dataType: 'ungeneral',
+						bidId: this.bindingVuexCheckeddata.bidId
+					}
 				} else {
-					data={
+					data = {
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: "details",
-						dataType:'general',
-						inaploId:this.bindingVuexCheckeddata.inaploId,
-						inaplosuppId:this.bindingVuexCheckeddata.inaplosuppId
-					} 
+						dataType: 'general',
+						inaploId: this.bindingVuexCheckeddata.inaploId,
+						inaplosuppId: this.bindingVuexCheckeddata.inaplosuppId
+					}
 				}
 				let res = await fetch(this.api.v2.logisticssupplier, {
 					method: "get",
 					data
 				})
 				if (res.data.code === '0') {
-					this.bindingData=res.data.data
+					this.bindingData = res.data.data
 				}
 			},
 			//点击打开竞价模态框
@@ -264,7 +400,7 @@
 						title: this.bindingVuexCheckeddata.titletext
 					})
 				}
-		
+
 			}
 		}
 	}
@@ -360,6 +496,9 @@
 
 			//具体的报价记录
 			.binding-record {
+				.binding-record-item{
+					padding: 20rpx 0;
+				}
 				.binding-record_item {
 					padding: 20rpx 30rpx;
 					border: 2rpx solid #d9d9d9;
