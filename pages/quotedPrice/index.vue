@@ -329,7 +329,7 @@
 		components: {
 			Tabbar
 		},
-		created() {
+		onShow() {
 			this.isRole=uni.getStorageSync('roleId') === 1 ? true : false
 			if (this.isRole) {
 				this.getInquiryList()

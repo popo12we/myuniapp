@@ -938,7 +938,8 @@
 				logisticQuotationData: "",
 				inaploId: "",
 				//判断哪个角色权限
-				isRole: uni.getStorageSync('roleId') === 1 ? true : false
+				isRole: uni.getStorageSync('roleId') === 1 ? true : false,
+				inaplosuppId: ""
 			}
 		},
 		onShow() {
@@ -1130,11 +1131,11 @@
 					}
 					this.giveupModalProduct = item.spuName
 				} else {
-					console.log(item)
 					this.logisticQuotationData = item
 					this.bidId = item.bidId
 					this.custId = item.custId
 					this.inaploId = item.inaploId
+					this.inaplosuppId = item.inaplosuppId
 				}
 				this.giveupbiddingShow = true;
 
@@ -1342,6 +1343,7 @@
 								"PC006" ?
 								"conventional" : "",
 							bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
+							inaplosuppId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaplosuppId : "",
 							inaploId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaploId : "",
 							custId: this.custId && Number(this.custId)
 						}
@@ -1507,6 +1509,7 @@
 				this.bidId = item.bidId
 				this.custId = item.custId
 				this.inaploId = item.inaploId
+				this.inaplosuppId= item.inaplosuppId
 				this.logisticQuotationFormShow = true
 				this.logisticQuotationData = item
 			},
@@ -1529,6 +1532,7 @@
 								list: [{
 									bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
 									inaploId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaploId : "",
+									inaplosuppId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaplosuppId : "",
 									custId: this.custId && Number(this.custId),
 									//价格
 									price: this.logisticQuotationForm.price && Number(this.logisticQuotationForm.price),
@@ -1591,8 +1595,6 @@
 		},
 
 		computed: {
-
-
 			swiperList() {
 				let arr = [...this.biddingList, ...this.realOrderList]
 				arr = arr.filter(item => {
