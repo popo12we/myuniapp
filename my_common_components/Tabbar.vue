@@ -5,9 +5,9 @@
 
 <script>
 	export default {
+		props:['isRole'],
 		data() {
 			return {
-
 				//底部导航
 				tabbarFourList: [{
 						iconPath: "photo",
@@ -15,9 +15,10 @@
 						text: '待报价',
 						customIcon: false,
 						pagePath: '/pages/prepareQuoted/index',
-						
+
 					},
-					{   iconPath: "gift",
+					{
+						iconPath: "gift",
 						selectedIconPath: "gift-fill",
 						text: '商品',
 						customIcon: false,
@@ -29,7 +30,7 @@
 						text: '已报价',
 						customIcon: false,
 						pagePath: "/pages/quotedPrice/index",
-						
+
 					},
 
 					{
@@ -47,7 +48,7 @@
 						text: '待报价',
 						customIcon: false,
 						pagePath: '/pages/prepareQuoted/index',
-						
+
 					},
 					{
 						iconPath: "home",
@@ -55,9 +56,9 @@
 						text: '已报价',
 						customIcon: false,
 						pagePath: "/pages/quotedPrice/index",
-						
+
 					},
-				
+
 					{
 						iconPath: "account",
 						selectedIconPath: "account-fill",
@@ -67,17 +68,10 @@
 					},
 				]
 			}
-		},
-		
-		computed: {
-			//判断哪个角色权限	
-			isRole() {
-				return uni.getStorageSync('roleId') === 1 ? true : false
-			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	
+
 </style>

@@ -28,7 +28,7 @@
 			退出登录
 		</view>
 		<!-- 底部导航 -->
-		<Tabbar></Tabbar>
+		<Tabbar :isRole="isRole"></Tabbar>
 		<u-modal v-model="modelShow" content="是否退出登录" :show-title='false' :show-cancel-button="true" cancel-text="取消" @confirm="confirmLoginOut" confirm-color="#D0021B"></u-modal>
 	</view>
 </template>
@@ -40,7 +40,8 @@
 		components: {
 			Tabbar
 		},
-		created() {
+		onShow() {
+			this.isRole=uni.getStorageSync('roleId') === 1 ? true : false
 			this.getSupplierInfo()
 		},
 		data() {
@@ -52,7 +53,9 @@
 				//放弃报价次数
 				giveupCount:0,
 				//退出模态框
-				modelShow:false
+				modelShow:false,
+				//判断哪个角色权限
+				isRole :uni.getStorageSync('roleId') === 1 ? true : false
 			}
 		},
 		methods: {

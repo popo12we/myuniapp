@@ -175,7 +175,7 @@
 											<u-col span="5">
 												<text class="gray">打托</text>
 												<text class="mg15">:</text>
-												<text class="gray">{{item.ifPlay}}</text>
+												<text class="gray">{{item.ifPlay=="1"?"是":"否"}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -456,7 +456,7 @@
 		</view>
 
 		<!-- 底部导航 -->
-		<Tabbar></Tabbar>
+		<Tabbar :isRole="isRole"></Tabbar>
 
 		<!-- 询盘模态框 -->
 		<u-modal v-model="inquiryShow" :show-title="false" :show-confirm-button="false">
@@ -849,10 +849,16 @@
 						trigger: ['change']
 					}],
 					voyage: [{
-						required: true,
-						message: '请填写航程',
-						trigger: ['change', 'blur'],
-					}],
+							required: true,
+							message: '请填写航程',
+							trigger: ['change', 'blur'],
+						},
+						{
+							pattern: /^(0|[1-9][0-9]*)(\.\d+)?$/,
+							message: '请输入准确的数字',
+							trigger: ['change', 'blur']
+						}
+					],
 					trend: [{
 						required: true,
 						message: '请选择价格趋势',
@@ -930,10 +936,13 @@
 				//结束时间的选择器
 				dateTimeEnd: false,
 				logisticQuotationData: "",
-				inaploId:"",
+				inaploId: "",
+				//判断哪个角色权限
+				isRole: uni.getStorageSync('roleId') === 1 ? true : false
 			}
 		},
-		created() {
+		onShow() {
+			this.isRole = uni.getStorageSync('roleId') === 1 ? true : false
 			//是展示产品询价单数据还是物流询价单数据
 			if (this.isRole) {
 				this.getInquiryList()
@@ -1124,8 +1133,8 @@
 					console.log(item)
 					this.logisticQuotationData = item
 					this.bidId = item.bidId
-					this.custId=item.custId
-					this.inaploId=item.inaploId
+					this.custId = item.custId
+					this.inaploId = item.inaploId
 				}
 				this.giveupbiddingShow = true;
 
@@ -1329,7 +1338,8 @@
 						method: "post",
 						data: {
 							accessToken: uni.getStorageSync('accessToken'),
-							type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData.moduleCode === "PC006" ?
+							type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData.moduleCode ===
+								"PC006" ?
 								"conventional" : "",
 							bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
 							inaploId: this.logisticQuotationData.moduleCode === "PC006" ? this.inaploId : "",
@@ -1356,14 +1366,14 @@
 
 			//点轮播图跳转到待报价竞价模式
 			navigateTobidding(obj) {
-				if(this.isRole){
+				if (this.isRole) {
 					obj.status = 'prepareQuoted'
 					this.$set(obj, 'titletext', '竞价')
 					this.$store.dispatch('checkOne', obj)
 					uni.navigateTo({
 						url: '../bidding/index'
 					})
-				}else{
+				} else {
 					obj.status = 'prepareQuoted'
 					this.$set(obj, 'titletext', '实盘询价')
 					this.$store.dispatch('checkOne', obj)
@@ -1402,8 +1412,8 @@
 
 			//重置报价模态框
 			resetLogisticQuotationForm() {
-				this.checkscheduleList.forEach(item=>{
-					item.checked=false
+				this.checkscheduleList.forEach(item => {
+					item.checked = false
 				})
 				this.logisticQuotationData = ""
 				this.logisticQuotationForm = {
@@ -1496,7 +1506,7 @@
 				this.resetLogisticQuotationForm()
 				this.bidId = item.bidId
 				this.custId = item.custId
-				this.inaploId=item.inaploId
+				this.inaploId = item.inaploId
 				this.logisticQuotationFormShow = true
 				this.logisticQuotationData = item
 			},
@@ -1513,7 +1523,8 @@
 							method: "post",
 							data: {
 								accessToken: uni.getStorageSync('accessToken'),
-								type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData.moduleCode === "PC006" ?
+								type: this.logisticQuotationData.moduleCode === "PC007" ? "real" : this.logisticQuotationData.moduleCode ===
+									"PC006" ?
 									"conventional" : "",
 								list: [{
 									bidId: this.logisticQuotationData.moduleCode === "PC007" ? this.bidId : "",
@@ -1580,10 +1591,7 @@
 		},
 
 		computed: {
-			//判断哪个角色权限	
-			isRole() {
-				return uni.getStorageSync('roleId') === 1 ? true : false
-			},
+
 
 			swiperList() {
 				let arr = [...this.biddingList, ...this.realOrderList]
@@ -1592,13 +1600,6 @@
 				})
 				return arr
 			},
-
-			//是否还没有结束(询价截止日期>当前时间)
-			// isLiving() {
-			// 	const endTime = new Date(this.endTime)
-			// 	const nowTime = new Date()
-			// 	return nowTime.getTime() - endTime.getTime() > 0 ? true : false
-			// },
 			logicSwiperList() {
 				return this.logisticRealOrderList.filter(item => {
 					return new Date(item.biddeadLine) > new Date()

@@ -142,7 +142,7 @@
 		<!-- toast -->
 		<u-toast ref="toast" position="top" />
 		<!-- 底部导航 -->
-		<Tabbar></Tabbar>
+		<Tabbar :isRole="isRole"></Tabbar>
 	</view>
 </template>
 
@@ -266,11 +266,13 @@
 					unit: "",
 				},
 				//选中数据所组成的数组
-				checkedList: []
+				checkedList: [],
+				isRole:uni.getStorageSync('roleId') === 1 ? true : false
 			}
 		},
 
 		created() {
+			this.isRole=uni.getStorageSync('roleId') === 1 ? true : false
 			this.getSupplierProduct()
 		},
 		onReady() {
@@ -465,11 +467,6 @@
 			//确认币种
 			confirmCurrency(e) {
 				this.inquiryForm.currency = e[0].label
-			},
-			//确认价格趋势
-			confirmPriceTrend(e) {
-				this.inquiryForm.trend = e[0].label
-				this.inquiryForm.pricetrendValue = e[0].value
 			},
 			//询盘确实时间
 			confirmTime(e) {

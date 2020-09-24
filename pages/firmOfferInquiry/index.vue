@@ -135,7 +135,8 @@
 						</u-col>
 						<u-col span="6">
 							<view class="binding-record_item_info">
-								<view>*******</view>
+								<view v-if="item.isMy!=='1'">*******</view>
+								<view v-if="item.isMy=='1'">{{item.price}}</view>
 								<view class="mg-t24">{{item.offerTime}}</view>
 							</view>
 						</u-col>

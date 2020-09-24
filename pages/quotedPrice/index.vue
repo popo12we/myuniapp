@@ -215,8 +215,8 @@
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')">详情</u-button>
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -305,8 +305,8 @@
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')">详情</u-button>
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -317,7 +317,7 @@
 			</swiper>
 		</view>
 		<!-- 底部导航 -->
-		<Tabbar></Tabbar>
+		<Tabbar :isRole="isRole"></Tabbar>
 	</view>
 </template>
 
@@ -330,6 +330,7 @@
 			Tabbar
 		},
 		created() {
+			this.isRole=uni.getStorageSync('roleId') === 1 ? true : false
 			if (this.isRole) {
 				this.getInquiryList()
 			} else {
@@ -366,24 +367,11 @@
 				//实盘询价数据
 				logisticsGeneralList: [],
 				//常规询价数据
-				logisticsUngeneralList: []
+				logisticsUngeneralList: [],
+				isRole:uni.getStorageSync('roleId') === 1 ? true : false
 			}
 		},
 		methods: {
-			// 全选
-			checkboxAllChange() {
-				this.allChecked ? this.list.map(val => {
-					val.checked = true;
-				}) : this.list.map(val => {
-					val.checked = false;
-				})
-			},
-
-			//单选
-			checkboxOneChange(e) {
-				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
-			},
-
 			//点击详情跳转
 			toBidding(obj) {
 				obj.status = 'quotedPrice'
@@ -393,6 +381,7 @@
 					url: '../bidding/index',
 				})
 			},
+			
 			//询价单列表
 			async getInquiryList() {
 				let res = await fetch(this.api.v2.inquiryList, {
@@ -472,16 +461,20 @@
 				this.swiperCurrent = current;
 				this.current = current;
 			},
+			toBiddingLogistics(obj){
+				obj.status = 'quotedPrice'
+				this.$set(obj, 'titletext', '实盘询价')
+				this.$store.dispatch('checkOne', obj)
+				uni.navigateTo({
+					url: '../firmOfferInquiry/index',
+				})
+			},
 			//下拉加载
-			onreachBottom() {
+			reachBottom() {
 
 			}
 		},
 		computed: {
-			//判断哪个角色权限
-			isRole() {
-				return uni.getStorageSync('roleId') === 1 ? true : false
-			},
 			showTag() {
 				return function(item) {
 					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
