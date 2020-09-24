@@ -215,8 +215,8 @@
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -305,8 +305,8 @@
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item)">详情</u-button>
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')" @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -461,9 +461,9 @@
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			toBiddingLogistics(obj){
-				obj.status = 'quotedPrice'
-				this.$set(obj, 'titletext', '实盘询价')
+			toBiddingLogistics(obj,status){
+				this.$set(obj, 'titletext', status)
+				this.$set(obj, 'status', status)
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
 					url: '../firmOfferInquiry/index',

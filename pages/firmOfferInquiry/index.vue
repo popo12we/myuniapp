@@ -224,15 +224,28 @@
 		methods: {
 			//拿到详细信息
 			async getDetails() {
-				let res = await fetch(this.api.v2.logisticssupplier, {
-					method: "get",
-					data: {
+				let data={}
+				console.log(this.bindingVuexCheckeddata)
+				if (this.bindingVuexCheckeddata.status==="实盘询价") {
+					data={
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: "details",
+						dataType:'ungeneral',
 						bidId:this.bindingVuexCheckeddata.bidId
-					}
+					} 
+				} else {
+					data={
+						accessToken: uni.getStorageSync('accessToken'),
+						actionType: "details",
+						dataType:'general',
+						inaploId:this.bindingVuexCheckeddata.inaploId,
+						inaplosuppId:this.bindingVuexCheckeddata.inaplosuppId
+					} 
+				}
+				let res = await fetch(this.api.v2.logisticssupplier, {
+					method: "get",
+					data
 				})
-				console.log(res)
 				if (res.data.code === '0') {
 					this.bindingData=res.data.data
 				}
@@ -240,6 +253,18 @@
 			//点击打开竞价模态框
 			modalOpen() {
 				this.modalShow = true
+			}
+		},
+		watch: {
+			'$store.state.checkData': {
+				deep: true,
+				immediate: true,
+				handler() {
+					wx.setNavigationBarTitle({
+						title: this.bindingVuexCheckeddata.titletext
+					})
+				}
+		
 			}
 		}
 	}

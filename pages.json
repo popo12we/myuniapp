@@ -4,18 +4,17 @@
 	},
 	"pages": [
 		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": "登录页"
-			}
-		},
-		{
 			"path": "pages/quotedPrice/index",
 			"style": {
 				"navigationBarTitleText": "已报价"
 			}
 		},
-		
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录页"
+			}
+		},
 		{
 			"path": "pages/prepareQuoted/index",
 			"style": {
