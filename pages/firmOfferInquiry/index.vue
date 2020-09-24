@@ -113,11 +113,6 @@
 			</view>
 		</view>
 
-
-
-
-
-
 		<!-- 常规询价 -->
 		<view class="binding-info" v-if="bindingVuexCheckeddata.titletext==='常规询价'">
 			<view class="binding-info_oneline  binding-info_oneline_title">
@@ -137,12 +132,12 @@
 					<u-col span="7">
 						<text class="gray">货物总量</text>
 						<text class="mg15">:</text>
-						<text class="gray">1*20GP</text>
+						<text class="gray">{{bindingData.logisticsbIdVo.footNumber}}*{{bindingData.logisticsbIdVo.cabinetType}}</text>
 					</u-col>
 					<u-col span="5">
 						<text class="red">截止日期</text>
 						<text class="mg15">:</text>
-						<text class="red">2020-08-05</text>
+						<text class="red">{{bindingData.logisticsbIdVo.biddeadLine}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -151,12 +146,12 @@
 					<u-col span="7">
 						<text class="gray">货盘类型</text>
 						<text class="mg15">:</text>
-						<text class="gray">海运整箱</text>
+						<text class="gray">{{bindingData.logisticsbIdVo.palletType}}</text>
 					</u-col>
 					<u-col span="5">
 						<text class="gray">危险品</text>
 						<text class="mg15">:</text>
-						<text class="gray">是</text>
+						<text class="gray">{{bindingData.logisticsbIdVo.danger===1?"是":"否"}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -165,21 +160,12 @@
 					<u-col span="7">
 						<text class="gray">货物毛重</text>
 						<text class="mg15">:</text>
-						<text class="gray">200KG</text>
+						<text class="gray">{{bindingData.logisticsbIdVo.gw}}</text>
 					</u-col>
 					<u-col span="5">
 						<text class="gray">预计出运</text>
 						<text class="mg15">:</text>
-						<text class="gray">2020-08-05</text>
-					</u-col>
-				</u-row>
-			</view>
-			<view class="binding-info_oneline">
-				<u-row gutter="16">
-					<u-col span="7">
-						<text class="gray">危险品</text>
-						<text class="mg15">:</text>
-						<text class="gray">{{bindingData.danger===1?"是":"否"}}</text>
+						<text class="gray">{{bindingData.logisticsbIdVo.planshipDate}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -188,67 +174,12 @@
 					<u-col span="7">
 						<text class="gray">备注</text>
 						<text class="mg15">:</text>
-						<text class="gray">一种食品添加剂</text>
+						<text class="gray">{{bindingData.logisticsbIdVo.remarks}}</text>
 					</u-col>
 				</u-row>
 			</view>
 		</view>
-
-
-		<!-- 竞价排名 -->
-		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='常规询价'">
-			<view class="binding-ranking-title">
-				我的报价记录
-			</view>
-			<!-- 具体的报价记录 -->
-			<view class="binding-record" v-if="bindingData.logisticsbidsupplierVo">
-				<view class="binding-record-item">
-					<text class="gray">价格(USD)</text>
-					<text class="mg15">:</text>
-					<text class="gray">1200</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">有效期</text>
-					<text class="mg15">:</text>
-					<text class="gray">2020-08-15</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">船公司</text>
-					<text class="mg15">:</text>
-					<text class="gray">MSK</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">船期</text>
-					<text class="mg15">:</text>
-					<text class="gray">周一、周三、周五</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">转运方式</text>
-					<text class="mg15">:</text>
-					<text class="gray">直达</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">航程</text>
-					<text class="mg15">:</text>
-					<text class="gray">60</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">价格趋势</text>
-					<text class="mg15">:</text>
-					<text class="gray">平稳</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">趋势说明</text>
-					<text class="mg15">:</text>
-					<text class="gray">最近价格趋势很平稳</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">备注</text>
-					<text class="mg15">:</text>
-					<text class="gray">我是一条备注</text>
-				</view>
-			</view>
-		</view>
+       
 		<!-- 竞价排名 -->
 		<view class="binding-ranking" v-if="bindingData.logisticsbidsupplierVos&&bindingVuexCheckeddata.titletext==='实盘询价'">
 			<view class="binding-ranking-title">
@@ -277,6 +208,116 @@
 							</view>
 						</u-col>
 					</u-row>
+				</view>
+			</view>
+		</view>
+		
+		<!-- 我的报价记录 -->
+		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='实盘询价'">
+			<view class="binding-ranking-title">
+				我的报价记录
+			</view>
+			<!-- 具体的报价记录 -->
+			<view class="binding-record" v-if="myBindingData.price">
+				<view class="binding-record-item">
+					<text class="gray">价格(USD)</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.price}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">有效期</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.expiredDate}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">船公司</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.shippingName}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">船期</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{"周"+myBindingData.schedule}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">转运方式</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.transferMethod}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">航程</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.voyage}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">价格趋势</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.pricetrendType}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">趋势说明</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.pricetrendRemark}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">备注</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{myBindingData.remark}}</text>
+				</view>
+			</view>
+		</view>
+		
+		<!-- 我的报价记录 -->
+		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='常规询价'">
+			<view class="binding-ranking-title">
+				我的报价记录
+			</view>
+			<!-- 具体的报价记录 -->
+			<view class="binding-record" v-if="bindingData.logisticsbidsupplierVo">
+				<view class="binding-record-item">
+					<text class="gray">价格(USD)</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.price}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">有效期</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.expiredDate}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">船公司</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.shippingName}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">船期</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{"周"+bindingData.logisticsbidsupplierVo.schedule}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">转运方式</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.transferMethod}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">航程</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.voyage}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">价格趋势</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.pricetrendType}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">趋势说明</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.pricetrendRemark}}</text>
+				</view>
+				<view class="binding-record-item">
+					<text class="gray">备注</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{bindingData.logisticsbidsupplierVo.remark}}</text>
 				</view>
 			</view>
 		</view>
@@ -349,7 +390,9 @@
 				quotedPrice: true,
 				//从上一个页面拿到的数据
 				bindingVuexCheckeddata: this.$store.state.checkedData,
-				bindingData: {}
+				bindingData: {},
+				//我的报价记录
+				myBindingData:{}
 			}
 		},
 
@@ -384,6 +427,18 @@
 				})
 				if (res.data.code === '0') {
 					this.bindingData = res.data.data
+					if(this.bindingVuexCheckeddata.titletext==='实盘询价'){
+						if(this.bindingData.logisticsbidsupplierVos&&this.bindingData.logisticsbidsupplierVos.length>0){
+							for(let i=0;i<this.bindingData.logisticsbidsupplierVos.length;i++){
+								if(this.bindingData.logisticsbidsupplierVos[i].isMy=='1'){
+									this.myBindingData=this.bindingData.logisticsbidsupplierVos[i]
+									break;
+								}
+							}
+							
+						}
+						
+					}
 				}
 			},
 			//点击打开竞价模态框
