@@ -86,7 +86,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text class="gray">期望5天交货</text>
+						<text class="gray">期望{{bindingData.detail.expeDeliDay}}天交货</text>
 					</u-col>
 					<u-col span="5">
 					<text class="gray">打托</text>

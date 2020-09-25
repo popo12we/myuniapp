@@ -104,9 +104,9 @@
 											<text class="gray">{{item.spuSpec}}</text>
 										</u-col>
 										<u-col span="5">
-											<text class="gray">品牌</text>
+											<text class="gray">数量</text>
 											<text class="mg15">:</text>
-											<text class="gray">{{item.brand}}</text>
+											<text class="gray">{{item.saleQty}}{{item.unit}}</text>
 										</u-col>
 									</u-row>
 								</view>
@@ -117,11 +117,6 @@
 											<text class="gray">包装</text>
 											<text class="mg15">:</text>
 											<text class="gray">{{item.packageInfo}}</text>
-										</u-col>
-										<u-col span="5">
-											<text class="gray">数量</text>
-											<text class="mg15">:</text>
-											<text class="gray">{{item.saleQty}}{{item.unit}}</text>
 										</u-col>
 									</u-row>
 								</view>
