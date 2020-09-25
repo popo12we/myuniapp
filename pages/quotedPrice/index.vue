@@ -435,9 +435,9 @@
 				})
 				if (res.data.code === '0') {
 					if (!index) {
-						this.logisticsGeneralList = [...this.logisticsGeneralList,...res.data.data]
+						this.logisticsGeneralList = res.data.data
 					} else {
-						this.logisticsUngeneralList = [...this.logisticsUngeneralList,...res.data.data]
+						this.logisticsUngeneralList = res.data.data
 					}
 				}
 			},

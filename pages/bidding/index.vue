@@ -7,8 +7,8 @@
 				<u-row gutter="16">
 					<text class="bidding_name">{{bindingData.detail.spuName}}</text>
 					<text class="mg15"></text>
-					<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘',orangebg:showTag(bindingVuexCheckeddata)==='实单',graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">{{showTag(bindingVuexCheckeddata)}}</text>
-					<view :class="{isWinBidding:true,graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束',orangebg:showTag(bindingVuexCheckeddata)==='实单',redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘'}"
+					<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='询盘',orangebg:showTag(bindingVuexCheckeddata)==='实单'}">{{showTag(bindingVuexCheckeddata)}}</text>
+					<view :class="{isWinBidding:true,graybg:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束',orangebg:showTag(bindingVuexCheckeddata)==='实单'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束',redbg:showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束',bluebg:showTag(bindingVuexCheckeddata)==='询盘'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'}"
 					 v-if="bindingVuexCheckeddata.status==='quotedPrice'">{{bindingVuexCheckeddata.statusDesc}}</view>
 				</u-row>
 			</view>
@@ -146,7 +146,6 @@
 				</view>
 			</view>
 		</view>
-
 		<!-- 我的报价记录 -->
 		<view class="mybinding">
 			<view class="mybinding-title">
@@ -408,7 +407,6 @@
 				return function(item) {
 					return item.biddingMode === '是' ? '竞价' : item.inquiryType === "询盘询价" ? "询盘" : "实单"
 				}
-
 			}
 		},
 		watch: {
