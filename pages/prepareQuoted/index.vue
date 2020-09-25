@@ -1817,39 +1817,38 @@
 				}
 			}
 		}
-
-		//报价
-		.quotation_area {
-			position: fixed;
-			bottom: 165rpx;
-			z-index: 999;
-			border-top: 5rpx solid #f8f8f8;
-			background-color: #fefefe;
-
-			.quotation_area_oneline {
-				padding: 0 20rpx;
+	}
+	
+	//报价
+	.quotation_area {
+		position: fixed;
+		bottom: 165rpx;
+		z-index: 999;
+		border-top: 5rpx solid #f8f8f8;
+		background-color: #fefefe;
+	
+		.quotation_area_oneline {
+			padding: 0 20rpx;
+			display: flex;
+	
+			.quotation_area_oneline_item {
 				display: flex;
-
-				.quotation_area_oneline_item {
-					display: flex;
-					width: 50%;
-
-					/deep/.u-input__input {
-						margin-top: 8rpx;
-					}
-
-					.ufield {
-						// flex: 1;
-					}
-
-					.text {
-						align-self: center;
-						color: #868686;
-					}
+				width: 50%;
+	
+				/deep/.u-input__input {
+					margin-top: 8rpx;
+				}
+	
+				.ufield {
+					// flex: 1;
+				}
+	
+				.text {
+					align-self: center;
+					color: #868686;
 				}
 			}
 		}
-
 	}
 
 
