@@ -488,7 +488,6 @@
 				//实盘
 				if (this.swiperCurrent === 0) {
 					if (this.count > (this.currentPage+1)*this.size) {
-						console.log("a执行了")
 						this.currentPage+=1
 						this.getLogisticsQuotedPriceList(this.swiperCurrent)
 					}
@@ -496,7 +495,6 @@
 				//常规
 				if (this.swiperCurrent === 1) {
 					if (this.count > (this.currentPage+1)*this.size) {
-						console.log("b执行了")
 						this.currentPage+=1
 						this.getLogisticsQuotedPriceList(this.swiperCurrent)
 					}

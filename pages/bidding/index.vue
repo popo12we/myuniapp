@@ -100,7 +100,7 @@
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
-						<text class="gray">一种食品添加剂</text>
+						<text class="gray">{{bindingData.detail.remarks}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -110,14 +110,14 @@
 					<u-col span="12">
 						<text class="red">{{bindingData.detail.inquiryDeadline}}</text>
 						<text class="mg15"></text>
-						<text class="red">12:00截止报价</text>
+						<text class="red">截止报价</text>
 					</u-col>
 				</u-row>
 			</view>
 		</view>
 
 		<!-- 竞价排名 -->
-		<view class="binding-ranking">
+		<view class="binding-ranking" v-if="showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'">
 			<view class="binding-ranking-title">
 				全部供应商报价排名(价格从低到高)
 			</view>
@@ -147,7 +147,7 @@
 			</view>
 		</view>
 		<!-- 我的报价记录 -->
-		<view class="mybinding">
+		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'">
 			<view class="mybinding-title">
 				我的报价记录
 			</view>
@@ -168,7 +168,7 @@
 				</view>
 			</view>
 
-			<view class="binding-info_oneline">
+			<view class="binding-info_oneline" v-if="bindingVuexCheckeddata.titletext==='竞价'">
 				<u-row gutter="16">
 					<u-col span="6">
 						<u-button type="error" plain @click="giveupbidding">放弃报价</u-button>
