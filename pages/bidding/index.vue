@@ -42,7 +42,7 @@
 				</u-row>
 			</view>
 
-			<view class="binding-info_oneline">
+			<view class="binding-info_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
 				<u-row gutter="16">
 					<u-col span="7">
 						<text class="gray">标的价格(USD)</text>
@@ -52,7 +52,7 @@
 				</u-row>
 			</view>
 
-			<view class="binding-info_oneline">
+			<view class="binding-info_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'">
 				<u-row gutter="16">
 					<u-col span="7">
 						<text class="gray">当前出价(USD)</text>

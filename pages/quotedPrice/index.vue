@@ -11,116 +11,106 @@
 
 			<!-- 商品列表 -->
 			<view class="commodity_list">
-				<u-checkbox-group :wrap="true" :active-color='activeColor'>
-					<u-collapse :accordion="false">
-						<view class="checkbox_view" v-for="(item, index) in list" :key="index" :name="item.name">
-							<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">
-								<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
-								<text class="mg15"></text>
-								<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单'}">{{showTag(item)}}</text>
-								<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:showTag(item)==='实单'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束',redbg:showTag(item)==='竞价'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束',bluebg:showTag(item)==='询盘'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束'}">{{item.statusDesc}}</view>
-							</view>
+				<view class="checkbox_view" v-for="(item, index) in list" :key="index" :name="item.name">
+					<view :class="{checkbox_view_oneline:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">
+						<text :class="{checkbox_view_name:true,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuName}}</text>
+						<text class="mg15"></text>
+						<text :class="{checkbox_view_tab:true,redbg:showTag(item)==='竞价',bluebg:showTag(item)==='询盘',orangebg:showTag(item)==='实单'}">{{showTag(item)}}</text>
+						<view :class="{isWinBidding:true,graybg:item.statusDesc==='已放弃'||item.statusDesc==='已结束',orangebg:showTag(item)==='实单'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束',redbg:showTag(item)==='竞价'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束',bluebg:showTag(item)==='询盘'&&item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束'}">{{item.statusDesc}}</view>
+					</view>
 
-							<view class="checkbox_view_oneline">
-								<u-row gutter="16">
-									<u-col span="7">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">规格</text>
-										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuSpec}}</text>
-									</u-col>
-									<u-col span="5">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">品牌</text>
-										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.brand}}</text>
-									</u-col>
-								</u-row>
-							</view>
+					<view class="checkbox_view_oneline">
+						<u-row gutter="16">
+							<u-col span="7">
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">规格</text>
+								<text class="mg15">:</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.spuSpec}}</text>
+							</u-col>
+							<u-col span="5">
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">数量</text>
+								<text class="mg15">:</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.saleQty}}{{item.unit}}</text>
+							</u-col>
+						</u-row>
+					</view>
 
-							<view class="checkbox_view_oneline">
-								<u-row gutter="16">
-									<u-col span="7">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">包装</text>
-										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.packageInfo}}</text>
-									</u-col>
-									<u-col span="5">
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">数量</text>
-										<text class="mg15">:</text>
-										<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.saleQty}}{{item.unit}}</text>
-									</u-col>
-								</u-row>
-							</view>
-							<view class="checkbox_view_oneline">
-								<u-row gutter="16">
-									<u-col span="12">
-										<view>
-											<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.inquiryDeadline}}</text>
-											<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}"
-											 v-if="item.inquiryDeadline">截止报价</text>
-
-										</view>
-									</u-col>
-								</u-row>
-							</view>
-							<view class="checkbox_view_oneline">
-								<u-row gutter="16">
-									<u-col span="12">
-										<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding(item)">详情</u-button>
-									</u-col>
-								</u-row>
-							</view>
-							<u-collapse-item>
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="7">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.shipPort}}</text>
-											<text class="mg15">---</text>
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.destinationPort}}</text>
-										</u-col>
-										<u-col span="5">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.cargoWeight}}</text>
-										</u-col>
-									</u-row>
+					<view class="checkbox_view_oneline">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">包装</text>
+								<text class="mg15">:</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.packageInfo}}</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="checkbox_view_oneline" v-if="(showTag(item)==='询盘'||showTag(item)==='实单')&&(item.statusDesc==='已报价')">
+						<u-row gutter="16">
+							<u-col span="7">
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">我的报价</text>
+								<text class="mg15">:</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">1.63</text>
+							</u-col>
+							<u-col span="5">
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">币种</text>
+								<text class="mg15">:</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">USD</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="checkbox_view_oneline" v-if="showTag(item)==='竞价'">
+						<u-row gutter="16">
+							<u-col span="12">
+								<view>
+									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">标的价格（USD）</text>
+									<text class="mg15">:</text>
+									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">1.5</text>
 								</view>
-
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="7">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">期望{{item.expeDeliDay}}天交货</text>
-										</u-col>
-										<u-col span="5">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">打托</text>
-											<text class="mg15">:</text>
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.ifPlay}}</text>
-										</u-col>
-									</u-row>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="checkbox_view_oneline" v-if="(showTag(item)==='竞价')&&(item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束')">
+						<u-row gutter="16">
+							<u-col span="12">
+								<view>
+									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">当前出价（USD）</text>
+									<text class="mg15">:</text>
+									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">1.63</text>
 								</view>
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="12">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">询价单编号：{{item.inquiryCode}}</text>
-										</u-col>
-									</u-row>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="checkbox_view_oneline" v-if="(showTag(item)==='竞价')&&(item.statusDesc!=='已放弃'&&item.statusDesc!=='已结束')">
+						<u-row gutter="16">
+							<u-col span="7">
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">出价次数</text>
+								<text class="mg15">:</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">1/3</text>
+							</u-col>
+							<u-col span="5">
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">当前排名</text>
+								<text class="mg15">:</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">2</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="checkbox_view_oneline" v-if="showTag(item)==='竞价'">
+						<u-row gutter="16">
+							<u-col span="12">
+								<view>
+									<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.inquiryDeadline}}</text>
+									<text :class="{red:item.statusDesc!=='已放弃',shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}" v-if="item.inquiryDeadline">截止报价</text>
 								</view>
-
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="12">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">备注:</text>
-										</u-col>
-									</u-row>
-								</view>
-								<view class="checkbox_view_oneline">
-									<u-row gutter="16">
-										<u-col span="12">
-											<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.remarks}}</text>
-										</u-col>
-									</u-row>
-								</view>
-							</u-collapse-item>
-						</view>
-					</u-collapse>
-				</u-checkbox-group>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="checkbox_view_oneline">
+						<u-row gutter="16">
+							<u-col span="12">
+								<u-button type="error" shape="circle" plain size="medium" class='fr mt15' @click="toBidding(item)">详情</u-button>
+							</u-col>
+						</u-row>
+					</view>
+				</view>
 			</view>
 		</view>
 
@@ -336,7 +326,7 @@
 		onShow() {
 			this.isRole = uni.getStorageSync('roleId') === 1 ? true : false
 			this.currentPage = 0
-			this.count=0
+			this.count = 0
 			if (this.isRole) {
 				this.getInquiryList()
 			} else {
@@ -377,8 +367,8 @@
 				isRole: uni.getStorageSync('roleId') === 1 ? true : false,
 				//用于下拉刷新
 				currentPage: 0,
-				size:5,
-				count:0
+				size: 5,
+				count: 0
 			}
 		},
 		methods: {
@@ -432,18 +422,18 @@
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: 'alreadyList',
 						dataType,
-						from: this.currentPage*this.size,
+						from: this.currentPage * this.size,
 						size: this.size
 					}
 				})
 				if (res.data.code === '0') {
 					if (!index) {
-						this.logisticsGeneralList = [...this.logisticsGeneralList,...res.data.data.logisticsbIdVos]
-						
+						this.logisticsGeneralList = [...this.logisticsGeneralList, ...res.data.data.logisticsbIdVos]
+
 					} else {
-						this.logisticsUngeneralList = [...this.logisticsUngeneralList,...res.data.data.logisticsbIdVos]
+						this.logisticsUngeneralList = [...this.logisticsUngeneralList, ...res.data.data.logisticsbIdVos]
 					}
-					this.count=res.data.data.count
+					this.count = res.data.data.count
 				}
 			},
 			//点击搜索按钮
@@ -452,10 +442,10 @@
 			},
 			// tab栏切换
 			change(index) {
-				this.logisticsGeneralList= []
-				this.logisticsUngeneralList= []
+				this.logisticsGeneralList = []
+				this.logisticsUngeneralList = []
 				this.currentPage = 0
-				this.count=0
+				this.count = 0
 				this.swiperCurrent = index
 				this.getLogisticsQuotedPriceList(index)
 			},
@@ -487,15 +477,15 @@
 			reachBottom() {
 				//实盘
 				if (this.swiperCurrent === 0) {
-					if (this.count > (this.currentPage+1)*this.size) {
-						this.currentPage+=1
+					if (this.count > (this.currentPage + 1) * this.size) {
+						this.currentPage += 1
 						this.getLogisticsQuotedPriceList(this.swiperCurrent)
 					}
 				}
 				//常规
 				if (this.swiperCurrent === 1) {
-					if (this.count > (this.currentPage+1)*this.size) {
-						this.currentPage+=1
+					if (this.count > (this.currentPage + 1) * this.size) {
+						this.currentPage += 1
 						this.getLogisticsQuotedPriceList(this.swiperCurrent)
 					}
 				}
