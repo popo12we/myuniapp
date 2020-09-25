@@ -357,10 +357,7 @@
 									<text class="mg15"></text>
 									<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 									<text class="mg15"></text>
-									<text v-if="item.currency==='USD'">USD</text>
-									<text v-if="item.currency==='CNY'">CNY</text>
-									<text class="mg15"></text>
-									<text class="change" @click.stop="changeCurrency(item)">切换</text>
+									<text>USD</text>
 								</view>
 								<u-collapse-item :index="index" @change="changeCollapseItem">
 									<view class="checkbox_view_oneline">
@@ -400,15 +397,13 @@
 											</u-col>
 										</u-row>
 									</view>
+									
 									<view class="price_change" v-if="logisticRoutineList[index].checked&&item.down">
 										<text class="gray pricetext">价格</text>
 										<text class="mg15"></text>
 										<u-input class="ufield" :label-width="0" v-model.number="item.price" @click.stop placeholder=" "></u-input>
 										<text class="mg15"></text>
-										<text v-if="item.currency==='USD'">USD</text>
-										<text v-if="item.currency==='CNY'">CNY</text>
-										<text class="mg15"></text>
-										<text class="change" @click.stop="changeCurrency(item)">切换</text>
+										<text>USD</text>
 									</view>
 									<view class="checkbox_view_oneline mt15">
 										<u-row gutter="16">
@@ -1161,7 +1156,7 @@
 				if (this.isRole) {
 					this.Inquiry[e.index].down = e.show
 				} else {
-					this.list[e.index].down = e.show
+					this.logisticRoutineList[e.index].down = e.show
 				}
 
 			},
@@ -1514,7 +1509,6 @@
 			},
 			//物流模态框提价报价
 			logisticSubmitBidding() {
-				console.log(this.logisticQuotationData)
 				this.$refs.iForm3.validate(async valid => {
 					if (valid) {
 						let res = await fetch(this.api.v2.logisticsBidQuotation, {
@@ -2099,24 +2093,25 @@
 
 				.price_change {
 					display: flex;
-
+				
 					/deep/ .u-input__input {
-						min-height: 30px !important;
+						height: 55rpx;
+						min-height: 30rpx !important;
 					}
-
+				
 					.pricetext {
 						margin-left: 6rpx;
 					}
-
+				
 					.ufield {
 						flex: 1;
 						border-bottom: 2rpx solid #ccc;
 					}
-
+				
 					text {
 						align-self: center;
 					}
-
+				
 					.change {
 						color: #00a6db;
 					}
