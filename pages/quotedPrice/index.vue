@@ -336,6 +336,7 @@
 		onShow() {
 			this.isRole = uni.getStorageSync('roleId') === 1 ? true : false
 			this.currentPage = 0
+			this.count=0
 			if (this.isRole) {
 				this.getInquiryList()
 			} else {
@@ -375,7 +376,9 @@
 				logisticsUngeneralList: [],
 				isRole: uni.getStorageSync('roleId') === 1 ? true : false,
 				//用于下拉刷新
-				currentPage: 0
+				currentPage: 0,
+				size:5,
+				count:0
 			}
 		},
 		methods: {
@@ -429,16 +432,18 @@
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: 'alreadyList',
 						dataType,
-						from: this.currentPage,
-						size: 10
+						from: this.currentPage*this.size,
+						size: this.size
 					}
 				})
 				if (res.data.code === '0') {
 					if (!index) {
-						this.logisticsGeneralList = res.data.data
+						this.logisticsGeneralList = [...this.logisticsGeneralList,...res.data.data.logisticsbIdVos]
+						
 					} else {
-						this.logisticsUngeneralList = res.data.data
+						this.logisticsUngeneralList = [...this.logisticsUngeneralList,...res.data.data.logisticsbIdVos]
 					}
+					this.count=res.data.data.count
 				}
 			},
 			//点击搜索按钮
@@ -447,6 +452,10 @@
 			},
 			// tab栏切换
 			change(index) {
+				this.logisticsGeneralList= []
+				this.logisticsUngeneralList= []
+				this.currentPage = 0
+				this.count=0
 				this.swiperCurrent = index
 				this.getLogisticsQuotedPriceList(index)
 			},
@@ -476,19 +485,22 @@
 			},
 			//下拉加载
 			reachBottom() {
-				// if (this.swiperCurrent === 0) {
-				// 	if (this.logisticsGeneralList.length >= 10) {
-				// 		this.currentPage++
-				// 		this.getLogisticsQuotedPriceList(this.swiperCurrent)
-				// 	}
-				// }
-				// if (this.swiperCurrent === 1) {
-				// 	if (this.logisticsUngeneralList.length >= 10) {
-				// 		this.currentPage++
-				// 		this.getLogisticsQuotedPriceList(this.swiperCurrent)
-				// 	}
-				// }
-
+				//实盘
+				if (this.swiperCurrent === 0) {
+					if (this.count > (this.currentPage+1)*this.size) {
+						console.log("a执行了")
+						this.currentPage+=1
+						this.getLogisticsQuotedPriceList(this.swiperCurrent)
+					}
+				}
+				//常规
+				if (this.swiperCurrent === 1) {
+					if (this.count > (this.currentPage+1)*this.size) {
+						console.log("b执行了")
+						this.currentPage+=1
+						this.getLogisticsQuotedPriceList(this.swiperCurrent)
+					}
+				}
 			}
 		},
 		computed: {
