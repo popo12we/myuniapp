@@ -20,7 +20,7 @@
 				<view class="uni-padding-wrap">
 					<view class="page-section swiper">
 						<view class="page-section-spacing">
-							<!-- autoplay='true' :circular='true' -->
+							<!-- :autoplay='true' :circular='true' -->
 							<swiper class="swiper" :indicator-dots="indicatorDots" indicator-color='rgba(0, 0, 0, .1)'
 							 indicator-active-color='#666'>
 								<swiper-item v-for="item in swiperList" :key="item.id" @click="navigateTobidding(item)">

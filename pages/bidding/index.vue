@@ -20,9 +20,9 @@
 						<text class="gray">{{bindingData.detail.spuSpec}}</text>
 					</u-col>
 					<u-col span="5">
-						<text class="gray">品牌</text>
+						<text class="gray">数量</text>
 						<text class="mg15">:</text>
-						<text class="gray">{{bindingData.detail.brand}}</text>
+						<text class="gray">{{bindingData.detail.saleQty}}{{bindingData.detail.unit}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -34,14 +34,8 @@
 						<text class="mg15">:</text>
 						<text class="gray">{{bindingData.detail.packageInfo}}</text>
 					</u-col>
-					<u-col span="5">
-						<text class="gray">数量</text>
-						<text class="mg15">:</text>
-						<text class="gray">{{bindingData.detail.saleQty}}{{bindingData.detail.unit}}</text>
-					</u-col>
 				</u-row>
 			</view>
-
 			<view class="binding-info_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'">
 				<u-row gutter="16">
 					<u-col span="7">
@@ -61,6 +55,21 @@
 					</u-col>
 				</u-row>
 			</view>
+			
+			<view class="checkbox_view_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'">
+				<u-row gutter="16">
+					<u-col span="7">
+						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">出价次数</text>
+						<text class="mg15">:</text>
+						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">1/3</text>
+					</u-col>
+					<u-col span="5">
+						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">当前排名</text>
+						<text class="mg15">:</text>
+						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">2</text>
+					</u-col>
+				</u-row>
+			</view>
 
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
@@ -68,13 +77,21 @@
 						<text class="gray">{{bindingData.detail.shipPort}}---</text>
 						<text class="gray">{{bindingData.detail.destinationPort}}</text>
 					</u-col>
+					<u-col span="5">
+						<text class="gray">20GP</text>
+					</u-col>
 				</u-row>
 			</view>
 
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
-					<u-col span="12">
+					<u-col span="7">
 						<text class="gray">期望5天交货</text>
+					</u-col>
+					<u-col span="5">
+					<text class="gray">打托</text>
+					<text class="mg15">:</text>
+					<text class="gray">{{item.ifPlay=="1"?"是":"否"}}</text>
 					</u-col>
 				</u-row>
 			</view>
