@@ -56,7 +56,7 @@
 				</u-row>
 			</view>
 			
-			<view class="checkbox_view_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'">
+			<view class="binding-info_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'">
 				<u-row gutter="16">
 					<u-col span="7">
 						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">出价次数</text>

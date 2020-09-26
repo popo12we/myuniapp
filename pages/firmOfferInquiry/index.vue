@@ -404,8 +404,7 @@
 			//拿到详细信息
 			async getDetails() {
 				let data = {}
-				console.log(this.bindingVuexCheckeddata)
-				if (this.bindingVuexCheckeddata.status === "实盘询价") {
+				if (this.bindingVuexCheckeddata.titletext === "实盘询价") {
 					data = {
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: "details",
@@ -452,7 +451,7 @@
 				immediate: true,
 				handler() {
 					wx.setNavigationBarTitle({
-						title: this.bindingVuexCheckeddata.titletext
+						title: '实盘询价'
 					})
 				}
 
