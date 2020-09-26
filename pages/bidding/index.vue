@@ -59,14 +59,14 @@
 			<view class="checkbox_view_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'">
 				<u-row gutter="16">
 					<u-col span="7">
-						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">出价次数</text>
+						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">出价次数</text>
 						<text class="mg15">:</text>
-						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">1/3</text>
+						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">1/3</text>
 					</u-col>
 					<u-col span="5">
-						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">当前排名</text>
+						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">当前排名</text>
 						<text class="mg15">:</text>
-						<text :class="{gray,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">2</text>
+						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">2</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -149,7 +149,7 @@
 						</u-col>
 						<u-col span="3">
 							<view class="binding-record_item_content">
-								<view>价格{{item.cur}}</view>
+								<view>价格</view>
 								<view class="mg-t24">日期</view>
 							</view>
 						</u-col>
@@ -164,7 +164,7 @@
 			</view>
 		</view>
 		<!-- 我的报价记录 -->
-		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'">
+		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'">
 			<view class="mybinding-title">
 				我的报价记录
 			</view>

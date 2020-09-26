@@ -1111,7 +1111,6 @@
 					this.checkedNum = this.logisticRoutineList.filter((val) => val.checked).length
 					this.allChecked =
 						this.logisticRoutineList.length === this.logisticRoutineList.filter((val) => val.checked).length
-						console.log(item)
 						this.bidId = item.bidId
 						this.custId = item.custId
 						this.inaploId = item.inaploId
