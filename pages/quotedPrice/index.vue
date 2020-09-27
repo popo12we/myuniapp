@@ -502,9 +502,10 @@
 					return item.state === 1 ? '已报价' : item.state === 3 ? "已放弃" : item.state === 4 ? '已结束' : '未报价'
 				}
 			},
+			//是否中标
 			showTagIsoutbid() {
 				return function(item) {
-					return item.state === 1 ? '已中标' : '未中标'
+					return item.isoutbid === 1 ? '已中标' : '未中标'
 				}
 			}
 		}

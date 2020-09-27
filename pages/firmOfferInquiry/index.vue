@@ -17,7 +17,7 @@
 				<view class="fifthtext gray">
 					1*20'GP
 				</view>
-				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
+				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='实盘',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
 			</view>
 			<view :class="{isWinBidding:true}"  v-if="bindingVuexCheckeddata.status==='物流已报价实盘询价'">已中标</view>
 			<view class="binding-info_oneline">
@@ -128,6 +128,7 @@
 				<view class="fourthtext">
 					{{bindingData.logisticsbIdVo.arrivePort}}
 				</view>
+				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='实盘',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
 			</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
@@ -408,6 +409,18 @@
 			showTag() {
 				return function(item) {
 					return item.moduleCode === 'PC007' ? '实盘' :  "常规"
+				}
+			},
+			//报价状态
+			showTagState() {
+				return function(item) {
+					return item.state === 1 ? '已报价' : item.state === 3 ? "已放弃" : item.state === 4 ? '已结束' : '未报价'
+				}
+			},
+			//是否中标
+			showTagIsoutbid() {
+				return function(item) {
+					return item.isoutbid === 1 ? '已中标' : '未中标'
 				}
 			}
 		}
