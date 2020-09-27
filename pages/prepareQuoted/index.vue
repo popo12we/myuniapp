@@ -1689,12 +1689,24 @@
 		computed: {
 			swiperList() {
 				let arr = [...this.biddingList, ...this.realOrderList]
+				arr.forEach(item=>{
+					if(item.inquiryDeadline){
+						item.inquiryDeadline=item.inquiryDeadline.replace(/-/g,'/')
+					}
+				})
 				arr = arr.filter(item => {
 					return new Date(item.inquiryDeadline).getTime() > new Date().getTime()
+					
 				})
 				return arr
 			},
 			logicSwiperList() {
+				this.logisticRealOrderList.forEach(item=>{
+					if(item.biddeadLine){
+						item.biddeadLine=item.biddeadLine.replace(/-/g,'/')
+					}
+				})
+				console.log(this.logisticRealOrderList)
 				return this.logisticRealOrderList.filter(item => {
 					return new Date(item.biddeadLine) > new Date()
 				})
