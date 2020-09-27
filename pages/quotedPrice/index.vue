@@ -135,41 +135,41 @@
 							<view class="commodity_list">
 								<view class="checkbox_view" v-for="(item, index) in logisticsGeneralList" :key="index">
 									<view class="checkbox_view_oneline  checkbox_view_oneline_title">
-										<view :class="{secondtext:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.startPort}}</view>
+										<view :class="{secondtext:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.startPort}}</view>
 										<view class="thirdtext">
 											<view :class="{shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">直达</view>
 											<view :class="{shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">——</view>
 										</view>
-										<view :class="{fourthtext:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.arrivePort}}</view>
+										<view :class="{fourthtext:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.arrivePort}}</view>
 										<text class="mg15"></text>
-										<text :class="{checkbox_view_tab:true,redbg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">实盘</text>
-										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagState(item)}}</view>
+										<text :class="{checkbox_view_tab:true,redbg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{swiperCurrent?"常规":"实盘"}}</text>
+										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagIsoutbid(item)||showTagState(item)}}</view>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">箱型</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">箱型</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.cabinetType}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.cabinetType}}</text>
 											</u-col>
 											<u-col span="5">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">截止日期</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">截止日期</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.biddeadLine}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.biddeadLine}}</text>
 											</u-col>
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">货盘类型</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">货盘类型</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.palletType}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.palletType}}</text>
 											</u-col>
 											<u-col span="5">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">货物总量</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">货物总量</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.footNumber}}*{{item.cabinetType}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.footNumber}}*{{item.cabinetType}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -177,37 +177,37 @@
 										<u-row gutter="16">
 											<u-col span="7">
 												<view>
-													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">货物毛重</text>
+													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">货物毛重</text>
 													<text class="mg15"></text>
-													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.gw}}</text>
+													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.gw}}</text>
 												</view>
 											</u-col>
 											<u-col span="5">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">预计出运</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">预计出运</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.planshipDate}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.planshipDate}}</text>
 											</u-col>
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.loadDock}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.loadDock}}</text>
 												<text class="mg15">--</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.unLoadDock}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.unLoadDock}}</text>
 											</u-col>
 											<u-col span="5">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">货物类型</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">货物类型</text>
 												<text class="mg15">--</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">一般化工品</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">一般化工品</text>
 											</u-col>
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标')"
 											 @click="toBiddingLogistics(item,'物流已报价','物流已报价实盘询价')">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标')"
 											 @click="toBiddingLogistics(item,'物流已报价','物流已报价实盘询价')">详情</u-button>
 										</u-row>
 									</view>
@@ -231,41 +231,41 @@
 							<view class="commodity_list">
 								<view class="checkbox_view" v-for="(item, index) in logisticsUngeneralList" :key="index">
 									<view class="checkbox_view_oneline  checkbox_view_oneline_title">
-										<view :class="{secondtext:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.startPort}}</view>
+										<view :class="{secondtext:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.startPort}}</view>
 										<view class="thirdtext">
-											<view :class="{shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">直达</view>
-											<view :class="{shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">——</view>
+											<view :class="{shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">直达</view>
+											<view :class="{shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">——</view>
 										</view>
-										<view :class="{fourthtext:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.arrivePort}}</view>
+										<view :class="{fourthtext:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.arrivePort}}</view>
 										<text class="mg15"></text>
-										<text :class="{checkbox_view_tab:true,bluebg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">常规</text>
-										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagState(item)}}</view>
+										<text :class="{checkbox_view_tab:true,bluebg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">常规</text>
+										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagState(item)}}</view>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">货物总量</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">货物总量</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.footNumber}}*{{item.cabinetType}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.footNumber}}*{{item.cabinetType}}</text>
 											</u-col>
 											<u-col span="5">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">截止日期</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">截止日期</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.biddeadLine}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.biddeadLine}}</text>
 											</u-col>
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="7">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">货盘类型</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">货盘类型</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.palletType}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.palletType}}</text>
 											</u-col>
 											<u-col span="5">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">危险品</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">危险品</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.danger===1?'是':'否'}}*{{item.cabinetType}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.danger===1?'是':'否'}}*{{item.cabinetType}}</text>
 											</u-col>
 										</u-row>
 									</view>
@@ -273,33 +273,33 @@
 										<u-row gutter="16">
 											<u-col span="7">
 												<view>
-													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">货物毛重</text>
+													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">货物毛重</text>
 													<text class="mg15"></text>
-													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.gw}}</text>
+													<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.gw}}</text>
 												</view>
 											</u-col>
 											<u-col span="5">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">预计出运</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">预计出运</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.planshipDate}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.planshipDate}}</text>
 											</u-col>
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-col span="12">
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">备注</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">备注</text>
 												<text class="mg15">:</text>
-												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标'}">{{item.remarks}}</text>
+												<text :class="{gray:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.remarks}}</text>
 											</u-col>
 
 										</u-row>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
-											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标')"
 											 @click="toBiddingLogistics(item,'物流已报价','物流已报价常规询价')">详情</u-button>
-											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
+											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标')"
 											 @click="toBiddingLogistics(item,'物流已报价','物流已报价常规询价')">详情</u-button>
 										</u-row>
 									</view>
@@ -505,7 +505,14 @@
 			//是否中标
 			showTagIsoutbid() {
 				return function(item) {
-					return item.isoutbid === 1 ? '已中标' : '未中标'
+					if(item.isoutbid === 1){
+						return '已中标'
+					}else if(item.isoutbid === 0){
+						return '未中标'
+					}else{
+						return ''
+					}
+					
 				}
 			}
 		}
