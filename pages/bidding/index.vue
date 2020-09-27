@@ -55,7 +55,7 @@
 					</u-col>
 				</u-row>
 			</view>
-			
+
 			<view class="binding-info_oneline" v-if="showTag(bindingVuexCheckeddata)==='竞价'&&bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'">
 				<u-row gutter="16">
 					<u-col span="7">
@@ -89,9 +89,9 @@
 						<text class="gray">期望{{bindingData.detail.expeDeliDay}}天交货</text>
 					</u-col>
 					<u-col span="5">
-					<text class="gray">打托</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{item.ifPlay=="1"?"是":"否"}}</text>
+						<text class="gray">打托</text>
+						<text class="mg15">:</text>
+						<text class="gray">{{item.ifPlay=="1"?"是":"否"}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -164,12 +164,12 @@
 			</view>
 		</view>
 		<!-- 我的报价记录 -->
-		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'">
-			<view class="mybinding-title">
+		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'&&showTag(bindingVuexCheckeddata)!=='竞价'">
+			<!-- <view class="mybinding-title">
 				我的报价记录
-			</view>
+			</view> -->
 			<!-- 我的具体报价记录 -->
-			<view class="mybinding-recode">
+		<!-- 	<view class="mybinding-recode">
 				<view class="mybinding-recode_item" v-for="(item,index) in bindingData.history" :key="index">
 					<view class="mybinding-recode_item_count">
 						<text>第{{index+1}}次报价</text>
@@ -183,19 +183,151 @@
 					</view>
 					<view class="mybinding-recode_item_ball"></view>
 				</view>
+			</view> -->
+			
+			<view class="mybinding-title">
+				我的报价详情
 			</view>
-
-			<view class="binding-info_oneline" v-if="bindingVuexCheckeddata.titletext==='竞价'">
-				<u-row gutter="16">
-					<u-col span="6">
-						<u-button type="error" plain @click="giveupbidding">放弃报价</u-button>
-					</u-col>
-					<u-col span="6">
-						<u-button type="error" @click="modalOpen">我要竞价</u-button>
-					</u-col>
-				</u-row>
+			<view class="mybinding-info">
+				<view class="mybinding-recode_item">
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="7">
+								<text class="gray">上海</text>
+								<text class="mg15">---</text>
+								<text class="gray">拉各斯</text>
+							</u-col>
+							<u-col span="5">
+								<text class="gray">20GP</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="7">
+								<text class="gray">期望5天交货</text>
+							</u-col>
+							<u-col span="5">
+								<text class="gray">打托</text>
+								<text class="mg15">:</text>
+								<text class="gray">是</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">询价单编号：IN2087973</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">备注：</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">一种食品添加剂</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">2020-08-07  12:00截止报价</text>
+							</u-col>
+						</u-row>
+					</view>
+				</view>
 			</view>
 		</view>
+		
+		
+		
+		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'&&showTag(bindingVuexCheckeddata)==='竞价'">
+			<view class="mybinding-title">
+				我的报价记录
+			</view>
+			<view class="mybinding-title">
+				第一次报价
+			</view>
+			<view class="mybinding-info">
+				<view class="mybinding-recode_item">
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="7">
+								<text class="gray">价格(USD)</text>
+								<text class="mg15">---</text>
+								<text class="gray">1.71/KG</text>
+							</u-col>
+							<u-col span="5">
+								<text class="gray">交货天数</text>
+								<text class="mg15">:</text>
+								<text class="gray">12</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">价格趋势</text>
+								<text class="mg15">:</text>
+								<text class="gray">平稳</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">趋势说明：</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">最近工厂进度趋于稳定，价格稳定。</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">采购反馈：</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">这价格接收不了（价格太高）</text>
+							</u-col>
+						</u-row>
+					</view>
+				</view>
+			</view>
+		</view>
+
+
+
+
+		<view class="binding-info_oneline" v-if="bindingVuexCheckeddata.titletext==='竞价'">
+			<u-row gutter="16">
+				<u-col span="6">
+					<u-button type="error" plain @click="giveupbidding">放弃报价</u-button>
+				</u-col>
+				<u-col span="6">
+					<u-button type="error" @click="modalOpen">我要竞价</u-button>
+				</u-col>
+			</u-row>
+		</view>
+
+
+
 
 		<!-- 竞价模态框 -->
 		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
@@ -523,6 +655,11 @@
 			.mybinding-title {
 				height: 66rpx;
 				line-height: 66rpx;
+			}
+			.mybinding-info{
+				.mybinding-info_item{
+					margin-bottom: 25rpx;
+				}
 			}
 
 			//我的报价记录具体内容

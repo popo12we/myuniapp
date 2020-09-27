@@ -1706,7 +1706,6 @@
 						item.biddeadLine=item.biddeadLine.replace(/-/g,'/')
 					}
 				})
-				console.log(this.logisticRealOrderList)
 				return this.logisticRealOrderList.filter(item => {
 					return new Date(item.biddeadLine) > new Date()
 				})

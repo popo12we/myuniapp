@@ -521,10 +521,12 @@
 		computed: {
 			//三天后就过期的数据
 			day3AfterList() {
-				return this.list.filter(item => {
-					return ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate).getTime() <
-						this.day3After)
-				})
+				if(this.list&&this.list.length>0){
+					return this.list.filter(item => {
+						return ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate).getTime() <
+							this.day3After)
+					})
+				}
 			}
 		}
 	}
