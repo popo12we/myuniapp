@@ -19,7 +19,7 @@
 				</view>
 				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='实盘',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
 			</view>
-			<view :class="{isWinBidding:true}"  v-if="bindingVuexCheckeddata.status==='物流已报价实盘询价'">已中标</view>
+			<view :class="{isWinBidding:true,graybg:showTagState(bindingVuexCheckeddata)==='已结束'||showTagState(bindingVuexCheckeddata)==='已放弃'||showTagIsoutbid(bindingVuexCheckeddata)==='未中标',redbg:showTagIsoutbid(bindingVuexCheckeddata)==='已中标',orangebg:showTagState(bindingVuexCheckeddata)==='已报价'}"  v-if="bindingVuexCheckeddata.status==='物流已报价实盘询价'">{{showTagIsoutbid(bindingVuexCheckeddata)||showTagState(bindingVuexCheckeddata)}}</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
@@ -129,6 +129,7 @@
 					{{bindingData.logisticsbIdVo.arrivePort}}
 				</view>
 				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='实盘',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
+				<view :class="{isWinBidding:true,graybg:showTagState(bindingVuexCheckeddata)==='已结束'||showTagState(bindingVuexCheckeddata)==='已放弃'||showTagIsoutbid(bindingVuexCheckeddata)==='未中标',redbg:showTagIsoutbid(bindingVuexCheckeddata)==='已中标',orangebg:showTagState(bindingVuexCheckeddata)==='已报价'}"  v-if="bindingVuexCheckeddata.status==='物流已报价常规询价'">{{showTagIsoutbid(bindingVuexCheckeddata)||showTagState(bindingVuexCheckeddata)}}</view>
 			</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
@@ -447,7 +448,7 @@
 			.isWinBidding {
 				position: absolute;
 				top: 0;
-				left: 60%;
+				left: 80%;
 				width: 120rpx;
 				height: 50rpx;
 				text-align: center;

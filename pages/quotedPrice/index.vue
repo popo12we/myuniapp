@@ -375,6 +375,7 @@
 			//点击详情跳转
 			toBidding(obj) {
 				this.$set(obj, 'titletext', '报价详情')
+				this.$set(obj, 'status', 'quotedPrice')
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
 					url: '../bidding/index',
