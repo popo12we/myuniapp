@@ -239,7 +239,7 @@
 										<view :class="{fourthtext:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.arrivePort}}</view>
 										<text class="mg15"></text>
 										<text :class="{checkbox_view_tab:true,bluebg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">常规</text>
-										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagState(item)}}</view>
+										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagIsoutbid(item)||showTagState(item)}}</view>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">

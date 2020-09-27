@@ -420,7 +420,14 @@
 			//是否中标
 			showTagIsoutbid() {
 				return function(item) {
-					return item.isoutbid === 1 ? '已中标' : '未中标'
+					if(item.isoutbid === 1){
+						return '已中标'
+					}else if(item.isoutbid === 0){
+						return '未中标'
+					}else{
+						return ''
+					}
+					
 				}
 			}
 		}
