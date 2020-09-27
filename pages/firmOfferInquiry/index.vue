@@ -17,7 +17,9 @@
 				<view class="fifthtext gray">
 					1*20'GP
 				</view>
+				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='竞价',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
 			</view>
+			<view :class="{isWinBidding:true}"  v-if="bindingVuexCheckeddata.status==='物流已报价实盘询价'">已中标</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
@@ -211,62 +213,7 @@
 				</view>
 			</view>
 		</view>
-		
-		<!-- 我的报价记录 -->
-		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='物流待报价'">
-			<view class="binding-ranking-title">
-				我的报价记录
-			</view>
-			<!-- 具体的报价记录 -->
-			<view class="binding-record" v-if="myBindingData.price">
-				<view class="binding-record-item">
-					<text class="gray">价格(USD)</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.price}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">有效期</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.expiredDate}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">船公司</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.shippingName}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">船期</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{"周"+myBindingData.schedule}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">转运方式</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.transferMethod}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">航程</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.voyage}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">价格趋势</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.pricetrendType}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">趋势说明</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.pricetrendRemark}}</text>
-				</view>
-				<view class="binding-record-item">
-					<text class="gray">备注</text>
-					<text class="mg15">:</text>
-					<text class="gray">{{myBindingData.remark}}</text>
-				</view>
-			</view>
-		</view>
-		
+			
 		<!-- 我的报价记录 -->
 		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='物流已报价'">
 			<view class="binding-ranking-title">
@@ -456,6 +403,13 @@
 				}
 
 			}
+		},
+		computed:{
+			showTag() {
+				return function(item) {
+					return item.moduleCode === 'PC007' ? '实盘' :  "常规"
+				}
+			}
 		}
 	}
 </script>
@@ -476,12 +430,10 @@
 				left: 60%;
 				width: 120rpx;
 				height: 50rpx;
-				color: #fff;
 				text-align: center;
 				line-height: 48rpx;
 				border-bottom-left-radius: 20rpx;
 				border-bottom-right-radius: 20rpx;
-				background-color: #D0021B;
 				font-size: 24rpx;
 			}
 
@@ -528,11 +480,12 @@
 				}
 
 				.bidding_sign {
-					padding: 4rpx 14rpx;
+					padding: 6rpx 14rpx;
 					background-color: #D0021B;
 					border-radius: 14rpx;
 					color: #fff;
-					font-size: 20rpx;
+					font-size: 24rpx;
+					margin-left:20rpx;
 				}
 			}
 		}
