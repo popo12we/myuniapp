@@ -1410,7 +1410,7 @@
 					})
 				} else {
 					obj.status = 'prepareQuoted'
-					this.$set(obj, 'titletext', '实盘询价')
+					this.$set(obj, 'titletext', '物流待报价')
 					this.$store.dispatch('checkOne', obj)
 					uni.navigateTo({
 						url: '../firmOfferInquiry/index'

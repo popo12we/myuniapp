@@ -2,7 +2,7 @@
 	<!-- 物流供应商待报价页面(实盘询价) -->
 	<view class="firmOfferInquiry">
 		<!-- 竞价信息(物流常规询价) -->
-		<view class="binding-info" v-if="bindingVuexCheckeddata.titletext==='实盘询价'">
+		<view class="binding-info" v-if="bindingVuexCheckeddata.titletext==='物流待报价'||bindingVuexCheckeddata.status==='物流已报价实盘询价'">
 			<view class="binding-info_oneline  binding-info_oneline_title">
 				<view class="secondtext">
 					{{bindingVuexCheckeddata.startPort}}
@@ -114,7 +114,7 @@
 		</view>
 
 		<!-- 常规询价 -->
-		<view class="binding-info" v-if="bindingVuexCheckeddata.titletext==='常规询价'">
+		<view class="binding-info" v-if="bindingVuexCheckeddata.titletext==='物流已报价'&&bindingVuexCheckeddata.status==='物流已报价常规询价'">
 			<view class="binding-info_oneline  binding-info_oneline_title">
 				<view class="secondtext">
 					{{bindingData.logisticsbIdVo.startPort}}
@@ -181,7 +181,7 @@
 		</view>
        
 		<!-- 竞价排名 -->
-		<view class="binding-ranking" v-if="bindingData.logisticsbidsupplierVos&&bindingVuexCheckeddata.titletext==='实盘询价'">
+		<view class="binding-ranking" v-if="bindingData.logisticsbidsupplierVos&&bindingVuexCheckeddata.titletext==='物流待报价'">
 			<view class="binding-ranking-title">
 				全部供应商报价排名(价格从低到高)
 			</view>
@@ -213,7 +213,7 @@
 		</view>
 		
 		<!-- 我的报价记录 -->
-		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='实盘询价'">
+		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='物流待报价'">
 			<view class="binding-ranking-title">
 				我的报价记录
 			</view>
@@ -268,7 +268,7 @@
 		</view>
 		
 		<!-- 我的报价记录 -->
-		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='常规询价'">
+		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='物流已报价'">
 			<view class="binding-ranking-title">
 				我的报价记录
 			</view>
@@ -404,7 +404,7 @@
 			//拿到详细信息
 			async getDetails() {
 				let data = {}
-				if (this.bindingVuexCheckeddata.titletext === "实盘询价") {
+				if (this.bindingVuexCheckeddata.titletext === "物流待报价"||this.bindingVuexCheckeddata.status === "物流已报价实盘询价") {
 					data = {
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: "details",
@@ -426,7 +426,7 @@
 				})
 				if (res.data.code === '0') {
 					this.bindingData = res.data.data
-					if(this.bindingVuexCheckeddata.titletext==='实盘询价'){
+					if(this.bindingVuexCheckeddata.titletext==='物流待报价'){
 						if(this.bindingData.logisticsbidsupplierVos&&this.bindingData.logisticsbidsupplierVos.length>0){
 							for(let i=0;i<this.bindingData.logisticsbidsupplierVos.length;i++){
 								if(this.bindingData.logisticsbidsupplierVos[i].isMy=='1'){

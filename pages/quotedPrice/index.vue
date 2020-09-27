@@ -206,9 +206,9 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
-											 @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
+											 @click="toBiddingLogistics(item,'物流已报价','物流已报价实盘询价')">详情</u-button>
 											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
-											 @click="toBiddingLogistics(item,'实盘询价')">详情</u-button>
+											 @click="toBiddingLogistics(item,'物流已报价','物流已报价实盘询价')">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -298,9 +298,9 @@
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
 											<u-button shape="circle" plain size="medium" class='fr' v-if="(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
-											 @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
+											 @click="toBiddingLogistics(item,'物流已报价','物流已报价常规询价')">详情</u-button>
 											<u-button type="error" shape="circle" plain size="medium" class='fr' v-if="!(showTagState(item)==='已结束'||showTagIsoutbid(item)==='未中标')"
-											 @click="toBiddingLogistics(item,'常规询价')">详情</u-button>
+											 @click="toBiddingLogistics(item,'物流已报价','物流已报价常规询价')">详情</u-button>
 										</u-row>
 									</view>
 								</view>
@@ -374,7 +374,6 @@
 		methods: {
 			//点击详情跳转
 			toBidding(obj) {
-				obj.status = 'quotedPrice'
 				this.$set(obj, 'titletext', '报价详情')
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
@@ -465,8 +464,8 @@
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			toBiddingLogistics(obj, status) {
-				this.$set(obj, 'titletext', status)
+			toBiddingLogistics(obj,titletext,status) {
+				this.$set(obj, 'titletext', titletext)
 				this.$set(obj, 'status', status)
 				this.$store.dispatch('checkOne', obj)
 				uni.navigateTo({
