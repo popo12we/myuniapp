@@ -222,108 +222,140 @@
 				我的报价记录
 			</view>
 			<!-- 具体的报价记录 -->
-			<view class="binding-record" v-if="bindingData.logisticsbidsupplierVo">
+			<view class="binding-record" v-if="myBindingData">
 				<view class="binding-record-item">
 					<text class="gray">价格(USD)</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.price}}</text>
+					<text class="gray">{{myBindingData.price}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">有效期</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.expiredDate}}</text>
+					<text class="gray">{{myBindingData.expiredDate}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">船公司</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.shippingName}}</text>
+					<text class="gray">{{myBindingData.shippingName}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">船期</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{"周"+bindingData.logisticsbidsupplierVo.schedule}}</text>
+					<text class="gray">{{"周"+myBindingData.schedule}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">转运方式</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.transferMethod}}</text>
+					<text class="gray">{{myBindingData.transferMethod}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">航程</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.voyage}}</text>
+					<text class="gray">{{myBindingData.voyage}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">价格趋势</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.pricetrendType}}</text>
+					<text class="gray">{{myBindingData.pricetrendType}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">趋势说明</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.pricetrendRemark}}</text>
+					<text class="gray">{{myBindingData.pricetrendRemark}}</text>
 				</view>
 				<view class="binding-record-item">
 					<text class="gray">备注</text>
 					<text class="mg15">:</text>
-					<text class="gray">{{bindingData.logisticsbidsupplierVo.remark}}</text>
+					<text class="gray">{{myBindingData.remark}}</text>
 				</view>
 			</view>
 		</view>
-
-		<!-- 竞价模态框 -->
-		<u-modal v-model="modalShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
-			<view class="slot-content">
-				<view class="slot-content_oneline">
-					<u-row gutter="16">
-						<u-col span="6">
-							<text>价格（USD）*</text>
-						</u-col>
-						<u-col span="6">
-							<text class="fr">1.63</text>
-						</u-col>
-					</u-row>
-				</view>
-
-				<view class="slot-content_oneline">
-					<u-row gutter="16">
-						<u-col span="6">
-							<text>有效期*</text>
-						</u-col>
-						<u-col span="6">
-							<text class="fr">2020-08-12</text>
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					<u-row gutter="16">
-						<u-col span="12">
-							<text>备注*</text>
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					<u-row gutter="16">
-						<u-col span="12">
-							<u-input v-model="remark" placeholder="请输入备注" />
-						</u-col>
-					</u-row>
-				</view>
-				<view class="remark">
-					总共剩余1次报价机会
-				</view>
-				<view>
-					<u-row gutter="16">
-						<u-col span="6">
-							<u-button type="error" plain>放弃报价</u-button>
-						</u-col>
-						<u-col span="6">
-							<u-button type="error">我要报价</u-button>
-						</u-col>
-					</u-row>
-				</view>
+		
+		<view class="binding-info_oneline" v-if="bindingVuexCheckeddata.titletext==='物流待报价'">
+			<u-row gutter="16">
+				<u-col span="6">
+					<u-button type="error" plain @click="giveupbidding">放弃报价</u-button>
+				</u-col>
+				<u-col span="6">
+					<u-button type="error" @click="modalOpen">我要竞价</u-button>
+				</u-col>
+			</u-row>
+		</view>
+		
+		<!-- 物流报价模态框 -->
+		<u-modal v-model="logisticQuotationFormShow" :show-title="false" :show-confirm-button="false" z-index="10000">
+			<view class="inquiryModal_content">
+				<u-form :model="logisticQuotationForm" ref="iForm3" :label-width="145">
+					<u-form-item label="价格" prop="price">
+						<u-input v-model="logisticQuotationForm.price" placeholder="请输入价格" />
+					</u-form-item>
+					<u-form-item label="开始时间" prop="startDate">
+						<u-input v-model="logisticQuotationForm.startDate" type="select" @click="showValidityStart" placeholder="请输入开始时间" />
+					</u-form-item>
+					<u-form-item label="结束时间" prop="expiredDate">
+						<u-input v-model="logisticQuotationForm.expiredDate" type="select" @click="showValidityEnd" placeholder="请输入结束时间" />
+					</u-form-item>
+					<u-form-item label="船公司" prop="shippingName">
+						<u-input v-model="logisticQuotationForm.shippingName" placeholder="请输入船公司" />
+					</u-form-item>
+					<u-form-item label="船期" prop="schedule">
+						<!-- <u-input v-model="logisticQuotationForm.schedule" placeholder="请输入船期" /> -->
+						<u-checkbox-group @change="checkboxGroupChange">
+							<u-checkbox v-model="item.checked" v-for="(item, index) in checkscheduleList" :key="index" :name="item.name">
+								{{ item.name }}
+							</u-checkbox>
+						</u-checkbox-group>
+					</u-form-item>
+					<u-form-item label="转运方式" prop="transferMethod">
+						<u-input v-model="logisticQuotationForm.transferMethodValue" type="select" @click="showTransferMethod"
+						 placeholder="请输入转运方式" />
+					</u-form-item>
+					<u-form-item label="航程" prop="voyage">
+						<u-input v-model="logisticQuotationForm.voyage" placeholder="请输入航程" />
+					</u-form-item>
+					<u-form-item label="鉴定书" prop="appraisalCertificate">
+						<u-input v-model="logisticQuotationForm.appraisalCertificateValue" type="select" @click="showAppraisalCertificate"
+						 placeholder="是否有鉴定书" />
+					</u-form-item>
+					<u-form-item label="价格趋势" prop="trend">
+						<u-input v-model="logisticQuotationForm.trendValue" type="select" @click="showTrendSelect" placeholder="请选择价格趋势" />
+					</u-form-item>
+					<u-form-item label="趋势说明" placeholder="请输入趋势说明">
+						<u-input v-model="logisticQuotationForm.explain" />
+					</u-form-item>
+					<u-form-item label="备注" placeholder="请输入备注">
+						<u-input v-model="logisticQuotationForm.remark" />
+					</u-form-item>
+					<view class="btn-area">
+						<u-row gutter="16">
+							<u-col span="6">
+								<u-button type="error" plain @click="giveuptoLogisticQuotation">取消</u-button>
+							</u-col>
+							<u-col span="6">
+								<u-button type="error" @click="logisticSubmitBidding(item)">提交报价</u-button>
+							</u-col>
+						</u-row>
+					</view>
+				</u-form>
 			</view>
 		</u-modal>
+		<!-- 放弃报价模态框 -->
+		<u-modal v-model="giveupbiddingShow" :show-title="false" :show-cancel-button="true" @confirm="sureGiveupBidding"
+		 confirm-text="确认放弃" confirm-color="#D0021B" class="giveupbiddingModal">
+			<view class="giveupbiddingModal_oneline">确定放弃报价？</view>
+		</u-modal>
+		<!-- 时间选择(开始) -->
+		<u-picker v-model="dateTimeStart" mode="time" :params="paramsLogistic" :defaultTime="defaultTime" @confirm="confirmTimeStart"></u-picker>
+		<!-- 时间选择(结束时间) -->
+		<u-picker v-model="dateTimeEnd" mode="time" :params="paramsLogistic" :defaultTime="defaultTime" @confirm="confirmTimeEnd"></u-picker>
+		<!-- 价格趋势下拉框 -->
+		<u-select v-model="selectPriceTrendShow" :list="selectPriceTrendList" @confirm="confirmPriceTrend"></u-select>
+		<!-- 报价中转下拉框 -->
+		<u-select v-model="selectTransferMethodShow" :list="selectTransferMethodList" @confirm="confirmTransferMethod"></u-select>
+		<!-- 报价鉴定书下拉框 -->
+		<u-select v-model="selectAppraisalCertificateShow" :list="selectAppraisalCertificateList" @confirm="confirmAppraisalCertificate"></u-select>
+		<!-- toast -->
+		<u-toast ref="toast" position="top" />
 	</view>
 </template>
 
@@ -333,7 +365,7 @@
 		data() {
 			return {
 				//竞价模态框是否显示
-				modalShow: false,
+				logisticQuotationFormShow: false,
 				remark: "",
 				//是已报价还是未报价 已报价true 未报价false
 				quotedPrice: true,
@@ -341,18 +373,198 @@
 				bindingVuexCheckeddata: this.$store.state.checkedData,
 				bindingData: {},
 				//我的报价记录
-				myBindingData:{}
+				myBindingData:'',
+				//物流报价模态框
+				logisticQuotationForm: {
+					// 价格
+					price: "",
+					//开始时间
+					startDate: "",
+					// 有效期（结束时间）
+					expiredDate: "",
+					// 船公司
+					shippingName: "",
+					// 船期
+					schedule: "",
+					// 转运方式
+					transferMethod: "",
+					// 航程
+					voyage: "",
+					//价格趋势
+					trend: "",
+					// 鉴定书
+					appraisalCertificate: "",
+					// 趋势说明
+					explain: "",
+					// 备注
+					remark: "",
+					appraisalCertificateValue: "",
+					trendValue: "",
+					appraisalCertificateValue: ""
+				},
+				rules3: {
+					price: [{
+						trigger: ['blur', 'change'],
+						required: true,
+						validator: (rule, value, callback) => {
+							let reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/
+							if (!reg.test(value)) {
+								callback(new Error('请输入准确的价格'))
+							} else {
+								callback()
+							}
+							return
+						}
+					}],
+					startDate: [{
+						required: true,
+						message: '请选择开始时间',
+						trigger: ['change']
+					}],
+					expiredDate: [{
+							required: true,
+							message: '请选择结束时间',
+							trigger: ['change']
+						},
+						{
+							// 结束时间大于开始时间
+							validator: (rule, value, callback) => {
+								return new Date(value) > new Date(this.logisticQuotationForm.startDate)
+							},
+							message: '结束时间要大于开始时间',
+							trigger: ['change'],
+						}
+					],
+					shippingName: [{
+						required: true,
+						message: '请填写船公司',
+						trigger: ['change', 'blur'],
+					}],
+					schedule: [{
+						required: true,
+						message: '请选择船期',
+						schedule: ['change'],
+					}],
+					transferMethod: [{
+						required: true,
+						message: '请选择转运方式',
+						trigger: ['change']
+					}],
+					appraisalCertificate: [{
+						required: true,
+						message: '请选择是否有鉴定书',
+						trigger: ['change']
+					}],
+					voyage: [{
+							required: true,
+							message: '请填写航程',
+							trigger: ['change', 'blur'],
+						},
+						{
+							pattern: /^(0|[1-9][0-9]*)(\.\d+)?$/,
+							message: '请输入准确的数字',
+							trigger: ['change', 'blur']
+						}
+					],
+					trend: [{
+						required: true,
+						message: '请选择价格趋势',
+						schedule: ['change'],
+					}],
+				},
+				// 物流报价中转
+				selectTransferMethodShow: false,
+				selectTransferMethodList: [{
+						value: "1",
+						label: "中转",
+					},
+					{
+						value: "2",
+						label: "直达",
+					},
+				],
+				// 物流报价鉴定书
+				selectAppraisalCertificateShow: false,
+				selectAppraisalCertificateList: [{
+						value: "0",
+						label: "否",
+					},
+					{
+						value: "1",
+						label: "是",
+					},
+				],
+				//价格趋势
+				selectPriceTrendShow: false,
+				selectPriceTrendList: [{
+						value: "0",
+						label: "上升",
+					},
+					{
+						value: "1",
+						label: "平稳",
+					},
+					{
+						value: "2",
+						label: "下降",
+					},
+				],
+				checkscheduleList: [{
+						name: '周一',
+						checked: false,
+					},
+					{
+						name: '周二',
+						checked: false,
+					},
+					{
+						name: '周三',
+						checked: false,
+					},
+					{
+						name: '周四',
+						checked: false,
+					},
+					{
+						name: '周五',
+						checked: false,
+					},
+					{
+						name: '周六',
+						checked: false,
+					},
+					{
+						name: '周日',
+						checked: false,
+					},
+				],
+				//物流时间选择器配置
+				paramsLogistic: {
+					year: true,
+					month: true,
+					day: true
+				},
+				//开始时间的选择器
+				dateTimeStart: false,
+				//结束时间的选择器
+				dateTimeEnd: false,
+				//放弃模态框是否显示
+				giveupbiddingShow: false,
 			}
 		},
 
 		created() {
 			this.getDetails()
 		},
+		onReady() {
+			this.$refs.iForm3.setRules(this.rules3)
+		},
 
 		methods: {
 			//拿到详细信息
 			async getDetails() {
 				let data = {}
+				this.myBindingData=''
 				if (this.bindingVuexCheckeddata.titletext === "物流待报价"||this.bindingVuexCheckeddata.status === "物流已报价实盘询价") {
 					data = {
 						accessToken: uni.getStorageSync('accessToken'),
@@ -375,7 +587,7 @@
 				})
 				if (res.data.code === '0') {
 					this.bindingData = res.data.data
-					if(this.bindingVuexCheckeddata.titletext==='物流待报价'){
+					if(this.bindingVuexCheckeddata.titletext==='物流已报价'){
 						if(this.bindingData.logisticsbidsupplierVos&&this.bindingData.logisticsbidsupplierVos.length>0){
 							for(let i=0;i<this.bindingData.logisticsbidsupplierVos.length;i++){
 								if(this.bindingData.logisticsbidsupplierVos[i].isMy=='1'){
@@ -391,8 +603,185 @@
 			},
 			//点击打开竞价模态框
 			modalOpen() {
-				this.modalShow = true
-			}
+				this.logisticQuotationFormShow = true
+			},
+			//询盘打开选开始时间
+			showValidityStart() {
+				this.dateTimeStart = true
+			},
+			//询盘打开选开始时间
+			showValidityEnd() {
+				this.dateTimeEnd = true
+			},
+			//确认开始时间
+			confirmTimeStart(e) {
+				this.logisticQuotationForm.startDate = `${e.year}-${e.month}-${e.day}`
+			},
+			//确认结束时间
+			confirmTimeEnd(e) {
+				this.logisticQuotationForm.expiredDate = `${e.year}-${e.month}-${e.day}`
+			},
+			//点击打开价格趋势下拉框
+			showTrendSelect() {
+				this.selectPriceTrendShow = true;
+			},
+			//点击打开鉴定书下拉框
+			showAppraisalCertificate() {
+				this.selectAppraisalCertificateShow = true;
+			},
+			//点击打开直达中转拉框
+			showTransferMethod() {
+				this.selectTransferMethodShow = true;
+			},
+			//确认中转方式
+			confirmTransferMethod(e) {
+				this.logisticQuotationForm.transferMethodValue = e[0].label
+				this.logisticQuotationForm.transferMethod = e[0].value
+			},
+			//确认有无鉴定书
+			confirmAppraisalCertificate(e) {
+				this.logisticQuotationForm.appraisalCertificate = e[0].value
+				this.logisticQuotationForm.appraisalCertificateValue = e[0].label
+			},
+			//确认价格趋势
+			confirmPriceTrend(e) {
+				this.logisticQuotationForm.trend = e[0].value
+				this.logisticQuotationForm.trendValue = e[0].label
+			},
+			//船期多选框
+			checkboxGroupChange(e) {
+				let tempArr = []
+				if (e.length > 0) {
+					if (e.includes('周一')) tempArr.push(1)
+					if (e.includes('周二')) tempArr.push(2)
+					if (e.includes('周三')) tempArr.push(3)
+					if (e.includes('周四')) tempArr.push(4)
+					if (e.includes('周五')) tempArr.push(5)
+					if (e.includes('周六')) tempArr.push(6)
+					if (e.includes('周日')) tempArr.push(7)
+				}
+				let tempStr = tempArr.join(',')
+				this.logisticQuotationForm.schedule = tempStr
+			},
+			//物流模态框提价报价
+			logisticSubmitBidding() {
+				this.$refs.iForm3.validate(async valid => {
+					if (valid) {
+						let res = await fetch(this.api.v2.logisticsBidQuotation, {
+							method: "post",
+							data: {
+								accessToken: uni.getStorageSync('accessToken'),
+								type: "real",
+								list: [{
+									bidId: this.bindingVuexCheckeddata.bidId,
+									custId:this.bindingVuexCheckeddata.custId,
+									//价格
+									price: this.logisticQuotationForm.price && Number(this.logisticQuotationForm.price),
+									//开始时间
+									startDate: this.logisticQuotationForm.startDate + " " + "00:00:00",
+									//有效期(结束时间)
+									expiredDate: this.logisticQuotationForm.expiredDate + " " + "23:59:59",
+									//船公司
+									shippingName: this.logisticQuotationForm.shippingName,
+									//船期
+									schedule: this.logisticQuotationForm.schedule,
+									//转运方式
+									transferMethod: this.logisticQuotationForm.transferMethod && Number(this.logisticQuotationForm.transferMethod),
+									//航程
+									voyage: this.logisticQuotationForm.voyage && Number(this.logisticQuotationForm.voyage),
+									//鉴定书
+									isCertificate: this.logisticQuotationForm.appraisalCertificate & Number(this.logisticQuotationForm.appraisalCertificate),
+									//价格趋势
+									priceTrendType: this.logisticQuotationForm.trend & Number(this.logisticQuotationForm.trend),
+									//趋势说明
+									priceTrendRemark: this.logisticQuotationForm.explain,
+									// 备注
+									remark: this.logisticQuotationForm.remark,
+								}]
+							}
+						})
+						if (res.data.code === '0') {
+							this.$refs.toast.show({
+								title: '提交报价成功',
+								type: 'success',
+								position: 'top'
+							})
+						} else {
+							this.$refs.toast.show({
+								title: '提交报价失败',
+								type: 'error',
+								position: 'top'
+							})
+						}
+						this.resetLogisticQuotationForm()
+						this.logisticQuotationFormShow = false
+					}
+				})
+			},
+			
+			//点击放弃竞价出的弹框
+			giveupbidding() {
+				this.giveupbiddingShow = true;
+			},
+			
+			//确认放弃报价
+			async sureGiveupBidding() {
+				let res = await fetch(this.api.v2.giveUpLogisticsBid, {
+					method: "post",
+					data: {
+						accessToken: uni.getStorageSync('accessToken'),
+						type: "real" ,
+						bidId: this.bindingVuexCheckeddata.bidId,
+						custId: this.bindingVuexCheckeddata.custId
+					}
+				})
+				
+				if (res.data.code === '0') {
+					this.$refs.toast.show({
+						title: '放弃报价成功',
+						type: 'success',
+						position: 'top'
+					})
+					this.logicInquiryList()
+				} else {
+					this.$refs.toast.show({
+						title: '放弃报价失败',
+						type: 'error',
+						position: 'top'
+					})
+				}
+			},
+			//重置报价模态框
+			resetLogisticQuotationForm() {
+				this.logisticQuotationForm = {
+					// 价格
+					price: "",
+					// 开始时间
+					startDate: "",
+					// 有效期(结束时间)
+					expiredDate: "",
+					// 船公司
+					shippingName: "",
+					// 船期
+					schedule: "",
+					// 转运方式
+					transferMethod: "",
+					// 航程
+					voyage: "",
+					//价格趋势
+					trend: "",
+					// 鉴定书
+					appraisalCertificate: "",
+					// 趋势说明
+					explain: "",
+					// 备注
+					remark: "",
+					appraisalCertificateValue: "",
+					trendValue: "",
+					appraisalCertificateValue: ""
+				}
+				this.$refs['iForm3'].resetFields();
+			},
 		},
 		watch: {
 			'$store.state.checkData': {
@@ -563,6 +952,22 @@
 				height: 84rpx;
 				line-height: 84rpx;
 				overflow: hidden;
+			}
+		}
+		
+		// 竞价模态框
+		.inquiryModal_content {
+			padding: 20rpx;
+		
+			.btn-area {
+				margin-top: 20rpx;
+			}
+		}
+		//放弃报价模态框
+		.giveupbiddingModal {
+			.giveupbiddingModal_oneline {
+				text-align: center;
+				margin: 20rpx 0;
 			}
 		}
 	}

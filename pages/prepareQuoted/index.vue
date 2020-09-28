@@ -576,7 +576,7 @@
 		<u-picker v-model="dateTime" mode="time" :params="params" :defaultTime="defaultTime" @confirm="confirmTime"></u-picker>
 		<!-- 时间选择(开始) -->
 		<u-picker v-model="dateTimeStart" mode="time" :params="paramsLogistic" :defaultTime="defaultTime" @confirm="confirmTimeStart"></u-picker>
-		<!-- 时间选择(开始) -->
+		<!-- 时间选择(结束时间) -->
 		<u-picker v-model="dateTimeEnd" mode="time" :params="paramsLogistic" :defaultTime="defaultTime" @confirm="confirmTimeEnd"></u-picker>
 
 		<!-- 物流报价模态框 -->
@@ -1171,7 +1171,6 @@
 					this.inaplosuppId = item.inaplosuppId
 				}
 				this.giveupbiddingShow = true;
-
 			},
 
 			//点击取消 取消询盘弹窗显示

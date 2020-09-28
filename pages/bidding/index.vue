@@ -312,9 +312,6 @@
 			</view>
 		</view>
 
-
-
-
 		<view class="binding-info_oneline" v-if="bindingVuexCheckeddata.titletext==='竞价'">
 			<u-row gutter="16">
 				<u-col span="6">
@@ -325,9 +322,6 @@
 				</u-col>
 			</u-row>
 		</view>
-
-
-
 
 		<!-- 竞价模态框 -->
 		<u-modal v-model="binddingShow" :show-confirm-button="false" :show-title="false" :negative-top="500">
