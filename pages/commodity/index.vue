@@ -271,7 +271,7 @@
 			}
 		},
 
-		created() {
+		onShow() {
 			this.isRole=uni.getStorageSync('roleId') === 1 ? true : false
 			this.getSupplierProduct()
 		},
