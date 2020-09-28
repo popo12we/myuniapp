@@ -193,52 +193,69 @@
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="7">
-								<text class="gray">上海</text>
-								<text class="mg15">---</text>
-								<text class="gray">拉各斯</text>
-							</u-col>
-							<u-col span="5">
-								<text class="gray">20GP</text>
-							</u-col>
-						</u-row>
-					</view>
-					<view class="mybinding-info_item">
-						<u-row gutter="16">
-							<u-col span="7">
-								<text class="gray">期望5天交货</text>
-							</u-col>
-							<u-col span="5">
-								<text class="gray">打托</text>
+								<text class="gray">币种</text>
 								<text class="mg15">:</text>
-								<text class="gray">是</text>
+								<text class="gray">USD</text>
+							</u-col>
+							<u-col span="5">
+								<text class="gray">价格</text>
+								<text class="mg15">:</text>
+								<text class="gray">1.63</text>
+							</u-col>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-row gutter="16">
+								<u-col span="7">
+									<text class="gray">有效期</text>
+									<text class="mg15">:</text>
+									<text class="gray">2020-09-30</text>
+								</u-col>
+								<u-col span="5">
+									<text class="gray">交货天数</text>
+									<text class="mg15">:</text>
+									<text class="gray">15</text>
+								</u-col>
+							</u-row>
+						</u-row>
+					</view>
+					<view class="mybinding-info_item">
+						<u-row gutter="16">
+							<u-col span="12">
+								<text class="gray">价格趋势</text>
+								<text class="mg15">:</text>
+								<text class="gray">平稳</text>
 							</u-col>
 						</u-row>
 					</view>
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="12">
-								<text class="gray">询价单编号：IN2087973</text>
+								<text class="gray">趋势说明</text>
+								<text class="mg15">:</text>
 							</u-col>
 						</u-row>
 					</view>
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="12">
-								<text class="gray">备注：</text>
+								<text class="gray">近期趋势平稳</text>
 							</u-col>
 						</u-row>
 					</view>
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="12">
-								<text class="gray">一种食品添加剂</text>
+								<text class="gray">备注</text>
+								<text class="mg15">:</text>
 							</u-col>
 						</u-row>
 					</view>
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="12">
-								<text class="gray">2020-08-07  12:00截止报价</text>
+								<text class="gray">我是备注我是备注</text>
 							</u-col>
 						</u-row>
 					</view>
