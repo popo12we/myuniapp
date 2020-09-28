@@ -61,12 +61,15 @@
 												<text class="gray">{{item.bidAmount}}</text>
 
 											</view>
-											<view class="swiper_center_oneline">
-
+											<view class="swiper_center_oneline" v-if="item.biddingMode==='是'">
 												<text class="red">当前排名</text>
 												<text class="mg15 red">:</text>
 												<text class="red">2</text>
-
+											</view>
+											<view class="swiper_center_oneline" v-if="item.biddingMode!=='是'">
+												<text class="gray">数量</text>
+												<text class="mg15 red">:</text>
+												<text class="gray">{{item.saleQty}}</text>
 											</view>
 											<view class="swiper_center_oneline settimeout_btn">
 												<InquiryDeadline :endTime="item.inquiryDeadline"></InquiryDeadline>
