@@ -19,7 +19,8 @@
 				</view>
 				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='实盘',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
 			</view>
-			<view :class="{isWinBidding:true,graybg:showTagState(bindingVuexCheckeddata)==='已结束'||showTagState(bindingVuexCheckeddata)==='已放弃'||showTagIsoutbid(bindingVuexCheckeddata)==='未中标',redbg:showTagIsoutbid(bindingVuexCheckeddata)==='已中标',orangebg:showTagState(bindingVuexCheckeddata)==='已报价'}"  v-if="bindingVuexCheckeddata.status==='物流已报价实盘询价'">{{showTagIsoutbid(bindingVuexCheckeddata)||showTagState(bindingVuexCheckeddata)}}</view>
+			<view :class="{isWinBidding:true,graybg:showTagState(bindingVuexCheckeddata)==='已结束'||showTagState(bindingVuexCheckeddata)==='已放弃'||showTagIsoutbid(bindingVuexCheckeddata)==='未中标',redbg:showTagIsoutbid(bindingVuexCheckeddata)==='已中标',orangebg:showTagState(bindingVuexCheckeddata)==='已报价'&&showTagIsoutbid(bindingVuexCheckeddata)!=='未中标'&&showTagIsoutbid(bindingVuexCheckeddata)!=='已中标'}"
+			 v-if="bindingVuexCheckeddata.status==='物流已报价实盘询价'">{{showTagIsoutbid(bindingVuexCheckeddata)||showTagState(bindingVuexCheckeddata)}}</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
 					<u-col span="12">
@@ -129,7 +130,8 @@
 					{{bindingData.logisticsbIdVo.arrivePort}}
 				</view>
 				<text :class="{bidding_sign:true,redbg:showTag(bindingVuexCheckeddata)==='实盘',bluebg:showTag(bindingVuexCheckeddata)==='常规'}">{{showTag(bindingVuexCheckeddata)}}</text>
-				<view :class="{isWinBidding:true,graybg:showTagState(bindingVuexCheckeddata)==='已结束'||showTagState(bindingVuexCheckeddata)==='已放弃'||showTagIsoutbid(bindingVuexCheckeddata)==='未中标',redbg:showTagIsoutbid(bindingVuexCheckeddata)==='已中标',orangebg:showTagState(bindingVuexCheckeddata)==='已报价'}"  v-if="bindingVuexCheckeddata.status==='物流已报价常规询价'">{{showTagIsoutbid(bindingVuexCheckeddata)||showTagState(bindingVuexCheckeddata)}}</view>
+				<view :class="{isWinBidding:true,graybg:showTagState(bindingVuexCheckeddata)==='已结束'||showTagState(bindingVuexCheckeddata)==='已放弃'||showTagIsoutbid(bindingVuexCheckeddata)==='未中标',redbg:showTagIsoutbid(bindingVuexCheckeddata)==='已中标',orangebg:showTagState(bindingVuexCheckeddata)==='已报价'}"
+				 v-if="bindingVuexCheckeddata.status==='物流已报价常规询价'">{{showTagIsoutbid(bindingVuexCheckeddata)||showTagState(bindingVuexCheckeddata)}}</view>
 			</view>
 			<view class="binding-info_oneline">
 				<u-row gutter="16">
@@ -183,7 +185,7 @@
 				</u-row>
 			</view>
 		</view>
-       
+
 		<!-- 竞价排名 -->
 		<view class="binding-ranking" v-if="bindingData.logisticsbidsupplierVos&&bindingVuexCheckeddata.titletext==='物流待报价'">
 			<view class="binding-ranking-title">
@@ -215,7 +217,7 @@
 				</view>
 			</view>
 		</view>
-			
+
 		<!-- 我的报价记录 -->
 		<view class="binding-ranking" v-if="bindingVuexCheckeddata.titletext==='物流已报价'">
 			<view class="binding-ranking-title">
@@ -270,7 +272,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="binding-info_oneline" v-if="bindingVuexCheckeddata.titletext==='物流待报价'">
 			<u-row gutter="16">
 				<u-col span="6">
@@ -281,7 +283,7 @@
 				</u-col>
 			</u-row>
 		</view>
-		
+
 		<!-- 物流报价模态框 -->
 		<u-modal v-model="logisticQuotationFormShow" :show-title="false" :show-confirm-button="false" z-index="10000">
 			<view class="inquiryModal_content">
@@ -373,7 +375,7 @@
 				bindingVuexCheckeddata: this.$store.state.checkedData,
 				bindingData: {},
 				//我的报价记录
-				myBindingData:'',
+				myBindingData: '',
 				//物流报价模态框
 				logisticQuotationForm: {
 					// 价格
@@ -564,8 +566,8 @@
 			//拿到详细信息
 			async getDetails() {
 				let data = {}
-				this.myBindingData=''
-				if (this.bindingVuexCheckeddata.titletext === "物流待报价"||this.bindingVuexCheckeddata.status === "物流已报价实盘询价") {
+				this.myBindingData = ''
+				if (this.bindingVuexCheckeddata.titletext === "物流待报价" || this.bindingVuexCheckeddata.status === "物流已报价实盘询价") {
 					data = {
 						accessToken: uni.getStorageSync('accessToken'),
 						actionType: "details",
@@ -587,17 +589,17 @@
 				})
 				if (res.data.code === '0') {
 					this.bindingData = res.data.data
-					if(this.bindingVuexCheckeddata.titletext==='物流已报价'){
-						if(this.bindingData.logisticsbidsupplierVos&&this.bindingData.logisticsbidsupplierVos.length>0){
-							for(let i=0;i<this.bindingData.logisticsbidsupplierVos.length;i++){
-								if(this.bindingData.logisticsbidsupplierVos[i].isMy=='1'){
-									this.myBindingData=this.bindingData.logisticsbidsupplierVos[i]
+					if (this.bindingVuexCheckeddata.titletext === '物流已报价') {
+						if (this.bindingData.logisticsbidsupplierVos && this.bindingData.logisticsbidsupplierVos.length > 0) {
+							for (let i = 0; i < this.bindingData.logisticsbidsupplierVos.length; i++) {
+								if (this.bindingData.logisticsbidsupplierVos[i].isMy == '1') {
+									this.myBindingData = this.bindingData.logisticsbidsupplierVos[i]
 									break;
 								}
 							}
-							
+
 						}
-						
+
 					}
 				}
 			},
@@ -674,7 +676,7 @@
 								type: "real",
 								list: [{
 									bidId: this.bindingVuexCheckeddata.bidId,
-									custId:this.bindingVuexCheckeddata.custId,
+									custId: this.bindingVuexCheckeddata.custId,
 									//价格
 									price: this.logisticQuotationForm.price && Number(this.logisticQuotationForm.price),
 									//开始时间
@@ -718,24 +720,24 @@
 					}
 				})
 			},
-			
+
 			//点击放弃竞价出的弹框
 			giveupbidding() {
 				this.giveupbiddingShow = true;
 			},
-			
+
 			//确认放弃报价
 			async sureGiveupBidding() {
 				let res = await fetch(this.api.v2.giveUpLogisticsBid, {
 					method: "post",
 					data: {
 						accessToken: uni.getStorageSync('accessToken'),
-						type: "real" ,
+						type: "real",
 						bidId: this.bindingVuexCheckeddata.bidId,
 						custId: this.bindingVuexCheckeddata.custId
 					}
 				})
-				
+
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: '放弃报价成功',
@@ -795,10 +797,10 @@
 
 			}
 		},
-		computed:{
+		computed: {
 			showTag() {
 				return function(item) {
-					return item.moduleCode === 'PC007' ? '实盘' :  "常规"
+					return item.moduleCode === 'PC007' ? '实盘' : "常规"
 				}
 			},
 			//报价状态
@@ -810,14 +812,13 @@
 			//是否中标
 			showTagIsoutbid() {
 				return function(item) {
-					if(item.isoutbid === 1){
+					if (item.isOutbid === 1 && item.auditState === 3) {
 						return '已中标'
-					}else if(item.isoutbid === 0){
+					} else if (item.isOutbid === 0 && item.auditState === 3) {
 						return '未中标'
-					}else{
+					} else {
 						return ''
 					}
-					
 				}
 			}
 		}
@@ -895,7 +896,7 @@
 					border-radius: 14rpx;
 					color: #fff;
 					font-size: 24rpx;
-					margin-left:20rpx;
+					margin-left: 20rpx;
 				}
 			}
 		}
@@ -913,9 +914,10 @@
 
 			//具体的报价记录
 			.binding-record {
-				.binding-record-item{
+				.binding-record-item {
 					padding: 20rpx 0;
 				}
+
 				.binding-record_item {
 					padding: 20rpx 30rpx;
 					border: 2rpx solid #d9d9d9;
@@ -954,15 +956,16 @@
 				overflow: hidden;
 			}
 		}
-		
+
 		// 竞价模态框
 		.inquiryModal_content {
 			padding: 20rpx;
-		
+
 			.btn-area {
 				margin-top: 20rpx;
 			}
 		}
+
 		//放弃报价模态框
 		.giveupbiddingModal {
 			.giveupbiddingModal_oneline {

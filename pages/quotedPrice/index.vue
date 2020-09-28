@@ -142,8 +142,8 @@
 										</view>
 										<view :class="{fourthtext:true,shallowgray:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{item.arrivePort}}</view>
 										<text class="mg15"></text>
-										<text :class="{checkbox_view_tab:true,redbg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{swiperCurrent?"常规":"实盘"}}</text>
-										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'}">{{showTagIsoutbid(item)||showTagState(item)}}</view>
+										<text :class="{checkbox_view_tab:true,redbg:showTagIsoutbid(item)==='已中标'||showTagState(item)==='已报价'&&showTagIsoutbid(item)!=='未中标'&&showTagIsoutbid(item)!=='已中标',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标'}">{{swiperCurrent?"常规":"实盘"}}</text>
+										<view :class="{isWinBidding:true,redbg:showTagIsoutbid(item)==='已中标',graybg:showTagState(item)==='已结束'||showTagState(item)==='已放弃'||showTagIsoutbid(item)==='未中标',orangebg:showTagState(item)==='已报价'&&showTagIsoutbid(item)!=='未中标'&&showTagIsoutbid(item)!=='已中标'}">{{showTagIsoutbid(item)||showTagState(item)}}</view>
 									</view>
 									<view class="checkbox_view_oneline">
 										<u-row gutter="16">
@@ -506,14 +506,13 @@
 			//是否中标
 			showTagIsoutbid() {
 				return function(item) {
-					if(item.isoutbid === 1){
+					if(item.isOutbid === 1&&item.auditState===3){
 						return '已中标'
-					}else if(item.isoutbid === 0){
+					}else if(item.isOutbid === 0&&item.auditState===3){
 						return '未中标'
 					}else{
 						return ''
 					}
-					
 				}
 			}
 		}
