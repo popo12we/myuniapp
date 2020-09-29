@@ -39,7 +39,7 @@
 							<u-col span="12">
 								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">包装</text>
 								<text class="mg15">:</text>
-								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.packingmethodid}}</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.packingmethodid||item.packingMethodId}}</text>
 							</u-col>
 						</u-row>
 					</view>

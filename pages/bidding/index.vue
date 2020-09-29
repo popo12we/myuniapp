@@ -66,7 +66,7 @@
 					<u-col span="5">
 						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">当前排名</text>
 						<text class="mg15">:</text>
-						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">2</text>
+						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">{{myIndex}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -269,64 +269,69 @@
 			<view class="mybinding-title">
 				我的报价记录
 			</view>
-			<view class="mybinding-title">
-				第一次报价
-			</view>
-			<view class="mybinding-info">
-				<view class="mybinding-recode_item">
-					<view class="mybinding-info_item">
-						<u-row gutter="16">
-							<u-col span="7">
-								<text class="gray">价格(USD)</text>
-								<text class="mg15">---</text>
-								<text class="gray">1.71/KG</text>
-							</u-col>
-							<u-col span="5">
-								<text class="gray">交货天数</text>
-								<text class="mg15">:</text>
-								<text class="gray">12</text>
-							</u-col>
-						</u-row>
+			<view v-if='bindingData.history.length>0'>
+				<view v-for="(item,index) in bindingData.history" :key="item.id">
+					<view class="mybinding-title">
+						第{{index+1}}次报价
 					</view>
-					<view class="mybinding-info_item">
-						<u-row gutter="16">
-							<u-col span="12">
-								<text class="gray">价格趋势</text>
-								<text class="mg15">:</text>
-								<text class="gray">平稳</text>
-							</u-col>
-						</u-row>
-					</view>
-					<view class="mybinding-info_item">
-						<u-row gutter="16">
-							<u-col span="12">
-								<text class="gray">趋势说明：</text>
-							</u-col>
-						</u-row>
-					</view>
-					<view class="mybinding-info_item">
-						<u-row gutter="16">
-							<u-col span="12">
-								<text class="gray">最近工厂进度趋于稳定，价格稳定。</text>
-							</u-col>
-						</u-row>
-					</view>
-					<view class="mybinding-info_item">
-						<u-row gutter="16">
-							<u-col span="12">
-								<text class="gray">采购反馈：</text>
-							</u-col>
-						</u-row>
-					</view>
-					<view class="mybinding-info_item">
-						<u-row gutter="16">
-							<u-col span="12">
-								<text class="gray">这价格接收不了（价格太高）</text>
-							</u-col>
-						</u-row>
+					<view class="mybinding-info">
+						<view class="mybinding-recode_item">
+							<view class="mybinding-info_item">
+								<u-row gutter="16">
+									<u-col span="7">
+										<text class="gray">价格(USD)</text>
+										<text class="mg15">:</text>
+										<text class="gray">{{item.price||""}}</text>
+									</u-col>
+									<u-col span="5">
+										<text class="gray">交货天数</text>
+										<text class="mg15">:</text>
+										<text class="gray">{{item.deliveryDay=='-1'?"":item.deliveryDay}}</text>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="mybinding-info_item">
+								<u-row gutter="16">
+									<u-col span="12">
+										<text class="gray">价格趋势</text>
+										<text class="mg15">:</text>
+										<text class="gray">{{item.pricetrend=='-1'?"":pricetrend}}</text>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="mybinding-info_item">
+								<u-row gutter="16">
+									<u-col span="12">
+										<text class="gray">趋势说明：</text>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="mybinding-info_item">
+								<u-row gutter="16">
+									<u-col span="12">
+										<text class="gray">{{pricetrend=='-1'?'':pricetrend}}</text>
+									</u-col>
+								</u-row>
+							</view>
+<!-- 							<view class="mybinding-info_item">
+								<u-row gutter="16">
+									<u-col span="12">
+										<text class="gray">采购反馈：</text>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="mybinding-info_item">
+								<u-row gutter="16">
+									<u-col span="12">
+										<text class="gray">这价格接收不了（价格太高）</text>
+									</u-col>
+								</u-row>
+							</view> -->
+						</view>
 					</view>
 				</view>
 			</view>
+
 		</view>
 
 		<view class="binding-info_oneline" v-if="bindingVuexCheckeddata.titletext==='竞价'">
@@ -390,6 +395,7 @@
 				remark: "",
 				bindingData: '',
 				myObj: {},
+				myIndex: '',
 				inquiryForm: {
 					//币种
 					currency: "",
@@ -453,6 +459,7 @@
 			//拿到详细的数据
 			async getBiddingData() {
 				this.myObj = {}
+				this.myIndex = ''
 				let inquiryCode = this.$store.state.checkedData.inquiryCode
 				let res = await fetch(this.api.v2.inquiryDetail, {
 					method: "get",
@@ -464,9 +471,10 @@
 				if (res.data.code === '0') {
 					this.bindingData = res.data.data
 					if (this.bindingData && Object.prototype.toString.call(this.bindingData) === '[object Object]') {
-						this.bindingData.rank.forEach(item => {
+						this.bindingData.rank.forEach((item, index) => {
 							if (item.owner) {
 								this.myObj = item
+								this.myIndex = index + 1
 							}
 						})
 					}
