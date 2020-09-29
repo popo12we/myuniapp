@@ -55,7 +55,6 @@
 		methods: {
 			//修改密码
 			async submitEditPassword() {
-				console.log(this.$refs.uForm.validate)
 				this.$refs.uForm.validate(async valid => {
 					if (valid) {
 						//加密公钥私钥

@@ -32,7 +32,7 @@
 					<u-col span="7">
 						<text class="gray">包装</text>
 						<text class="mg15">:</text>
-						<text class="gray">{{bindingData.detail.packageInfo}}</text>
+						<text class="gray">{{bindingData.detail.packingmethodid||bindingData.detail.packingMethodId}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -41,7 +41,7 @@
 					<u-col span="7">
 						<text class="gray">标的价格(USD)</text>
 						<text class="mg15">:</text>
-						<text class="gray">1.5</text>
+						<text class="gray">{{bindingData.detail.underlying||'暂无'}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -51,7 +51,7 @@
 					<u-col span="7">
 						<text class="gray">当前出价(USD)</text>
 						<text class="mg15">:</text>
-						<text class="gray">1.63</text>
+						<text class="gray">{{myObj.price?myObj.price:'暂无'}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -61,7 +61,7 @@
 					<u-col span="7">
 						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">出价次数</text>
 						<text class="mg15">:</text>
-						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">1/3</text>
+						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">{{bindingData.detail.bidTimes}}</text>
 					</u-col>
 					<u-col span="5">
 						<text :class="{gray:true,shallowgray:bindingVuexCheckeddata.statusDesc==='已放弃'||bindingVuexCheckeddata.statusDesc==='已结束'}">当前排名</text>
@@ -78,7 +78,7 @@
 						<text class="gray">{{bindingData.detail.destinationPort}}</text>
 					</u-col>
 					<u-col span="5">
-						<text class="gray">20GP</text>
+						<text class="gray">{{bindingData.detail.cabinetType}}</text>
 					</u-col>
 				</u-row>
 			</view>
@@ -169,7 +169,7 @@
 				我的报价记录
 			</view> -->
 			<!-- 我的具体报价记录 -->
-		<!-- 	<view class="mybinding-recode">
+			<!-- 	<view class="mybinding-recode">
 				<view class="mybinding-recode_item" v-for="(item,index) in bindingData.history" :key="index">
 					<view class="mybinding-recode_item_count">
 						<text>第{{index+1}}次报价</text>
@@ -184,7 +184,7 @@
 					<view class="mybinding-recode_item_ball"></view>
 				</view>
 			</view> -->
-			
+
 			<view class="mybinding-title">
 				我的报价详情
 			</view>
@@ -262,9 +262,9 @@
 				</view>
 			</view>
 		</view>
-		
-		
-		
+
+
+
 		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'&&showTag(bindingVuexCheckeddata)==='竞价'">
 			<view class="mybinding-title">
 				我的报价记录
@@ -388,7 +388,8 @@
 				//竞价模态框是否显示
 				binddingShow: false,
 				remark: "",
-				bindingData: {},
+				bindingData: '',
+				myObj: {},
 				inquiryForm: {
 					//币种
 					currency: "",
@@ -451,7 +452,7 @@
 		methods: {
 			//拿到详细的数据
 			async getBiddingData() {
-
+				this.myObj = {}
 				let inquiryCode = this.$store.state.checkedData.inquiryCode
 				let res = await fetch(this.api.v2.inquiryDetail, {
 					method: "get",
@@ -462,6 +463,13 @@
 				})
 				if (res.data.code === '0') {
 					this.bindingData = res.data.data
+					if (this.bindingData && Object.prototype.toString.call(this.bindingData) === '[object Object]') {
+						this.bindingData.rank.forEach(item => {
+							if (item.owner) {
+								this.myObj = item
+							}
+						})
+					}
 				}
 			},
 			//点击打开竞价模态框
@@ -667,8 +675,9 @@
 				height: 66rpx;
 				line-height: 66rpx;
 			}
-			.mybinding-info{
-				.mybinding-info_item{
+
+			.mybinding-info {
+				.mybinding-info_item {
 					margin-bottom: 25rpx;
 				}
 			}

@@ -61,11 +61,11 @@
 												<text class="gray">{{item.bidAmount}}</text>
 
 											</view>
-											<view class="swiper_center_oneline" v-if="item.biddingMode==='是'">
+											<!-- <view class="swiper_center_oneline" v-if="item.biddingMode==='是'">
 												<text class="red">当前排名</text>
 												<text class="mg15 red">:</text>
 												<text class="red">2</text>
-											</view>
+											</view> -->
 											<view class="swiper_center_oneline" v-if="item.biddingMode!=='是'">
 												<text class="gray">数量</text>
 												<text class="mg15 red">:</text>
@@ -119,7 +119,7 @@
 										<u-col span="7">
 											<text class="gray">包装</text>
 											<text class="mg15">:</text>
-											<text class="gray">{{item.packageInfo}}</text>
+											<text class="gray">{{item.packingMethodId}}</text>
 										</u-col>
 									</u-row>
 								</view>

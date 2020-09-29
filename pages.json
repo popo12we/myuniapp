@@ -4,9 +4,21 @@
 	},
 	"pages": [
 		{
+			"path": "pages/prepareQuoted/index",
+			"style": {
+				"navigationBarTitleText": "待报价"
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录页"
+			}
+		},
+		{
+			"path": "pages/commodity/index",
+			"style": {
+				"navigationBarTitleText": "商品"
 			}
 		},
 		{
@@ -15,12 +27,7 @@
 				"navigationBarTitleText": "已报价"
 			}
 		},
-		{
-			"path": "pages/prepareQuoted/index",
-			"style": {
-				"navigationBarTitleText": "待报价"
-			}
-		},
+		
 		{
 			"path": "pages/bidding/index",
 			"style": {
@@ -39,12 +46,7 @@
 				"navigationBarTitleText": "个人中心"
 			}
 		},
-		{
-			"path": "pages/commodity/index",
-			"style": {
-				"navigationBarTitleText": "商品"
-			}
-		},
+		
 		{
 			"path": "pages/soonExpire/index",
 			"style": {
