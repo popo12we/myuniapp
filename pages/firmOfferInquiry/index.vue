@@ -558,6 +558,7 @@
 		created() {
 			this.getDetails()
 		},
+		
 		onReady() {
 			this.$refs.iForm3.setRules(this.rules3)
 		},
@@ -597,9 +598,7 @@
 									break;
 								}
 							}
-
 						}
-
 					}
 				}
 			},
@@ -720,12 +719,10 @@
 					}
 				})
 			},
-
 			//点击放弃竞价出的弹框
 			giveupbidding() {
 				this.giveupbiddingShow = true;
 			},
-
 			//确认放弃报价
 			async sureGiveupBidding() {
 				let res = await fetch(this.api.v2.giveUpLogisticsBid, {
@@ -737,7 +734,6 @@
 						custId: this.bindingVuexCheckeddata.custId
 					}
 				})
-
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: '放弃报价成功',
@@ -785,6 +781,7 @@
 				this.$refs['iForm3'].resetFields();
 			},
 		},
+		
 		watch: {
 			'$store.state.checkData': {
 				deep: true,
@@ -794,9 +791,9 @@
 						title: '实盘询价'
 					})
 				}
-
 			}
 		},
+		
 		computed: {
 			showTag() {
 				return function(item) {

@@ -275,9 +275,11 @@
 			this.isRole=uni.getStorageSync('roleId') === 1 ? true : false
 			this.getSupplierProduct()
 		},
+		
 		onReady() {
 			this.$refs.iForm1.setRules(this.rules1)
 		},
+		
 		methods: {
 			//获取商品列表
 			async getSupplierProduct() {
@@ -288,7 +290,6 @@
 						keyword: this.name
 					}
 				})
-
 				if (res.data.code === '0') {
 					this.list = res.data.data
 					if (this.list&&this.list.length > 0) {
@@ -318,7 +319,6 @@
 				this.checkedList = this.list.filter((val) => val.checked)
 				this.$forceUpdate()
 			},
-
 			//单选
 			checkboxOneChange(e) {
 				this.allChecked = (this.list.length === this.list.filter(val => val.checked).length)
@@ -326,14 +326,12 @@
 				this.checkedList = this.list.filter((val) => val.checked)
 				this.$forceUpdate()
 			},
-
 			//批量填写
 			batchFilling() {
 				uni.navigateTo({
 					url: '../batchQuotation/index'
 				});
 			},
-
 			//点击去过期页面
 			toSoonExpire() {
 				uni.setStorageSync('day3AfterList', this.day3AfterList)
@@ -348,14 +346,11 @@
 						position: 'top'
 					})
 				}
-				
 			},
-
 			//点击搜索
 			checkedAll() {
 				this.getSupplierProduct()
 			},
-
 			//切换币种
 			changeCurrency(item) {
 				if (item.currency === 'USD') {
@@ -369,13 +364,11 @@
 					return;
 				}
 			},
-
 			//点击取消 取消询盘弹窗显示
 			showInquiryModalCancel() {
 				this.resetInquiryForm()
 				this.inquiryShow = false
 			},
-
 			//点击报价
 			showInquiryModal(item) {
 				this.resetInquiryForm()
@@ -388,7 +381,6 @@
 					unit: item.unit,
 				}
 			},
-
 			//提交报价
 			async submitBidding() {
 				this.$refs.iForm1.validate(async valid => {
@@ -410,7 +402,6 @@
 								}]
 							}
 						})
-
 						this.inquiryShow = false
 						if (res.data.code === '0') {
 							this.$refs.toast.show({
@@ -429,7 +420,6 @@
 					}
 				})
 			},
-
 			//重置报价模态框
 			resetInquiryForm() {
 				this.inquiryForm = {
@@ -476,7 +466,6 @@
 			showValidity() {
 				this.dateTime = true
 			},
-
 			//批量报价
 			async submitSomeBidding() {
 				let tempArr = []
@@ -518,6 +507,7 @@
 				}
 			}
 		},
+		
 		computed: {
 			//三天后就过期的数据
 			day3AfterList() {

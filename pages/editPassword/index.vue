@@ -49,9 +49,11 @@
 				}
 			}
 		},
+		
 		onReady() {
 			this.$refs.uForm.setRules(this.rules)
 		},
+		
 		methods: {
 			//修改密码
 			async submitEditPassword() {

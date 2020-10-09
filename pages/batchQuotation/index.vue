@@ -100,54 +100,42 @@
 <style lang="scss" scoped>
 	.batchQuotation {
 		padding: 0 40rpx;
-
 		//批量报价项
 		.batchQuotation_list {
 			/deep/ .u-field {
 				padding: 0;
 			}
-
 			.batchQuotation_list_item {
 				padding: 20rpx 0;
 				border-bottom: 2rpx solid #f1f1f1;
-
 				.batchQuotation_list_item_oneline {
 					margin-top: 20rpx;
-
 					.batch_name {
 						color: #333;
 						font-weight: 700;
 						font-size: 32rpx;
 					}
 				}
-
 			}
-
 			.price_change {
 				display: flex;
-
 				.ufield {
 					flex: 1;
 				}
-
 				text {
 					align-self: center;
 				}
-
 				.change {
 					color: #00a6db;
 				}
 			}
 		}
-
 		//报价
 		.quotation_area_oneline {
 			display: flex;
-			
 			.quotation_area_oneline_item {
 				display: flex;
 				width: 50%;
-				
 				.ufield {
 					flex: 1
 				}
@@ -156,7 +144,6 @@
 				}
 			}
 		}
-		
 		.btn-area{
 			margin-top:20rpx;
 		}

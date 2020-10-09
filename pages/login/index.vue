@@ -18,7 +18,6 @@
 				<text class="verificationcode-login">验证码登录</text>
 			</view>
 			<view class="loginbtn-area">
-				<!-- <button open-type="getUserInfo" @getuserinfo="onGotUserInfo">按钮</button> -->
 				<u-button type="error" open-type="getUserInfo" @click="login">登录</u-button>
 			</view>
 		</view>
@@ -47,7 +46,7 @@
 						},
 						{
 							validator: (rule, value, callback) => {
-								return this.$u.test.mobile(value);
+								return this.$u.test.mobile(value)
 							},
 							message: '手机号码不正确',
 							trigger: ['change', 'blur'],
@@ -63,11 +62,13 @@
 				isLoading: false,
 			}
 		},
+		
 		created() {
 			this.isUpdated()
 		},
+		
 		onReady() {
-			this.$refs.uForm.setRules(this.rules);
+			this.$refs.uForm.setRules(this.rules)
 		},
 
 		methods: {
@@ -86,7 +87,6 @@
 						}
 					})
 				})
-
 				updateManager.onUpdateFailed(function() {
 					// 新版本下载失败
 					this.$refs.toast.show({
@@ -116,10 +116,10 @@
 											let privateKey_pkcs1 =
 												`-----BEGIN PRIVATE KEY-----MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAlQTIgKIfKGlk9kz+oImQcxe+uxuo9uHEY2n6sIEjhNOCmqW/LMnmLSfcMiwXatFPyQ3R0ROQJaUPAuc6pCcU3wIDAQABAkABRfkwoDID9mKWeDH0zTgew6UtlB7tfSBgeRdbSr8y81hXfgJcyI/rbQDgDs0T6RTJluZsWANFRArJUqfToD8BAiEA53Yjk02hN52QC7zZvbuETo/JsPVVdTcO3Z7PJGqQx/kCIQCk0SXlG/5NpvFG1I4sjzpmZx+NFvjLuAsymHalo5xplwIhALR744u2SdMTMsJkVSlkcevMpUouU5/d+eKINh/AVPsJAiBKftY4Bj0dcBWiRDS2404sNvRF21o9CkTVa6BFIfxypQIgfwJt2qdBDpJX76DsW1TIFKNYOENMFinaH3qPLGkUZQ4=-----END PRIVATE KEY-----`;
 											// 加密 【加密字段长度不大于117】
-											let encrypt_rsa = new RSA.RSAKey();
-											encrypt_rsa = RSA.KEYUTIL.getKey(publicKey_pkcs1);
+											let encrypt_rsa = new RSA.RSAKey()
+											encrypt_rsa = RSA.KEYUTIL.getKey(publicKey_pkcs1)
 											let encStr = encrypt_rsa.encrypt(this.form.password)
-											encStr = RSA.hex2b64(encStr);
+											encStr = RSA.hex2b64(encStr)
 											let res = await fetch(this.api.v2.login, {
 												method: "post",
 												data: {
@@ -156,10 +156,6 @@
 														position: 'top'
 													})
 												}
-
-
-
-
 											} else {
 												this.$refs.errorLoginToast.show({
 													title: res.data.msg||"登录失败",
@@ -175,14 +171,12 @@
 					}
 				})
 			}
-
 		}
 	}
 </script>
 <style lang="scss" scoped>
 	.login {
 		position: relative;
-
 		.loading {
 			position: absolute;
 			left: 50%;

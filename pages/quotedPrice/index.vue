@@ -317,7 +317,7 @@
 
 <script>
 	import Tabbar from '../../my_common_components/Tabbar.vue'
-	import '../../common/font/iconfont.css';
+	import '../../common/font/iconfont.css'
 	import fetch from '../../utils/fetch.js'
 	export default {
 		components: {
@@ -454,16 +454,16 @@
 					dx
 				}
 			}) {
-				this.$refs.tabs.setDx(dx);
+				this.$refs.tabs.setDx(dx)
 			},
 			animationfinish({
 				detail: {
 					current
 				}
 			}) {
-				this.$refs.tabs.setFinishCurrent(current);
-				this.swiperCurrent = current;
-				this.current = current;
+				this.$refs.tabs.setFinishCurrent(current)
+				this.swiperCurrent = current
+				this.current = current
 			},
 			toBiddingLogistics(obj,titletext,status) {
 				this.$set(obj, 'titletext', titletext)

@@ -77,7 +77,7 @@
 			toEditPassword() {
 				uni.navigateTo({
 					url: '../editPassword/index'
-				});
+				})
 			},
 			//退出登录
 			loginOut(){
@@ -90,7 +90,7 @@
 				uni.removeStorageSync('accessToken')
 				uni.navigateTo({
 					url: '../login/index'
-				});
+				})
 			}
 		}
 	}
@@ -99,37 +99,29 @@
 <style lang="scss" scoped>
 	.profile {
 		padding: 0 40rpx;
-
 		.empty {
 			height: 15rpx;
 			background-color: #f9f9f9;
 		}
-
 		.profile_info {
 			display: flex;
 			background-color: #fff;
 
 			height: 185rpx;
-
 			.company {
 				margin-left: 40rpx;
 				margin-top: 30rpx;
-
 				.info {
 					margin-top: 25rpx;
 				}
 			}
-
-			,
 			.avator {
 				margin-top: 30rpx;
 			}
 		}
-
 		.count {
 			display: flex;
 			background-color: #fff;
-
 			>view {
 				width: 50%;
 				height: 130rpx;
@@ -143,7 +135,6 @@
 				}
 			}
 		}
-
 		.editpassword,
 		.loginout {
 			height: 75rpx;

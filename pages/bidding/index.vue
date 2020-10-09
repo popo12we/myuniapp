@@ -413,7 +413,6 @@
 					//备注
 					remark: "",
 				},
-
 				rules2: {
 					price: [{
 						trigger: ['blur', 'change'],
@@ -449,12 +448,15 @@
 				bindingVuexCheckeddata: this.$store.state.checkedData
 			}
 		},
+		
 		onReady() {
 			this.$refs.iForm2.setRules(this.rules2);
 		},
+		
 		created() {
 			this.getBiddingData()
 		},
+		
 		methods: {
 			//拿到详细的数据
 			async getBiddingData() {
@@ -484,12 +486,10 @@
 			modalOpen() {
 				this.binddingShow = true
 			},
-
 			//取消关闭竞价模态框
 			cancelBidding() {
 				this.binddingShow = false
 			},
-
 			// 打开选时间
 			showValidity() {
 				this.dateTime = true
@@ -498,19 +498,16 @@
 			confirmTime(e) {
 				this.inquiryForm.validity = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`
 			},
-
 			//点击放弃竞价出的弹框
 			giveupbidding() {
 				this.giveupbiddingShow = true;
 			},
-
 			//提交报价
 			async submitBidding2() {
 				let offerId = ''
 				if (this.$store.state.checkedData.offerId.length > 0) {
 					offerId = this.$store.state.checkedData.offerId[0]
 				}
-
 				this.$refs.iForm2.validate(async valid => {
 					if (valid) {
 						let res = await fetch(this.api.v2.submitQuotation, {
@@ -529,7 +526,6 @@
 								}]
 							}
 						})
-
 						this.inquiryShow = false
 						this.binddingShow = false
 						if (res.data.code === '0') {
@@ -548,7 +544,6 @@
 					}
 				})
 			},
-
 			//确认放弃报价
 			async sureGiveupBidding() {
 				let offerId = ''
@@ -562,7 +557,6 @@
 						offerId
 					}
 				})
-
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: '放弃报价成功',
@@ -578,6 +572,7 @@
 				}
 			}
 		},
+		
 		computed: {
 			showTag() {
 				return function(item) {
@@ -585,6 +580,7 @@
 				}
 			}
 		},
+		
 		watch: {
 			'$store.state.checkData': {
 				deep: true,
@@ -594,7 +590,6 @@
 						title: this.bindingVuexCheckeddata.titletext
 					})
 				}
-
 			}
 		}
 	}

@@ -68,9 +68,9 @@
 			// 全选
 			checkboxAllChange() {
 				this.allChecked ? this.list.map(val => {
-					val.checked = true;
+					val.checked = true
 				}) : this.list.map(val => {
-					val.checked = false;
+					val.checked = false
 				})
 				this.$forceUpdate()
 			},

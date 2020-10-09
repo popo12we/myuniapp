@@ -55,17 +55,10 @@
 
 											</view>
 											<view class="swiper_center_oneline">
-
 												<text class="gray">当前出价（USD):</text>
 												<text class="mg15"></text>
 												<text class="gray">{{item.bidAmount}}</text>
-
 											</view>
-											<!-- <view class="swiper_center_oneline" v-if="item.biddingMode==='是'">
-												<text class="red">当前排名</text>
-												<text class="mg15 red">:</text>
-												<text class="red">2</text>
-											</view> -->
 											<view class="swiper_center_oneline" v-if="item.biddingMode!=='是'">
 												<text class="gray">数量</text>
 												<text class="mg15 red">:</text>
@@ -713,7 +706,6 @@
 					//备注
 					remark: "",
 				},
-
 				//校验规则
 				rules1: {
 					currency: [{
@@ -748,7 +740,6 @@
 						trigger: ['change']
 					}]
 				},
-
 				rules2: {
 					price: [{
 						trigger: ['blur', 'change'],
@@ -769,7 +760,6 @@
 						trigger: ['change']
 					}]
 				},
-
 				//竞价模态框是否显示
 				binddingShow: false,
 				//放弃模态框是否显示
@@ -974,6 +964,7 @@
 				inaplosuppId: ""
 			}
 		},
+		
 		onShow() {
 			this.isRole = uni.getStorageSync('roleId') === 1 ? true : false
 			//是展示产品询价单数据还是物流询价单数据
@@ -982,17 +973,18 @@
 			} else {
 				this.logicInquiryList()
 			}
-
 		},
+		
 		onReady() {
 
 			if (this.isRole) {
-				this.$refs.iForm1.setRules(this.rules1);
-				this.$refs.iForm2.setRules(this.rules2);
+				this.$refs.iForm1.setRules(this.rules1)
+				this.$refs.iForm2.setRules(this.rules2)
 			} else {
-				this.$refs.iForm3.setRules(this.rules3);
+				this.$refs.iForm3.setRules(this.rules3)
 			}
 		},
+		
 		methods: {
 			//询价单列表
 			async getInquiryList() {
@@ -1034,7 +1026,6 @@
 					}
 				}
 			},
-
 			// 物流供应商列表
 			async logicInquiryList() {
 				let res = await fetch(this.api.v2.logisticssupplier, {
@@ -1045,7 +1036,6 @@
 						// keywords: this.keywords
 					}
 				})
-
 				this.logisticRoutineList = []
 				this.logisticRealOrderList = []
 				if (res.data.code === '0') {
@@ -1076,29 +1066,28 @@
 				if (this.isRole) {
 					this.allChecked ?
 						this.Inquiry.map((val) => {
-							val.checked = true;
+							val.checked = true
 						}) :
 						this.Inquiry.map((val) => {
-							val.checked = false;
-						});
+							val.checked = false
+						})
 					this.$forceUpdate()
 					this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 					this.checkedList = this.Inquiry.filter((val) => val.checked)
 				} else {
 					this.allChecked ?
 						this.logisticRoutineList.map((val) => {
-							val.checked = true;
+							val.checked = true
 						}) :
 						this.logisticRoutineList.map((val) => {
-							val.checked = false;
-						});
+							val.checked = false
+						})
 					this.$forceUpdate()
 					this.checkedNum = this.list.filter((val) => val.checked).length
 					this.checkedList = this.list.filter((val) => val.checked)
 				}
 
 			},
-
 			//单选
 			checkboxOneChange(item) {
 				this.resetInquiryForm()
@@ -1107,7 +1096,7 @@
 					this.checkedList = this.Inquiry.filter((val) => val.checked)
 					this.checkedNum = this.Inquiry.filter((val) => val.checked).length
 					this.allChecked =
-						this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length;
+						this.Inquiry.length === this.Inquiry.filter((val) => val.checked).length
 					this.$forceUpdate()
 				} else {
 					this.checkedList = this.logisticRoutineList.filter((val) => val.checked)
@@ -1121,44 +1110,39 @@
 					this.$forceUpdate()
 				}
 			},
-
 			//点击打开价格趋势下拉框
 			showTrendSelect() {
-				this.selectPriceTrendShow = true;
+				this.selectPriceTrendShow = true
 			},
-
 			//点击打开币种下拉框
 			showCurrencySelect() {
-				this.selectTypesCurrencyShow = true;
+				this.selectTypesCurrencyShow = true
 			},
 			//点击打开鉴定书下拉框
 			showAppraisalCertificate() {
-				this.selectAppraisalCertificateShow = true;
+				this.selectAppraisalCertificateShow = true
 			},
 			//点击打开直达中转拉框
 			showTransferMethod() {
-				this.selectTransferMethodShow = true;
+				this.selectTransferMethodShow = true
 			},
-
 			//点击询盘/我要报价打开询盘模态框
 			showInquiryModal(offerId) {
 				this.resetInquiryForm()
 				if (offerId) {
 					this.offerId = offerId.join(',')
 				}
-				this.inquiryShow = true;
+				this.inquiryShow = true
 			},
-
 			//点击我要竞价按钮打开竞价模态框
 			toBindding(offerId) {
 				this.resetInquiryForm()
 				if (offerId) {
 					this.offerId = offerId.join(',')
 				}
-				this.binddingShow = true;
+				this.binddingShow = true
 				this.inquiryForm.currency = 'USD'
 			},
-
 			//点击放弃竞价出的弹框
 			giveupbidding(item) {
 				if (this.isRole) {
@@ -1173,31 +1157,28 @@
 					this.inaploId = item.inaploId
 					this.inaplosuppId = item.inaplosuppId
 				}
-				this.giveupbiddingShow = true;
+				this.giveupbiddingShow = true
 			},
-
 			//点击取消 取消询盘弹窗显示
 			showInquiryModalCancel() {
 				this.resetInquiryForm()
 				this.inquiryShow = false
 			},
-
 			//点的折叠面板是开启还是关闭的 方便后续操作
 			changeCollapseItem(e) {
 				if (e.show === true) {
 					if (this.collapseItemIsChecked.length === 0) {
-						this.collapseItemIsChecked.push(e.index);
+						this.collapseItemIsChecked.push(e.index)
 					} else {
 						if (this.collapseItemIsChecked.some((item) => item !== e.index)) {
-							this.collapseItemIsChecked.push(e.index);
+							this.collapseItemIsChecked.push(e.index)
 						}
 					}
 				} else {
 					this.collapseItemIsChecked = this.collapseItemIsChecked.filter(
 						(item) => item !== e.index
-					);
+					)
 				}
-				// this.inquiryList[e.index].down = e.show;
 				if (this.isRole) {
 					this.Inquiry[e.index].down = e.show
 				} else {
@@ -1205,7 +1186,6 @@
 				}
 
 			},
-
 			//确认币种
 			confirmCurrency(e) {
 				this.inquiryForm.currency = e[0].label
@@ -1236,7 +1216,6 @@
 				this.resetInquiryForm()
 				this.binddingShow = false
 			},
-
 			//提交报价
 			async submitBidding() {
 				this.$refs.iForm1.validate(async valid => {
@@ -1257,7 +1236,6 @@
 								}]
 							}
 						})
-
 						this.inquiryShow = false
 						this.binddingShow = false
 						if (res.data.code === '0') {
@@ -1277,8 +1255,6 @@
 					}
 				})
 			},
-
-
 			async submitBidding2() {
 				this.$refs.iForm2.validate(async valid => {
 					if (valid) {
@@ -1298,7 +1274,6 @@
 								}]
 							}
 						})
-
 						this.inquiryShow = false
 						this.binddingShow = false
 						if (res.data.code === '0') {
@@ -1328,7 +1303,6 @@
 			showValidityEnd() {
 				this.dateTimeEnd = true
 			},
-
 			//询盘确认时间
 			confirmTime(e) {
 				if (this.isRole) {
@@ -1343,7 +1317,6 @@
 			confirmTimeEnd(e) {
 				this.logisticQuotationForm.expiredDate = `${e.year}-${e.month}-${e.day}`
 			},
-
 			//确认放弃报价
 			async sureGiveupBidding() {
 				if (this.isRole) {
@@ -1383,7 +1356,6 @@
 							custId: this.custId && Number(this.custId)
 						}
 					})
-
 					if (res.data.code === '0') {
 						this.$refs.toast.show({
 							title: '放弃报价成功',
@@ -1400,7 +1372,6 @@
 					}
 				}
 			},
-
 			//点轮播图跳转到待报价竞价模式
 			navigateTobidding(obj) {
 				if (this.isRole) {
@@ -1419,12 +1390,10 @@
 					})
 				}
 			},
-
 			//点击搜索
 			checkedAll() {
 				this.getInquiryList()
 			},
-
 			//重置报价模态框
 			resetInquiryForm() {
 				this.inquiryForm = {
@@ -1444,9 +1413,8 @@
 					//备注
 					remark: "",
 				}
-				this.$refs['iForm1'].resetFields();
+				this.$refs['iForm1'].resetFields()
 			},
-
 			//重置报价模态框
 			resetLogisticQuotationForm() {
 				this.checkscheduleList.forEach(item => {
@@ -1480,9 +1448,8 @@
 					trendValue: "",
 					appraisalCertificateValue: ""
 				}
-				this.$refs['iForm3'].resetFields();
+				this.$refs['iForm3'].resetFields()
 			},
-
 			//切换币种
 			changeCurrency(item) {
 				if (item.currency === 'USD') {
@@ -1496,7 +1463,6 @@
 					return;
 				}
 			},
-
 			//批量报价产品供应商
 			async submitSomeBidding() {
 				let tempArr = []
@@ -1519,7 +1485,6 @@
 						list: tempArr
 					}
 				})
-
 				if (res.data.code === '0') {
 					this.$refs.toast.show({
 						title: '提交报价成功',
@@ -1535,8 +1500,6 @@
 					})
 				}
 			},
-
-
 			//物流
 			//物流展示报价模态框
 			toLogisticQuotation(item) {
@@ -1713,7 +1676,7 @@
 				})
 			}
 		}
-	};
+	}
 </script>
 
 <style lang="scss" scoped>
