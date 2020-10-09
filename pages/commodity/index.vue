@@ -21,35 +21,35 @@
 				<u-checkbox @change="checkboxOneChange" v-model="item.checked" v-for="(item, index) in list" :key="item.id" :name="item.name">
 					<view class="checkbox_view">
 						<view class="checkbox_view_oneline">
-							<text :class="{checkbox_view_name:true,gray:item.isGray}">{{item.spuName}}</text>
+							<text :class="{checkbox_view_name:true,shallowgray:item.isGray,deepgray:!item.isGray}">{{item.spuName}}</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.brand}}</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">{{item.brand}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">规格</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">规格</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.spuSpec}}</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">{{item.spuSpec}}</text>
 						</view>
 
 						<view class="checkbox_view_oneline">
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">最新报价(USD)</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">最新报价(USD)</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.bidAmount?item.bidAmount:"未报价"}}</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">{{item.bidAmount?item.bidAmount:"未报价"}}</text>
 							<u-tag text="已失效" type="info" class="utag" v-if="item.isGray" />
 							<u-tag text="三天后到期" type="error" plain class="utag" v-if="item.day3After" />
 						</view>
-						<view class="checkbox_view_oneline" v-if="item.confirmPrice&&item.confirmCur">
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">待确认价格</text>
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">({{item.confirmCur}})</text>
+						<view class="checkbox_view_oneline" v-if="item.confirmPrice&&item.confirmCur&&(!item.isGray)">
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">待确认价格</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">({{item.confirmCur}})</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.confirmPrice}}</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">{{item.confirmPrice}}</text>
 							<u-tag text="等待确认" type="info" plain class="utag" />
 						</view>
 						<view class="checkbox_view_oneline">
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">价格有效期</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">价格有效期</text>
 							<text class="mg15">:</text>
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
+							<text :class="{shallowgray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
 						</view>
 						<view class="checkbox_view_oneline" v-if="!item.checked">
 							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain @click.stop="showInquiryModal(item)" v-if="!item.expiredDate&&!item.confirmPrice">立即报价</u-button>
@@ -307,7 +307,7 @@
 							item.name = index
 							item.id = index
 							item.currency = 'CNY'
-							item.isGray = new Date(item.expiredDate).getTime() < (+new Date())
+							item.isGray = new Date(item.expiredDate).getTime() < (new Date()).valueOf()
 							item.day3After = ((new Date()).valueOf() < new Date(item.expiredDate).getTime()) && (new Date(item.expiredDate)
 								.getTime() < this.day3After)
 						})
@@ -425,15 +425,16 @@
 								position: 'top'
 							})
 						}
-						this.list.map((val) => {
-							val.checked = false;
-						})
 						this.resetInquiryForm()
 					}
 				})
 			},
 			//重置报价模态框
 			resetInquiryForm() {
+				this.list.map((val) => {
+					val.checked = false;
+				})
+				this.checkedNum = 0
 				this.inquiryForm = {
 					//币种
 					currency: "",
@@ -517,6 +518,7 @@
 						position: 'top'
 					})
 				}
+				this.resetInquiryForm()
 			}
 		},
 		
