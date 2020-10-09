@@ -89,7 +89,7 @@
 
 <script>
 	import Tabbar from '../../my_common_components/Tabbar.vue'
-	import '../../common/font/iconfont.css';
+	import '../../common/font/iconfont.css'
 	export default {
 		components: {
 			Tabbar

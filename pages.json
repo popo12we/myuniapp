@@ -4,6 +4,12 @@
 	},
 	"pages": [
 		{
+			"path": "pages/commodity/index",
+			"style": {
+				"navigationBarTitleText": "商品"
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录页"
@@ -15,19 +21,13 @@
 				"navigationBarTitleText": "待报价"
 			}
 		},
-		{
-			"path": "pages/commodity/index",
-			"style": {
-				"navigationBarTitleText": "商品"
-			}
-		},
+		
 		{
 			"path": "pages/quotedPrice/index",
 			"style": {
 				"navigationBarTitleText": "已报价"
 			}
 		},
-		
 		{
 			"path": "pages/bidding/index",
 			"style": {

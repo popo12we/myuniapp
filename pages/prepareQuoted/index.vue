@@ -13,7 +13,7 @@
 				<u-field v-model="keywords" placeholder="请输入产品编号或名称" label-width="0" class="ufield" :border-bottom="false"></u-field>
 				<u-button @click="checkedAll" type="error" size="mini" class="search_btn">搜索</u-button>
 			</view>
-			<view class="commodity_list_tips">您现在有{{biddingList.length}}条竞价、{{realOrderList.length}}条实单</view>
+			<view class="commodity_list_tips">您现在有{{biddingSwiperList.length}}条竞价、{{realOrderSwiperList.length}}条实单</view>
 
 			<!-- 轮播图区域 -->
 			<view class="swiper_box" v-if="swiperList.length>0">
@@ -1664,6 +1664,16 @@
 					
 				})
 				return arr
+			},
+			biddingSwiperList(){
+				return this.biddingList.filter(item=>{
+					return new Date(item.inquiryDeadline).getTime() > new Date().getTime()
+				})
+			},
+			realOrderSwiperList(){
+				return this.realOrderList.filter(item=>{
+					return new Date(item.inquiryDeadline).getTime() > new Date().getTime()
+				})
 			},
 			logicSwiperList() {
 				this.logisticRealOrderList.forEach(item=>{

@@ -39,13 +39,21 @@
 							<u-tag text="已失效" type="info" class="utag" v-if="item.isGray" />
 							<u-tag text="三天后到期" type="error" plain class="utag" v-if="item.day3After" />
 						</view>
+						<view class="checkbox_view_oneline" v-if="item.confirmPrice&&item.confirmCur">
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">待确认价格</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">({{item.confirmCur}})</text>
+							<text class="mg15">:</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.confirmPrice}}</text>
+							<u-tag text="等待确认" type="info" plain class="utag" />
+						</view>
 						<view class="checkbox_view_oneline">
-							<text :class="{gray:item.isGray,deepgray:!item.isGray}">有效期</text>
+							<text :class="{gray:item.isGray,deepgray:!item.isGray}">价格有效期</text>
 							<text class="mg15">:</text>
 							<text :class="{gray:item.isGray,deepgray:!item.isGray}">{{item.expiredDate||'NA'}}</text>
 						</view>
 						<view class="checkbox_view_oneline" v-if="!item.checked">
-							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain @click.stop="showInquiryModal(item)">更新报价</u-button>
+							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain @click.stop="showInquiryModal(item)" v-if="!item.expiredDate&&!item.confirmPrice">立即报价</u-button>
+							<u-button type="error" size="mini" class="checkbox_view_oneline_btn" plain @click.stop="showInquiryModal(item)" v-if="item.expiredDate||item.confirmPrice">更新报价</u-button>
 						</view>
 
 						<view class="price_change" v-if="item.checked">
