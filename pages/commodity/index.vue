@@ -425,6 +425,10 @@
 								position: 'top'
 							})
 						}
+						this.list.map((val) => {
+							val.checked = false;
+						})
+						this.resetInquiryForm()
 					}
 				})
 			},
