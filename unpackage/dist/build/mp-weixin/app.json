@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/login/index",
-    "pages/prepareQuoted/index",
     "pages/commodity/index",
+    "pages/prepareQuoted/index",
     "pages/quotedPrice/index",
     "pages/bidding/index",
     "pages/profile/index",

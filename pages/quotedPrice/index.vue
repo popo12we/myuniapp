@@ -63,7 +63,7 @@
 								<view>
 									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">标的价格（USD）</text>
 									<text class="mg15">:</text>
-									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">1.5</text>
+									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.underlying}}</text>
 								</view>
 							</u-col>
 						</u-row>
@@ -74,7 +74,7 @@
 								<view>
 									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">当前出价（USD）</text>
 									<text class="mg15">:</text>
-									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">1.63</text>
+									<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.currentPrice}}</text>
 								</view>
 							</u-col>
 						</u-row>
@@ -84,12 +84,12 @@
 							<u-col span="7">
 								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">出价次数</text>
 								<text class="mg15">:</text>
-								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">1/3</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.bidTimes}}</text>
 							</u-col>
 							<u-col span="5">
 								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">当前排名</text>
 								<text class="mg15">:</text>
-								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">2</text>
+								<text :class="{gray,shallowgray:item.statusDesc==='已放弃'||item.statusDesc==='已结束'}">{{item.currentSort}}</text>
 							</u-col>
 						</u-row>
 					</view>
