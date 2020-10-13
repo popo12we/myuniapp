@@ -165,26 +165,6 @@
 		</view>
 		<!-- 我的报价记录 -->
 		<view class="mybinding" v-if="bindingVuexCheckeddata.statusDesc!=='已放弃'&&bindingVuexCheckeddata.statusDesc!=='已结束'&&bindingVuexCheckeddata.titletext==='报价详情'&&showTag(bindingVuexCheckeddata)!=='竞价'">
-			<!-- <view class="mybinding-title">
-				我的报价记录
-			</view> -->
-			<!-- 我的具体报价记录 -->
-			<!-- 	<view class="mybinding-recode">
-				<view class="mybinding-recode_item" v-for="(item,index) in bindingData.history" :key="index">
-					<view class="mybinding-recode_item_count">
-						<text>第{{index+1}}次报价</text>
-						<text class="red" v-if="item.sortNumber">(剩余报价次数{{item.sortNumber}}次)</text>
-					</view>
-					<view class="mybinding-recode_item_price">
-						<text>价格{{item.cur}}:{{item.price}}</text>
-					</view>
-					<view class="mybinding-recode_item_remark">
-						<text>备注:{{item.backinfo?item.backinfo:''}}</text>
-					</view>
-					<view class="mybinding-recode_item_ball"></view>
-				</view>
-			</view> -->
-
 			<view class="mybinding-title">
 				我的报价详情
 			</view>
@@ -195,12 +175,12 @@
 							<u-col span="7">
 								<text class="gray">币种</text>
 								<text class="mg15">:</text>
-								<text class="gray">USD</text>
+								<text class="gray">{{myObj.cur}}</text>
 							</u-col>
 							<u-col span="5">
 								<text class="gray">价格</text>
 								<text class="mg15">:</text>
-								<text class="gray">1.63</text>
+								<text class="gray">{{myObj.price}}</text>
 							</u-col>
 						</u-row>
 					</view>
@@ -210,7 +190,7 @@
 								<u-col span="7">
 									<text class="gray">有效期</text>
 									<text class="mg15">:</text>
-									<text class="gray">2020-09-30</text>
+									<text class="gray">{{myObj.offeredDate}}</text>
 								</u-col>
 								<u-col span="5">
 									<text class="gray">交货天数</text>
@@ -394,7 +374,7 @@
 				binddingShow: false,
 				remark: "",
 				bindingData: '',
-				myObj: {},
+				myObj: '',
 				myIndex: '',
 				inquiryForm: {
 					//币种
@@ -460,7 +440,7 @@
 		methods: {
 			//拿到详细的数据
 			async getBiddingData() {
-				this.myObj = {}
+				this.myObj = ''
 				this.myIndex = ''
 				let inquiryCode = this.$store.state.checkedData.inquiryCode
 				let res = await fetch(this.api.v2.inquiryDetail, {

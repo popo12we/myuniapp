@@ -22,7 +22,7 @@
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
     "useMultiFrameRuntime": false,
-    "useApiHook": false,
+    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -37,7 +37,7 @@
   "compileType": "miniprogram",
   "libVersion": "",
   "appid": "wx9ecf9dfaa279e7f3",
-  "projectname": "mx供应商助手",
+  "projectname": "FoodchemGSC",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {

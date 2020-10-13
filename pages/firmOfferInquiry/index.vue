@@ -558,7 +558,7 @@
 		created() {
 			this.getDetails()
 		},
-		
+
 		onReady() {
 			this.$refs.iForm3.setRules(this.rules3)
 		},
@@ -598,6 +598,10 @@
 									break;
 								}
 							}
+						}
+						console.log(this.bindingData.logisticsbidsupplierVo)
+						if (this.bindingData.logisticsbidsupplierVo) {
+							this.myBindingData = this.bindingData.logisticsbidsupplierVo
 						}
 					}
 				}
@@ -781,7 +785,7 @@
 				this.$refs['iForm3'].resetFields();
 			},
 		},
-		
+
 		watch: {
 			'$store.state.checkData': {
 				deep: true,
@@ -793,7 +797,7 @@
 				}
 			}
 		},
-		
+
 		computed: {
 			showTag() {
 				return function(item) {
