@@ -506,11 +506,14 @@
 			//是否中标
 			showTagIsoutbid() {
 				return function(item) {
-					if(item.isOutbid === 1&&item.auditState===3){
+					if(this.swiperCurrent===0&&item.isOutbid === 1&&item.auditState===3){
 						return '已中标'
-					}else if(item.isOutbid === 0&&item.auditState===3){
+					}else if(this.swiperCurrent===0&&item.isOutbid === 0&&item.auditState===3){
 						return '未中标'
-					}else{
+					}else if(this.swiperCurrent===1&&item.auditState!==1&&item.auditState!==2){
+						return '已结束'
+					}
+					else{
 						return ''
 					}
 				}

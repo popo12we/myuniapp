@@ -168,19 +168,19 @@
 			<view class="mybinding-title">
 				我的报价详情
 			</view>
-			<view class="mybinding-info">
+			<view class="mybinding-info" v-if="bindingData.history">
 				<view class="mybinding-recode_item">
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="7">
 								<text class="gray">币种</text>
 								<text class="mg15">:</text>
-								<text class="gray">{{myObj.cur}}</text>
+								<text class="gray">{{bindingData.history[0].cur}}</text>
 							</u-col>
 							<u-col span="5">
 								<text class="gray">价格</text>
 								<text class="mg15">:</text>
-								<text class="gray">{{myObj.price}}</text>
+								<text class="gray">{{bindingData.history[0].price}}</text>
 							</u-col>
 						</u-row>
 					</view>
@@ -190,12 +190,12 @@
 								<u-col span="7">
 									<text class="gray">有效期</text>
 									<text class="mg15">:</text>
-									<text class="gray">{{myObj.offeredDate}}</text>
+									<text class="gray">{{bindingData.detail.inquiryDeadline}}</text>
 								</u-col>
 								<u-col span="5">
 									<text class="gray">交货天数</text>
 									<text class="mg15">:</text>
-									<text class="gray">15</text>
+									<text class="gray">{{bindingData.history[0].deliveryDay}}</text>
 								</u-col>
 							</u-row>
 						</u-row>
@@ -205,7 +205,7 @@
 							<u-col span="12">
 								<text class="gray">价格趋势</text>
 								<text class="mg15">:</text>
-								<text class="gray">平稳</text>
+								<text class="gray">{{bindingData.history[0].pricetrendStr}}</text>
 							</u-col>
 						</u-row>
 					</view>
@@ -220,7 +220,7 @@
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="12">
-								<text class="gray">近期趋势平稳</text>
+								<text class="gray">{{bindingData.history[0].priceinfo}}</text>
 							</u-col>
 						</u-row>
 					</view>
@@ -235,7 +235,7 @@
 					<view class="mybinding-info_item">
 						<u-row gutter="16">
 							<u-col span="12">
-								<text class="gray">我是备注我是备注</text>
+								<text class="gray">{{bindingData.history[0].backinfo}}</text>
 							</u-col>
 						</u-row>
 					</view>
@@ -293,20 +293,6 @@
 									</u-col>
 								</u-row>
 							</view>
-<!-- 							<view class="mybinding-info_item">
-								<u-row gutter="16">
-									<u-col span="12">
-										<text class="gray">采购反馈：</text>
-									</u-col>
-								</u-row>
-							</view>
-							<view class="mybinding-info_item">
-								<u-row gutter="16">
-									<u-col span="12">
-										<text class="gray">这价格接收不了（价格太高）</text>
-									</u-col>
-								</u-row>
-							</view> -->
 						</view>
 					</view>
 				</view>
